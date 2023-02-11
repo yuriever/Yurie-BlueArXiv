@@ -44,7 +44,7 @@ The documentation can also be found on [my website](https://yuriever.github.io/s
     * `extractID["file"|"path",opts_][_String|_List]` - return a dataset of associations with IDs, file names and where the IDs are found. The typical output is like
             
         ``` wl
-        Out[]= {<|"ID"->"xxxx.xxxx","file"->{"file1",...},"IDLocation"->{"FoundInFirstPage",...}|>}
+        Out[]= {<|"ID"->"xxxx.xxxx","file"->{"file1",...},"IDLocation"->{"foundInFirstPage",...}|>}
         ```
 
     Default options:
@@ -66,7 +66,7 @@ The documentation can also be found on [my website](https://yuriever.github.io/s
     * `searchByID["file"|"path",opts_][_String|_List]` - the typical output is like
 
         ``` wl
-        Out[]= {<|"ID"->{"xxxx.xxxx"},"item"->"formatted name","URL"->"URL.pdf","file"->{"file1",...},"IDLocation"->{"FoundInFirstPage",...}|>}
+        Out[]= {<|"ID"->{"xxxx.xxxx"},"item"->"formatted name","URL"->"URL.pdf","file"->{"file1",...},"IDLocation"->{"foundInFirstPage",...}|>}
         ```
 
     Default options:
@@ -90,7 +90,7 @@ The documentation can also be found on [my website](https://yuriever.github.io/s
     * `downloadByID[targetPath_,"file"|"path",opts_][_String|_List]` - the typical output is like
 
         ``` wl
-        Out[]= {<|"ID"->{"xxxx.xxxx"},"item"->"formatted name","URL"->"URL.pdf","file"->{"file1",...},"IDLocation"->{"FoundInFirstPage",...},"fileObject"->"file.pdf"|>}
+        Out[]= {<|"ID"->{"xxxx.xxxx"},"item"->"formatted name","URL"->"URL.pdf","file"->{"file1",...},"IDLocation"->{"foundInFirstPage",...},"fileObject"->"file.pdf"|>}
         ```
 
     Default options are the same as `searchByID`.
