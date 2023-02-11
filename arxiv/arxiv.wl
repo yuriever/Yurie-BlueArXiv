@@ -44,8 +44,6 @@ searchByTitle::usage =
 downloadByTitle::usage = 
     "download by titles extracted from file or path to the target path, 
     and return the file objects with formatted names by fileNameFormatter."
-(*reportByTitle::usage = 
-    "analyse the data of results returned from getByTitle."*)
 
 
 Begin["`Private`"];
@@ -665,6 +663,5 @@ fileNameFormat["ID"<>" "<>"title"<>", "<>"firstAuthor"];
 End[];
 
 Protect@@Names[$Context<>"*"];
-Unprotect["$fileNameFormat"];
 
 EndPackage[];
