@@ -20,7 +20,7 @@ arXivIDQ::usage =
 fileNameFormat::usage = 
     "set the format of file names.";
 fileNameInPath::usage =
-    "return a list of PDF file names in the path";
+    "return a list of PDF file names in the path.";
 fileNameRegulate::usage =
     "regulate the file name with characters like \"/\" and \"\n\".";
 
@@ -28,22 +28,22 @@ fileNameRegulate::usage =
 extractID::usage =
     "extract arXiv IDs from string, file name or path.";
 searchByID::usage = 
-    "search by IDs extracted from string, file or path, 
-    and return the found items on arXiv with formatted names by fileNameFormatter";
+    "search by IDs extracted from string, file or path, "<>
+    "and return the found items on arXiv with formatted names by fileNameFormatter.";
 downloadByID::usage = 
-    "download by IDs extracted from string, file or path to the target path, 
-    and return the file objects with formatted names by fileNameFormatter."
+    "download by IDs extracted from string, file or path to the target path, "<>
+    "and return the file objects with formatted names by fileNameFormatter."
 
 
 extractTitle::usage = 
     "extract title from PDF by searching grouped texts with larger Y coordinates and fontsize.";
 searchByTitle::usage = 
-    "search by titles extracted from file or path, 
-    and return the best-matched items on arXiv with formatted names by fileNameFormatter. 
-	The best match item is picked by minimizing EditDistance.";
+    "search by titles extracted from file or path, "<>
+    "and return the best-matched items on arXiv with formatted names by fileNameFormatter. "<>
+    "The best match item is picked by minimizing EditDistance.";
 downloadByTitle::usage = 
-    "download by titles extracted from file or path to the target path, 
-    and return the file objects with formatted names by fileNameFormatter."
+    "download by titles extracted from file or path to the target path, "<>
+    "and return the file objects with formatted names by fileNameFormatter."
 
 
 Begin["`Private`"];
@@ -246,57 +246,57 @@ extractID`kernel[tag:"path"|"file",opts:OptionsPattern[]][list_List] :=
 (*helper functions*)
 
 extractID`getIDListFromString[string_String] :=
-    DeleteDuplicates@StringCases[string,Longest[ID__]/;arXivIDQ[ID]:>ID];
+    DeleteDuplicates@StringCases[string,Longest[id__]/;arXivIDQ[id]:>id];
     
 extractID`getIDListFromFileOrPath//Options = {
     "tryFileName"->True,
     "hidePath"->True
 };
 extractID`getIDListFromFileOrPath[file_String,"file","notTryFileName"] :=
-    Module[ {IDList,IDNumber},
-        IDList = Import[file,{"Plaintext",1}]//StringSplit[#,RegularExpression["\\s"]]&//
+    Module[ {idList,idNumber},
+        idList = Import[file,{"Plaintext",1}]//StringSplit[#,RegularExpression["\\s"]]&//
         	Map[extractID`getIDListFromString]//Flatten//DeleteDuplicates;
-        IDNumber = Length@IDList;
+        idNumber = Length@idList;
         Which[
-            IDNumber===0,
+            idNumber===0,
                 {<|"ID"->"notFound","file"->{file},"IDLocation"->{"notFoundInFirstPage"}|>},
-            IDNumber===1,
-                {<|"ID"->First@IDList,"file"->{file},"IDLocation"->{"foundInFirstPage"}|>},
-            IDNumber>=2,
+            idNumber===1,
+                {<|"ID"->First@idList,"file"->{file},"IDLocation"->{"foundInFirstPage"}|>},
+            idNumber>=2,
                 MapThread[
                     <|"ID"->#1,"file"->#2,"IDLocation"->#3|>&,
-                    {IDList,ConstantArray[{file},IDNumber],ConstantArray[{"extraInFirstPage"},IDNumber]}
+                    {idList,ConstantArray[{file},idNumber],ConstantArray[{"extraInFirstPage"},idNumber]}
                 ]                
         ]
     ];
 extractID`getIDListFromFileOrPath[file_String,"file",opts:OptionsPattern[]] :=
-    Module[ {IDData,IDNumber,IDList},
+    Module[ {idData,idNumber,idList},
         If[ OptionValue["tryFileName"]==False,
-            IDData = extractID`getIDListFromFileOrPath[file,"file","notTryFileName"],
-            IDList = extractID`getIDListFromString[file];
-            IDNumber = Length@IDList;
-            IDData = Which[
-                IDNumber===0,
+            idData = extractID`getIDListFromFileOrPath[file,"file","notTryFileName"],
+            idList = extractID`getIDListFromString[file];
+            idNumber = Length@idList;
+            idData = Which[
+                idNumber===0,
                     extractID`getIDListFromFileOrPath[file,"file","notTryFileName"],
-                IDNumber===1,
-                    {<|"ID"->First@IDList,"file"->{file},"IDLocation"->{"foundInFileName"}|>},
-                IDNumber>=2,
+                idNumber===1,
+                    {<|"ID"->First@idList,"file"->{file},"IDLocation"->{"foundInFileName"}|>},
+                idNumber>=2,
                     MapThread[
                         <|"ID"->#1,"file"->#2,"IDLocation"->#3|>&,
-                        {IDList,ConstantArray[{file},IDNumber],ConstantArray[{"extraInFileName"},IDNumber]}
+                        {idList,ConstantArray[{file},idNumber],ConstantArray[{"extraInFileName"},idNumber]}
                     ]
             ]
         ];
-        IDData
+        idData
     ];
 extractID`getIDListFromFileOrPath[path_String,"path",opts:OptionsPattern[]] :=
-    Module[ {fileList,IDDataList},
+    Module[ {fileList,idDataList},
         fileList = FileNames[__~~".pdf"~~EndOfString,path];
-        IDDataList = extractID`getIDListFromFileOrPath[#,"file",opts]&/@fileList//Flatten;
+        idDataList = extractID`getIDListFromFileOrPath[#,"file",opts]&/@fileList//Flatten;
         If[ OptionValue["hidePath"]==True,
-            IDDataList = IDDataList//Query[All,<|#,"file"->extractID`hidePath[path,#file]|>&]
+            idDataList = idDataList//Query[All,<|#,"file"->extractID`hidePath[path,#file]|>&]
         ];
-        IDDataList
+        idDataList
     ];
 
 extractID`hidePath[path_,file_] :=
@@ -338,21 +338,21 @@ searchByID`kernel//Options = {
 };
 (*acting on string*)
 searchByID`kernel["string",opts:OptionsPattern[]][arg_] :=
-    Module[ {IDList,optsFiltered},
+    Module[ {idList,optsFiltered},
         optsFiltered = FilterRules[{opts},Options[searchByID`getItemDataFromID]];
-        IDList = extractID`kernel["string"][arg];
-        searchByID`getItemDataFromID[IDList,optsFiltered]
+        idList = extractID`kernel["string"][arg];
+        searchByID`getItemDataFromID[idList,optsFiltered]
     ];
 (*acting on file or path*)
 searchByID`kernel[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    Module[ {IDDataList,IDList,optsFiltered},
+    Module[ {idDataList,idList,optsFiltered},
         optsFiltered[1] = FilterRules[{opts},Options[extractID`kernel]];
         optsFiltered[2] = FilterRules[{opts},Options[searchByID`getItemDataFromID]];
-        IDDataList = extractID`kernel[tag,optsFiltered[1]][arg];
-        IDList = IDDataList//Query[All,#ID&];
+        idDataList = extractID`kernel[tag,optsFiltered[1]][arg];
+        idList = idDataList//Query[All,#ID&];
         JoinAcross[
-            searchByID`getItemDataFromID[IDList,optsFiltered[2]],
-            IDDataList,
+            searchByID`getItemDataFromID[idList,optsFiltered[2]],
+            idDataList,
             "ID"
         ]
     ];
@@ -363,15 +363,15 @@ searchByID`kernel[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
 searchByID`getItemDataFromID//Options = {
     "fileNameRegulate"->True
 };
-searchByID`getItemDataFromID[IDList_,opts:OptionsPattern[]] :=
-    Module[ {itemList,itemNameList,URLList},
-        itemList = Normal@arXivConnector["Search",{"ID"->IDList}];
+searchByID`getItemDataFromID[idList_,opts:OptionsPattern[]] :=
+    Module[ {itemList,itemNameList,urlList},
+        itemList = Normal@arXivConnector["Search",{"ID"->idList}];
         itemNameList = itemList//Query[All,fileNameFormatter,FailureAction->"Replace"]//
 	        searchByID`fileNameRegulate[OptionValue["fileNameRegulate"]];
-        URLList = Map[searchByID`getURLFromItem,itemList];
+        urlList = Map[searchByID`getURLFromItem,itemList];
         MapThread[
             Association["ID"->#1,"item"->#2,"URL"->#3]&,
-            {IDList,itemNameList,URLList}
+            {idList,itemNameList,urlList}
         ]
     ];
 
@@ -415,20 +415,20 @@ downloadByID`kernel//Options = {
     "fileNameRegulate"->True
 };
 downloadByID`kernel[targetPath_String,tag:"string"|"file"|"path",opts:OptionsPattern[]][arg_] :=
-    Module[ {IDDataList,optsFiltered},
+    Module[ {idDataList,optsFiltered},
         optsFiltered = FilterRules[{opts},Options[searchByID`kernel]];
-        IDDataList = searchByID`kernel[tag,optsFiltered][arg];
+        idDataList = searchByID`kernel[tag,optsFiltered][arg];
         (*download to the target path and return file objects*)
-        IDDataList//Query[All,<|#,"fileObject"->downloadByID`download[targetPath,#URL,#item]|>&]
+        idDataList//Query[All,<|#,"fileObject"->downloadByID`download[targetPath,#URL,#item]|>&]
     ];
 
 
 (*helper functions*)
 
-downloadByID`download[targetPath_,URL_,Missing["Failed"]] :=
+downloadByID`download[targetPath_,url_,Missing["Failed"]] :=
     Missing["Failed"];
-downloadByID`download[targetPath_,URL_,item_String] :=
-    URLDownload[URL,FileNameJoin@{targetPath,item<>".pdf"}];
+downloadByID`download[targetPath_,url_,item_String] :=
+    URLDownload[url,FileNameJoin@{targetPath,item<>".pdf"}];
 
 
 (* ::Subsection:: *)
