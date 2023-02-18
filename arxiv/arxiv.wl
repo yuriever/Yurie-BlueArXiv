@@ -370,7 +370,7 @@ searchByID`getItemDataFromID[idList_,opts:OptionsPattern[]] :=
         itemList = 
             If[ idValidList=={},
                 {},
-                Normal@arXivConnector["Search",{"ID"->idValidList}]
+                Normal@arXivConnector["Search",{"ID"->idValidList,MaxItems->Length@idValidList}]
             ];
         itemNameList = itemList//Query[All,fileNameFormatter,FailureAction->"Replace"]//
 	        searchByID`fileNameRegulate[OptionValue["fileNameRegulate"]];
@@ -387,16 +387,6 @@ searchByID`getItemDataFromID[idList_,opts:OptionsPattern[]] :=
             ]
         ]
     ];
-    (*Module[ {itemList,itemNameList,urlList},
-        itemList = Normal@arXivConnector["Search",{"ID"->idList}];
-        itemNameList = itemList//Query[All,fileNameFormatter,FailureAction->"Replace"]//
-            searchByID`fileNameRegulate[OptionValue["fileNameRegulate"]];
-        urlList = Map[searchByID`getURLFromItem,itemList];
-        MapThread[
-            Association["ID"->#1,"item"->#2,"URL"->#3]&,
-            {idList,itemNameList,urlList}
-        ]
-    ];*)
 
 searchByID`getURLFromItem::usage = 
     "get the Download URL from \"Link\".";
