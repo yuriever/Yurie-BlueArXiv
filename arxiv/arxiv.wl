@@ -364,16 +364,39 @@ searchByID`getItemDataFromID//Options = {
     "fileNameRegulate"->True
 };
 searchByID`getItemDataFromID[idList_,opts:OptionsPattern[]] :=
-    Module[ {itemList,itemNameList,urlList},
-        itemList = Normal@arXivConnector["Search",{"ID"->idList}];
+    Module[ {itemList,idValidList,itemNameList,urlList,notFoundNumber,itemData},
+        idValidList = DeleteCases[idList,"notFound"];
+        notFoundNumber = Count[idList,"notFound"];
+        itemList = 
+            If[ idValidList=={},
+                {},
+                Normal@arXivConnector["Search",{"ID"->idValidList}]
+            ];
         itemNameList = itemList//Query[All,fileNameFormatter,FailureAction->"Replace"]//
 	        searchByID`fileNameRegulate[OptionValue["fileNameRegulate"]];
+        urlList = Map[searchByID`getURLFromItem,itemList];
+        itemData = MapThread[
+            <|"ID"->#1,"item"->#2,"URL"->#3|>&,
+            {idValidList,itemNameList,urlList}
+        ];
+        If[ notFoundNumber==0,
+            itemData,
+            Join[
+                itemData,
+                {<|"ID"->"notFound","item"->Missing["Failed"],"URL"->Missing["Failed"]|>}
+            ]
+        ]
+    ];
+    (*Module[ {itemList,itemNameList,urlList},
+        itemList = Normal@arXivConnector["Search",{"ID"->idList}];
+        itemNameList = itemList//Query[All,fileNameFormatter,FailureAction->"Replace"]//
+            searchByID`fileNameRegulate[OptionValue["fileNameRegulate"]];
         urlList = Map[searchByID`getURLFromItem,itemList];
         MapThread[
             Association["ID"->#1,"item"->#2,"URL"->#3]&,
             {idList,itemNameList,urlList}
         ]
-    ];
+    ];*)
 
 searchByID`getURLFromItem::usage = 
     "get the Download URL from \"Link\".";
@@ -594,8 +617,13 @@ searchByTitle`getBestMatchItemFromTitle//Options = {
     "maxItems"->10
 };
 searchByTitle`getBestMatchItemFromTitle[title_,opts:OptionsPattern[]] :=
-    Module[ {itemList,itemBestMatch,itemName},
-        itemList = Normal@arXivConnector["TitleSearch",{"Query"->title,"MaxItems"->OptionValue["maxItems"]}];
+    Module[ {itemList,itemBestMatch,itemName,preItemList},
+        preItemList = arXivConnector["TitleSearch",{"Query"->title}];
+        itemList = 
+            If[ preItemList=={},
+                arXivConnector["Search",{"Query"->title,"MaxItems"->OptionValue["maxItems"]}],
+                preItemList
+            ]//Normal;
         itemBestMatch = itemList//Query[MinimalBy[EditDistance[title,#Title]&]]//First;
         itemName = itemBestMatch//Query[fileNameFormatter,FailureAction->"Replace"]//
 	        searchByTitle`fileNameRegulate[OptionValue["fileNameRegulate"]];
