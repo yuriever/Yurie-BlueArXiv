@@ -3,11 +3,15 @@ A Mathematica package for searching, downloading and renaming arXiv preprints by
 
 The documentation can also be found on [my website](https://yuriever.github.io/symbolic/package-lily-arxiv/).
 
+This package uses the following APIs:
+
+* [INSPIRE REST API](https://github.com/inspirehep/rest-api-doc)
+
+* [arXiv API](https://info.arxiv.org/help/api/index.html)
+
 ## List of symbols
 
-### Connect to arXiv and recognize ID
-
-* `arXivConnect|arXivDisconnect[]` - connect to or disconnect from the arXiv API.
+### Recognize arXiv ID
 
 * `arXivIDQ[_]` - check whether a string is a valid arXiv ID. 
     The new ID template after 2007 is `xxxx.xxxx(x)`, and the old one is `class/xxxxxxx`.
@@ -32,7 +36,7 @@ The documentation can also be found on [my website](https://yuriever.github.io/s
 
 * `fileNameRegulate[_String]` - regulate the file name with special characters like `"/"` and `"\n"`. The transformation rules are stored in ``fileNameRegulate`ruleList``.
 
-### Extract, search and download by arXiv ID
+### Extract, search, download and generate BibTeX by arXiv ID
 
 * `extractID[_][_]` - extract all arXiv IDs from string, file name or path.
     
@@ -56,7 +60,7 @@ The documentation can also be found on [my website](https://yuriever.github.io/s
 
     * `"mergeDuplicateID"->True` - the result will be gathered and sorted by `"ID"`. Otherwise there can be duplicate IDs from different positions.
 
-* `searchByID[_][_]`: search by IDs extracted from string, file or path, and return the found items on arXiv with formatted names by `fileNameFormatter`. 
+* `searchByID[_][_]` - search by IDs extracted from string, file or path, and return the found items on arXiv with formatted names by `fileNameFormatter`. 
 
     * `searchByID["string",opts_][_String|_List]` - the tag `"string"` can be omitted. The typical output is like
 
@@ -80,7 +84,7 @@ The documentation can also be found on [my website](https://yuriever.github.io/s
 
     * `"fileNameRegulate"->True` - special characters will be replaced in the formatted name by `fileNameRegulate`.
 
-* `downloadByID[_][_]`: download by IDs extracted from string, file or path to the target path, and return the file objects with formatted names by `fileNameFormatter`.
+* `downloadByID[__][_]` - download by IDs extracted from string, file or path to the target path, and return the file objects with formatted names by `fileNameFormatter`.
 
     * `downloadByID[targetPath_,"string",opts_][_String|_List]` - the tag `"string"` can be omitted. The typical output is like
 
@@ -95,6 +99,22 @@ The documentation can also be found on [my website](https://yuriever.github.io/s
         ```
 
     Default options are the same as `searchByID`.
+
+* `generateBibTeXByID[__][_]` - export the found BibTeX entries on inspirehep by IDs extracted from string, file or path, and return the BibTeX keys.
+
+    * `generateBibTeXByID[targetPath_,bibName_,"string",opts_][_String|_List]` - the tag `"string"` can be omitted. The typical output is like
+
+        ``` wl
+        Out[]= {<|"key"->"author:YYYYxxx","ID"->{"xxxx.xxxx"},"BibTeX"->"found BibTeX"|>}
+        ```
+
+    * `generateBibTeXByID[targetPath_,bibName_,"file"|"path",opts_][_String|_List]` - the typical output is like
+
+        ``` wl
+        Out[]= {<|"key"->"author:YYYYxxx","ID"->{"xxxx.xxxx"},"BibTeX"->"found BibTeX","file"->{"file1",...},"IDLocation"->{"foundInFirstPage",...}|>}
+        ```
+
+    Default options are the same as `extractID`.
 
 ### Extract, search and download by title
 
@@ -114,7 +134,7 @@ The documentation can also be found on [my website](https://yuriever.github.io/s
 
     * `"YResolution"->25` - the text elements extracted from the first page will be grouped according to the Y coordinate with resolution `"YResolution"`.
 
-    __TODO: test and improve the accuracy.__
+    __TODO: test and improve the accuracy (by SVM or some NN?)__
 
 * `searchByTitle["file"|"path",opts_][_String|_List]` - search by titles extracted from file or path, and return the best-matched items on arXiv with formatted names by fileNameFormatter. The best match item is picked by minimizing `EditDistance`. The typical output is like 
 
@@ -144,10 +164,12 @@ The documentation can also be found on [my website](https://yuriever.github.io/s
 
     Default options are the same as `searchByID`.
 
-## Workflow, to-do list and other issues
+
+## To-do list and other issues
 
 * The workflow can be found in [arxiv.pdf](https://github.com/yuriever/lily-arxiv/blob/main/arxiv/arxiv.pdf).
 
+* Output: the returned value is either list of strings or dataset of associations storing relevant data, and downloading file is treated as side effect.
+
 * TODO: rename files by ID or title.
 
-* Output: the returned value is either list of strings or dataset of associations storing relevant data, and downloading file is treated as side effect.

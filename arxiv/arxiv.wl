@@ -9,10 +9,10 @@ Unprotect@@Names[$Context<>"*"];
 ClearAll@@Names[$Context<>"*"]
 
 
-arXivConnect::usage =
+(*arXivConnect::usage =
     "connect to arXiv API.";
 arXivDisconnect::usage =
-    "disconnect from arXiv API.";
+    "disconnect from arXiv API.";*)
 arXivIDQ::usage =
     "check whether a string is a valid arXiv ID.";
 
@@ -33,6 +33,9 @@ searchByID::usage =
 downloadByID::usage = 
     "download by IDs extracted from string, file or path to the target path, "<>
     "and return the file objects with formatted names by fileNameFormatter."
+generateBibTeXByID::usage = 
+    "export the found BibTeX entries on inspirehep by IDs extracted from string, file or path, "<>
+    "and return the BibTeX keys.";
 
 
 extractTitle::usage = 
@@ -129,15 +132,15 @@ mergeByKey[data:{__?AssociationQ},rules:{___Rule},default:_:Identity] :=
 
 
 (* ::Subsection:: *)
-(*arXivConnector*)
+(*arXivIDQ*)
 
 
-arXivConnector::usage =
+(*arXivConnector::usage =
     "a private symbol representing the connector to arXiv API.";
 arXivConnect[] :=
     arXivConnector = ServiceConnect["ArXiv"];
 arXivDisconnect[] :=
-    ServiceDisconnect[arXivConnector];
+    ServiceDisconnect[arXivConnector];*)
 
 
 arXivIDQ[string_String] :=
@@ -370,7 +373,7 @@ searchByID`getItemDataFromID[idList_,opts:OptionsPattern[]] :=
         itemList = 
             If[ idValidList=={},
                 {},
-                Normal@arXivConnector["Search",{"ID"->idValidList,MaxItems->Length@idValidList}]
+                Normal@ServiceExecute["ArXiv","Search",{"ID"->idValidList,MaxItems->Length@idValidList}]
             ];
         itemNameList = itemList//Query[All,fileNameFormatter,FailureAction->"Replace"]//
 	        searchByID`fileNameRegulate[OptionValue["fileNameRegulate"]];
@@ -442,6 +445,71 @@ downloadByID`download[targetPath_,url_,Missing["Failed"]] :=
     Missing["Failed"];
 downloadByID`download[targetPath_,url_,item_String] :=
     URLDownload[url,FileNameJoin@{targetPath,item<>".pdf"}];
+
+
+(* ::Subsection:: *)
+(*generateBibTeXByID*)
+
+
+generateBibTeXByID//Options = {
+    "tryFileName"->True,
+    "hidePath"->True,
+    "mergeDuplicateID"->True
+};
+generateBibTeXByID[targetPath_String,bibName_String,opts:OptionsPattern[]][arg_] :=
+    generateBibTeXByID`kernel[targetPath,bibName,"string",opts][arg]//Dataset[#,HiddenItems->{"BibTeX"->True}]&;    
+generateBibTeXByID[targetPath_String,bibName_String,"string",opts:OptionsPattern[]][arg_] :=
+    generateBibTeXByID`kernel[targetPath,bibName,"string",opts][arg]//Dataset[#,HiddenItems->{"BibTeX"->True}]&;    
+generateBibTeXByID[targetPath_String,bibName_String,tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
+    generateBibTeXByID`kernel[targetPath,bibName,tag,opts][arg]//Dataset[#,HiddenItems->{"BibTeX"->True}]&;    
+
+
+generateBibTeXByID`kernel//Options = {
+    "tryFileName"->True,
+    "hidePath"->True,
+    "mergeDuplicateID"->True
+};
+(*acting on string*)
+generateBibTeXByID`kernel[targetPath_String,bibName_String,"string",opts:OptionsPattern[]][arg_] :=
+    Module[ {idList,optsFiltered,itemList},
+        optsFiltered = FilterRules[{opts},Options[generateBibTeXByID`getBibTeXItemFromID]];
+        idList = extractID`kernel["string"][arg];
+        itemList = generateBibTeXByID`getBibTeXItemFromID[idList];
+        generateBibTeXByID`exportBibTeX[targetPath,bibName,itemList];
+        itemList
+    ];
+(*acting on file or path*)
+generateBibTeXByID`kernel[targetPath_String,bibName_String,tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
+    Module[ {idDataList,idList,optsFiltered,itemList},
+        optsFiltered = FilterRules[{opts},Options[extractID`kernel]];
+        idDataList = extractID`kernel[tag,optsFiltered][arg];
+        idList = idDataList//Query[All,#ID&];
+        itemList = JoinAcross[
+            generateBibTeXByID`getBibTeXItemFromID[idList],
+            idDataList,
+            "ID"
+        ];
+        generateBibTeXByID`exportBibTeX[targetPath,bibName,itemList];
+        itemList
+    ];
+
+
+(*helper functions*)
+
+generateBibTeXByID`getBibTeXItemFromID[idList_] :=
+    Map[
+        <|"ID"->#,"BibTeX"->URLExecute@HTTPRequest["https://inspirehep.net/api/arxiv/"<>#<>"?format=bibtex"]|>&,
+        idList
+    ]//Query[All,<|"key"->generateBibTeXByID`extractBibTeXKey[#BibTeX],#|>&];
+    
+generateBibTeXByID`extractBibTeXKey[bibtex_String] :=
+    First@StringCases[bibtex,StartOfString~~Shortest[__]~~"{"~~Shortest[key__]~~",\n"~~__:>key];    
+generateBibTeXByID`extractBibTeXKey[_] :=
+    Missing["Failed"];
+
+generateBibTeXByID`exportBibTeX[targetPath_String,bibName_String,itemList_] :=
+    Export[FileNameJoin@{targetPath,bibName},itemList//
+		Query[Select[Head[#BibTeX]==String&],#BibTeX&]//Riffle[#,""]&,"List"];
 
 
 (* ::Subsection:: *)
@@ -608,10 +676,10 @@ searchByTitle`getBestMatchItemFromTitle//Options = {
 };
 searchByTitle`getBestMatchItemFromTitle[title_,opts:OptionsPattern[]] :=
     Module[ {itemList,itemBestMatch,itemName,preItemList},
-        preItemList = arXivConnector["TitleSearch",{"Query"->title}];
+        preItemList = ServiceExecute["ArXiv","TitleSearch",{"Query"->title}];
         itemList = 
             If[ preItemList=={},
-                arXivConnector["Search",{"Query"->title,"MaxItems"->OptionValue["maxItems"]}],
+                ServiceExecute["ArXiv","Search",{"Query"->title,"MaxItems"->OptionValue["maxItems"]}],
                 preItemList
             ]//Normal;
         itemBestMatch = itemList//Query[MinimalBy[EditDistance[title,#Title]&]]//First;
@@ -664,6 +732,7 @@ downloadByTitle`kernel[targetPath_String,tag:"file"|"path",opts:OptionsPattern[]
 
 
 (*helper functions*)
+
 downloadByTitle`download = downloadByID`download;
 
 
