@@ -274,7 +274,7 @@ extractID`getIDListFromFileOrPath[file_String,"file","notTryFileName"] :=
     ];
 extractID`getIDListFromFileOrPath[file_String,"file",opts:OptionsPattern[]] :=
     Module[ {idData,idNumber,idList},
-        If[ OptionValue["tryFileName"]==False,
+        If[ OptionValue["tryFileName"]===False,
             idData = extractID`getIDListFromFileOrPath[file,"file","notTryFileName"],
             idList = extractID`getIDListFromString[file];
             idNumber = Length@idList;
@@ -296,7 +296,7 @@ extractID`getIDListFromFileOrPath[path_String,"path",opts:OptionsPattern[]] :=
     Module[ {fileList,idDataList},
         fileList = FileNames[__~~".pdf"~~EndOfString,path];
         idDataList = extractID`getIDListFromFileOrPath[#,"file",opts]&/@fileList//Flatten;
-        If[ OptionValue["hidePath"]==True,
+        If[ OptionValue["hidePath"]===True,
             idDataList = idDataList//Query[All,<|#,"file"->extractID`hidePath[path,#file]|>&]
         ];
         idDataList
@@ -368,10 +368,10 @@ searchByID`getItemDataFromID//Options = {
 };
 searchByID`getItemDataFromID[idList_,opts:OptionsPattern[]] :=
     Module[ {itemList,idValidList,itemNameList,urlList,notFoundNumber,itemData},
-        idValidList = DeleteCases[idList,"notFound"];
+        idValidList = DeleteDuplicates@DeleteCases[idList,"notFound"];
         notFoundNumber = Count[idList,"notFound"];
         itemList = 
-            If[ idValidList=={},
+            If[ idValidList==={},
                 {},
                 Normal@ServiceExecute["ArXiv","Search",{"ID"->idValidList,MaxItems->Length@idValidList}]
             ];
@@ -382,7 +382,7 @@ searchByID`getItemDataFromID[idList_,opts:OptionsPattern[]] :=
             <|"ID"->#1,"item"->#2,"URL"->#3|>&,
             {idValidList,itemNameList,urlList}
         ];
-        If[ notFoundNumber==0,
+        If[ notFoundNumber===0,
             itemData,
             Join[
                 itemData,
@@ -397,7 +397,7 @@ searchByID`getURLFromItem[item_Association]/;MissingQ[item["ID"]] :=
     Missing["Failed"];
 searchByID`getURLFromItem[item_Association] :=
     item["Link"]//KeyUnion//
-    	Query[Select[#Type=="application/pdf"&],FailureAction->"Replace"]//
+    	Query[Select[#Type==="application/pdf"&],FailureAction->"Replace"]//
 		Query[All,"Href",FailureAction->"Replace"]//
 		First//StringJoin[#,".pdf"]&;
 
@@ -437,7 +437,7 @@ downloadByID`kernel[targetPath_String,tag:"string"|"file"|"path",opts:OptionsPat
         (*download to the target path and return file objects*)
         idDataList//Query[All,<|#,"fileObject"->downloadByID`download[targetPath,#URL,#item]|>&]
     ];
-
+	 
 
 (*helper functions*)
 
@@ -509,7 +509,7 @@ generateBibTeXByID`extractBibTeXKey[_] :=
 
 generateBibTeXByID`exportBibTeX[targetPath_String,bibName_String,itemList_] :=
     Export[FileNameJoin@{targetPath,bibName},itemList//
-		Query[Select[Head[#BibTeX]==String&],#BibTeX&]//Riffle[#,""]&,"List"];
+		Query[Select[Head[#BibTeX]===String&],#BibTeX&]//Riffle[#,""]&,"List"];
 
 
 (* ::Subsection:: *)
@@ -565,7 +565,7 @@ extractTitle`getTitleFromFileOrPath[path_String,"path",opts:OptionsPattern[]] :=
     Module[ {fileList,titleDataList},
         fileList = FileNames[__~~".pdf"~~EndOfString,path];
         titleDataList = extractTitle`getTitleFromFileOrPath[#,"file",opts]&/@fileList//Flatten;
-        If[ OptionValue["hidePath"]==True,
+        If[ OptionValue["hidePath"]===True,
             titleDataList = titleDataList//Query[All,<|#,"file"->extractTitle`hidePath[path,#file]|>&]
         ];
         titleDataList
@@ -603,7 +603,7 @@ extractTitle`method[file_,"sortYAndFontSize",opts:OptionsPattern[]] :=
             ];
         counter = 1;
         While[
-            (resultTextData = searchFirstNTexts[textData,counter])=={},
+            (resultTextData = searchFirstNTexts[textData,counter])==={},
             counter++
         ];
         resultTextData//Query[MaximalBy[StringLength[#string]&]]//Query[1,#string&]//fileNameRegulate
@@ -678,7 +678,7 @@ searchByTitle`getBestMatchItemFromTitle[title_,opts:OptionsPattern[]] :=
     Module[ {itemList,itemBestMatch,itemName,preItemList},
         preItemList = ServiceExecute["ArXiv","TitleSearch",{"Query"->title}];
         itemList = 
-            If[ preItemList=={},
+            If[ preItemList==={},
                 ServiceExecute["ArXiv","Search",{"Query"->title,"MaxItems"->OptionValue["maxItems"]}],
                 preItemList
             ]//Normal;
