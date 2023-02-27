@@ -508,8 +508,11 @@ generateBibTeXByID`extractBibTeXKey[_] :=
     Missing["Failed"];
 
 generateBibTeXByID`exportBibTeX[targetPath_String,bibName_String,itemList_] :=
-    Export[FileNameJoin@{targetPath,bibName},itemList//
-		Query[Select[Head[#BibTeX]===String&],#BibTeX&]//Riffle[#,""]&,"List"];
+    Export[
+    	FileNameJoin@{targetPath,bibName},
+    	itemList//Query[Select[Head[#BibTeX]===String&],#BibTeX&]//Riffle[#,""]&,
+    	"List"
+	];
 
 
 (* ::Subsection:: *)
