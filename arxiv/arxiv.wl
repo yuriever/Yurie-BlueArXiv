@@ -418,7 +418,7 @@ downloadByID//Options = {
     "mergeDuplicateID"->True,
     "fileNameRegulate"->True
 };
-downloadByID[targetPath_,opts:OptionsPattern[]][arg_] :=
+downloadByID[targetPath_String,opts:OptionsPattern[]][arg_] :=
     downloadByID`kernel[targetPath,"string",opts][arg]//Dataset;
 downloadByID[targetPath_String,tag:"string"|"file"|"path",opts:OptionsPattern[]][arg_] :=
     downloadByID`kernel[targetPath,tag,opts][arg]//Dataset;
