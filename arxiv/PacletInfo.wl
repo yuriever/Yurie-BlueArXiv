@@ -4,7 +4,7 @@ PacletObject[
     <|
         "Name" -> "lily-arxiv",
         "Version" -> "0.0.1",
-        "WolframVersion" -> "12+",
+        "WolframVersion" -> "13+",
         "Extensions" ->
             {
                 {
