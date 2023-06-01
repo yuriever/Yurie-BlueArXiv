@@ -1,6 +1,6 @@
 # Package ``lily`arxiv` ``
 
-A Mathematica package for searching, downloading and renaming arXiv preprints by ID or title.
+A Mathematica package for downloading preprints and generating BibTeX by arXiv ID.
 
 The documentation can be found on [my website](https://yuriever.github.io/symbolic/package-lily-arxiv/).
 
