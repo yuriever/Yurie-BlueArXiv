@@ -9,7 +9,7 @@ PacletObject[
             {
                 {
                     "Kernel",
-                    "Root" -> ".",
+                    "Root" -> "Kernel",
                     "Context" -> 
 						{
 						    "lily`arxiv`"
