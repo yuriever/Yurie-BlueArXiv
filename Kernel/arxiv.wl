@@ -38,17 +38,6 @@ generateBibTeXByID::usage =
     "and return the BibTeX keys.";
 
 
-extractTitle::usage = 
-    "extract title from PDF by searching grouped texts with larger Y coordinates and fontsize.";
-searchByTitle::usage = 
-    "search by titles extracted from file or path, "<>
-    "and return the best-matched items on arXiv with formatted names by fileNameFormatter. "<>
-    "The best match item is picked by minimizing EditDistance.";
-downloadByTitle::usage = 
-    "download by titles extracted from file or path to the target path, "<>
-    "and return the file objects with formatted names by fileNameFormatter."
-
-
 Begin["`Private`"];
 
 
@@ -56,21 +45,14 @@ Begin["`Private`"];
 (*Private*)
 
 
-pink[expr_] :=
-    Style[expr,RGBColor[1,0.5,0.5]];
-violet[expr_] :=
-    Style[expr,RGBColor[0.5,0.5,1]];
-orange[expr_] :=
-    Style[expr,RGBColor[1,0.5,0]];
-
 echo//Attributes = {HoldAll};
 echo[code_] :=
     Module[ {codeResult},
         codeResult = code;
         Print[
-            pink@ToString@Unevaluated@code,
+            ToString@Unevaluated@code,
             " = ",
-            violet@codeResult
+            codeResult
         ];
         codeResult
     ];
@@ -133,14 +115,6 @@ mergeByKey[data:{__?AssociationQ},rules:{___Rule},default:_:Identity] :=
 
 (* ::Subsection:: *)
 (*arXivIDQ*)
-
-
-(*arXivConnector::usage =
-    "a private symbol representing the connector to arXiv API.";
-arXivConnect[] :=
-    arXivConnector = ServiceConnect["ArXiv"];
-arXivDisconnect[] :=
-    ServiceDisconnect[arXivConnector];*)
 
 
 arXivIDQ[string_String] :=
@@ -437,7 +411,7 @@ downloadByID`kernel[targetPath_String,tag:"string"|"file"|"path",opts:OptionsPat
         (*download to the target path and return file objects*)
         idDataList//Query[All,<|#,"fileObject"->downloadByID`download[targetPath,#URL,#item]|>&]
     ];
-	 
+     
 
 (*helper functions*)
 
@@ -509,241 +483,10 @@ generateBibTeXByID`extractBibTeXKey[_] :=
 
 generateBibTeXByID`exportBibTeX[targetPath_String,bibName_String,itemList_] :=
     Export[
-    	FileNameJoin@{targetPath,bibName},
-    	itemList//Query[Select[Head[#BibTeX]===String&],#BibTeX&]//Riffle[#,""]&,
-    	"List"
-	];
-
-
-(* ::Subsection:: *)
-(*extractTitle*)
-
-
-extractTitle//Options = {
-    "hidePath"->True,
-    "mergeDuplicateTitle"->True,
-    "titleExtractMethod"->"plusYAndFontSize",
-    "YResolution"->25
-};
-extractTitle[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    extractTitle`kernel[tag,opts][arg]//Dataset;
-
-
-extractTitle`kernel//Options = {
-    "hidePath"->True,
-    "mergeDuplicateTitle"->True,
-    "titleExtractMethod"->"plusYAndFontSize",
-    "YResolution"->25
-};
-extractTitle`kernel[tag:"path"|"file",opts:OptionsPattern[]][fileOrPath_String] :=
-    Module[ {optsFiltered},
-        optsFiltered = FilterRules[{opts},Options[extractTitle`getTitleFromFileOrPath]];
-        extractTitle`getTitleFromFileOrPath[fileOrPath,tag,optsFiltered]//
-		    extractTitle`gatherAndSortByTitle[OptionValue["mergeDuplicateTitle"],#]&
+        FileNameJoin@{targetPath,bibName},
+        itemList//Query[Select[Head[#BibTeX]===String&],#BibTeX&]//Riffle[#,""]&,
+        "List"
     ];
-extractTitle`kernel[tag:"path"|"file",opts:OptionsPattern[]][list_List] :=
-    Module[ {optsFiltered},
-        optsFiltered = FilterRules[{opts},Options[extractTitle`getTitleFromFileOrPath]];
-        extractTitle`getTitleFromFileOrPath[#,tag,optsFiltered]&/@list//Flatten//DeleteDuplicates//
-		    extractTitle`gatherAndSortByTitle[OptionValue["mergeDuplicateTitle"],#]&
-    ];
-
-
-(*helper functions*)
-
-extractTitle`getTitleFromFileOrPath//Options = {
-    "hidePath"->True,
-    "titleExtractMethod"->"sortYAndFontSize",
-    "YResolution"->25
-};
-(*acting on file*)
-extractTitle`getTitleFromFileOrPath[file_String,"file",opts:OptionsPattern[]] :=
-    Module[ {title,optsFiltered},
-        optsFiltered = FilterRules[{opts},Options[extractTitle`method]];
-        title = extractTitle`method[file,OptionValue["titleExtractMethod"],optsFiltered];
-        {<|"title"->title,"file"->{file}|>}
-    ];
-(*acting on path*)
-extractTitle`getTitleFromFileOrPath[path_String,"path",opts:OptionsPattern[]] :=
-    Module[ {fileList,titleDataList},
-        fileList = FileNames[__~~".pdf"~~EndOfString,path];
-        titleDataList = extractTitle`getTitleFromFileOrPath[#,"file",opts]&/@fileList//Flatten;
-        If[ OptionValue["hidePath"]===True,
-            titleDataList = titleDataList//Query[All,<|#,"file"->extractTitle`hidePath[path,#file]|>&]
-        ];
-        titleDataList
-    ];
-
-extractTitle`textRegulate//Options = {
-    "YResolution"->25
-};
-extractTitle`textRegulate[text_Text,opts:OptionsPattern[]] :=
-    text/.Text[Style[string_String,color_,styleOptions___Rule],coords_List,offset_List]:>
-        KeyMap[ToString]@<|
-            "string"->string,
-            FilterRules[{styleOptions},{FontSize}],
-            "X"->coords[[1]],
-            "Y"->Round[coords[[2]],OptionValue["YResolution"]],
-            "offset"->offset
-        |>;
-extractTitle`textRegulate[textList_List,opts:OptionsPattern[]] :=
-    Module[ {textData},
-        textData = extractTitle`textRegulate[#,opts]&/@textList;
-        GatherBy[textData,#Y&]//Map[SortBy[#X&]]//
-			Map[mergeByKey[{"string"->StringJoin,"X"->Min},First]]
-    ];
-
-extractTitle`method//Options = {
-    "YResolution"->25
-};
-extractTitle`method[file_,"sortYAndFontSize",opts:OptionsPattern[]] :=
-    Module[ {textData,counter,resultTextData,searchFirstNTexts},
-        textData = extractTitle`textRegulate[Import[file,{"PagePositionedText",1}],opts];
-        searchFirstNTexts[data_List,n_] :=
-            Intersection[
-                data//Query[ReverseSortBy[#Y&]]//Query[1;;n],
-                data//Query[ReverseSortBy[#FontSize&]]//Query[1;;n]
-            ];
-        counter = 1;
-        While[
-            (resultTextData = searchFirstNTexts[textData,counter])==={},
-            counter++
-        ];
-        resultTextData//Query[MaximalBy[StringLength[#string]&]]//Query[1,#string&]//fileNameRegulate
-    ];
-extractTitle`method[file_,"plusYAndFontSize",opts:OptionsPattern[]] :=
-    Module[ {textData,maxY,maxFontSize,textDataNormalized},
-        textData = extractTitle`textRegulate[Import[file,{"PagePositionedText",1}],opts];
-        maxY = textData//Query[All,#Y&]//Max;
-        maxFontSize = textData//Query[All,#FontSize&]//Max;
-        textDataNormalized = textData//Query[All,<|#,"weight"->(#Y/maxY+#FontSize/maxFontSize)|>&];
-        textDataNormalized//Query[MaximalBy[#weight&]]//Query[1,"string"]//fileNameRegulate
-    ];
-
-extractTitle`hidePath = extractID`hidePath;
-
-extractTitle`gatherAndSortByTitle[mergeDuplicateTitle_,list_] :=
-    Switch[mergeDuplicateTitle,
-        False,
-            list//Query[SortBy[#title&]],
-        True,
-            GatherBy[list,#title&]//Map[Merge[Join]]//
-				Query[All,<|"title"->First@#title,"file"->Flatten@#file|>&]//Query[SortBy[#title&]]
-    ];
-
-
-(* ::Subsection:: *)
-(*searchByTitle*)
-
-
-searchByTitle//Options = {
-    "hidePath"->True,
-    "mergeDuplicateTitle"->True,
-    "titleExtractMethod"->"plusYAndFontSize",
-    "YResolution"->25,
-    "fileNameRegulate"->True,
-    "maxItems"->10
-};
-searchByTitle[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    searchByTitle`kernel[tag,opts][arg]//Dataset;
-
-
-searchByTitle`kernel//Options = {
-    "hidePath"->True,
-    "mergeDuplicateTitle"->True,
-    "titleExtractMethod"->"plusYAndFontSize",
-    "YResolution"->25,
-    "fileNameRegulate"->True,
-    "maxItems"->10
-};
-searchByTitle`kernel[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    Module[ {titleDataList,titleList,itemDataList,optsFiltered},
-        optsFiltered[1] = FilterRules[{opts},Options[extractTitle`kernel]];
-        optsFiltered[2] = FilterRules[{opts},Options[searchByTitle`getBestMatchItemFromTitle]];
-        titleDataList = extractTitle`kernel[tag,optsFiltered[1]][arg];
-        titleList = titleDataList//Query[All,#title&];
-        itemDataList = searchByTitle`getBestMatchItemFromTitle[#,optsFiltered[2]]&/@titleList;
-        JoinAcross[
-            itemDataList,
-            titleDataList,
-            "title"
-        ]
-    ];
-
-
-(*helper functions*)
-
-searchByTitle`getBestMatchItemFromTitle//Options = {
-    "fileNameRegulate"->True,
-    "maxItems"->10
-};
-searchByTitle`getBestMatchItemFromTitle[title_,opts:OptionsPattern[]] :=
-    Module[ {itemList,itemBestMatch,itemName,preItemList},
-        preItemList = ServiceExecute["ArXiv","TitleSearch",{"Query"->title}];
-        itemList = 
-            If[ preItemList==={},
-                ServiceExecute["ArXiv","Search",{"Query"->title,"MaxItems"->OptionValue["maxItems"]}],
-                preItemList
-            ]//Normal;
-        itemBestMatch = itemList//Query[MinimalBy[EditDistance[title,#Title]&]]//First;
-        itemName = itemBestMatch//Query[fileNameFormatter,FailureAction->"Replace"]//
-	        searchByTitle`fileNameRegulate[OptionValue["fileNameRegulate"]];
-        <|
-            "title"->title,
-            "item"->itemName,
-            "URL"->searchByTitle`getURLFromItem[itemBestMatch],
-            "distance"->EditDistance[title,itemBestMatch["Title"]]
-        |>
-    ];
-
-searchByTitle`fileNameRegulate = searchByID`fileNameRegulate;
-
-searchByTitle`getURLFromItem = searchByID`getURLFromItem; 
-
-
-(* ::Subsection:: *)
-(*downloadByTitle*)
-
-
-downloadByTitle//Options = {
-    "hidePath"->True,
-    "mergeDuplicateTitle"->True,
-    "titleExtractMethod"->"plusYAndFontSize",
-    "YResolution"->25,
-    "fileNameRegulate"->True,
-    "maxItems"->10
-};
-downloadByTitle[targetPath_String,tag:"file"|"path",opts:OptionsPattern[]][arg_] :=
-    downloadByTitle`kernel[targetPath,tag,opts][arg]//Dataset;
-
-
-downloadByTitle`kernel//Options = {
-    "hidePath"->True,
-    "mergeDuplicateTitle"->True,
-    "titleExtractMethod"->"plusYAndFontSize",
-    "YResolution"->25,
-    "fileNameRegulate"->True,
-    "maxItems"->10
-};
-downloadByTitle`kernel[targetPath_String,tag:"file"|"path",opts:OptionsPattern[]][arg_] :=
-    Module[ {titleDataList,optsFiltered},
-        optsFiltered = FilterRules[{opts},Options[searchByTitle`kernel]];
-        titleDataList = searchByTitle`kernel[tag,optsFiltered][arg];
-        (*download to the target path and return file objects*)
-        titleDataList//Query[All,<|#,"fileObject"->downloadByTitle`download[targetPath,#URL,#item]|>&]
-    ];
-
-
-(*helper functions*)
-
-downloadByTitle`download = downloadByID`download;
-
-
-(* ::Section:: *)
-(*Default setting of file names*)
-
-
-fileNameFormat["ID"<>" "<>"title"<>", "<>"firstAuthor"];
 
 
 (* ::Section:: *)
@@ -753,5 +496,8 @@ fileNameFormat["ID"<>" "<>"title"<>", "<>"firstAuthor"];
 End[];
 
 Protect@@Names[$Context<>"*"];
+
+(*Default setting of file names*)
+fileNameFormat["ID"<>" "<>"title"<>", "<>"firstAuthor"];
 
 EndPackage[];
