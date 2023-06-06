@@ -533,7 +533,7 @@ arXivInterface[] :=
         "Input"
     ];
 arXivInterface`targetUnit =
-    Hold["Downloads location:",InputField[Dynamic[target],String,FieldHint->"Enter the Downloads location.",FieldSize->{First@CurrentValue[WindowSize]/20,1}]];
+    Hold["Downloads location:",InputField[Dynamic[target],String,FieldHint->"Enter the downloads location.",FieldSize->{First@CurrentValue[WindowSize]/20,1}]];
 arXivInterface`inputUnit =
     Hold["Input string/file/path:",InputField[Dynamic[string],String,FieldHint->"Enter a string/file/path containing arXiv IDs.",FieldSize->{First@CurrentValue[WindowSize]/20,Last@CurrentValue[WindowSize]/80}]];
 
