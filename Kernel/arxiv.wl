@@ -5,6 +5,7 @@
 
 
 BeginPackage["lily`arxiv`"];
+
 Unprotect@@Names[$Context<>"*"];
 ClearAll@@Names[$Context<>"*"]
 
@@ -36,6 +37,10 @@ downloadByID::usage =
 generateBibTeXByID::usage = 
     "export the found BibTeX entries on inspirehep by IDs extracted from string, file or path, "<>
     "and return the BibTeX keys.";
+    
+
+arXivInterface::usage = 
+    "show the interface.";
 
 
 Begin["`Private`"];
@@ -487,6 +492,50 @@ generateBibTeXByID`exportBibTeX[targetPath_String,bibName_String,itemList_] :=
         itemList//Query[Select[Head[#BibTeX]===String&],#BibTeX&]//Riffle[#,""]&,
         "List"
     ];
+
+
+(* ::Subsection:: *)
+(*arXivInterface*)
+
+
+arXivInterface[] :=
+    CellPrint@ExpressionCell[
+        Interpretation[
+            {    
+                fun = "download",
+                tag = "string",
+                string = "",
+                target = FileNameJoin@{$HomeDirectory,"Downloads"}
+            },
+            Panel@Column@{
+                "Function:",
+                Row@{
+                    PopupMenu[Dynamic[fun],{"extract","search","download","generate BibTeX"},Appearance->"DialogBox",ImageSize->Small],
+                    " from ",
+                    PopupMenu[Dynamic[tag],{"string",Delimiter,"file","path"},Appearance->"DialogBox",ImageSize->Small]
+                },
+                "",
+                Sequence@@arXivInterface`targetUnit,
+                "",
+                Sequence@@arXivInterface`inputUnit
+            },
+            Switch[fun,
+                "extract",
+                    extractID[tag][string],
+                "search",
+                    searchByID[tag][string],
+                "download",
+                    downloadByID[target,tag][string],
+                "generate BibTeX",
+                    generateBibTeXByID[target,"refs-"<>ToString@RandomInteger[{100,1000}]<>".bib",tag][string]
+            ]
+        ],
+        "Input"
+    ];
+arXivInterface`targetUnit =
+    Hold["Downloads location:",InputField[Dynamic[target],String,FieldHint->"Enter the Downloads location.",FieldSize->{First@CurrentValue[WindowSize]/20,1}]];
+arXivInterface`inputUnit =
+    Hold["Input string/file/path:",InputField[Dynamic[string],String,FieldHint->"Enter a string/file/path containing arXiv IDs.",FieldSize->{First@CurrentValue[WindowSize]/20,Last@CurrentValue[WindowSize]/80}]];
 
 
 (* ::Section:: *)
