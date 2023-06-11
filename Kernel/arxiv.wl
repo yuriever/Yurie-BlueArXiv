@@ -6,14 +6,15 @@
 
 BeginPackage["lily`arxiv`"];
 
+
 Unprotect@@Names[$Context<>"*"];
 ClearAll@@Names[$Context<>"*"]
 
 
-(*arXivConnect::usage =
-    "connect to arXiv API.";
-arXivDisconnect::usage =
-    "disconnect from arXiv API.";*)
+(* ::Section:: *)
+(*Usage*)
+
+
 arXivIDQ::usage =
     "check whether a string is a valid arXiv ID.";
 
@@ -37,17 +38,25 @@ downloadByID::usage =
 generateBibTeXByID::usage = 
     "export the found BibTeX entries on inspirehep by IDs extracted from string, file or path, "<>
     "and return the BibTeX keys.";
-    
+
 
 arXivInterface::usage = 
     "show the interface.";
 
 
+(* ::Section:: *)
+(*Private*)
+
+
+(* ::Subsection:: *)
+(*Begin*)
+
+
 Begin["`Private`"];
 
 
-(* ::Section:: *)
-(*Private*)
+(* ::Subsection:: *)
+(*lily`base`*)
 
 
 echo//Attributes = {HoldAll};
@@ -538,15 +547,21 @@ arXivInterface`inputUnit =
     Hold["Input string/file/path:",InputField[Dynamic[string],String,FieldHint->"Enter a string/file/path containing arXiv IDs.",FieldSize->{First@CurrentValue[WindowSize]/20,Last@CurrentValue[WindowSize]/80}]];
 
 
-(* ::Section:: *)
+(* ::Subsection:: *)
 (*End*)
 
 
 End[];
 
+(* ::Section:: *)
+(*End*)
+
+
 Protect@@Names[$Context<>"*"];
+
 
 (*Default setting of file names*)
 fileNameFormat["ID"<>" "<>"title"<>", "<>"firstAuthor"];
+
 
 EndPackage[];
