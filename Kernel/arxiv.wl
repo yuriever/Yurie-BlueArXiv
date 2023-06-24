@@ -313,6 +313,8 @@ searchByID//Options = {
     "mergeDuplicateID"->True,
     "fileNameRegulate"->True
 };
+searchByID::connectionfailed =
+    "connection failed.";
 searchByID[opts:OptionsPattern[]][arg_] :=
     searchByID`kernel["string",opts][arg]//Dataset;    
 searchByID["string",opts:OptionsPattern[]][arg_] :=
@@ -351,6 +353,7 @@ searchByID`kernel[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
 
 (*helper functions*)
 
+
 searchByID`getItemDataFromID//Options = {
     "fileNameRegulate"->True
 };
@@ -358,10 +361,21 @@ searchByID`getItemDataFromID[idList_,opts:OptionsPattern[]] :=
     Module[ {itemList,idValidList,itemNameList,urlList,notFoundNumber,itemData},
         idValidList = DeleteDuplicates@DeleteCases[idList,"notFound"];
         notFoundNumber = Count[idList,"notFound"];
+        (*itemList = 
+            Quiet@Normal@ServiceExecute["ArXiv","Search",{"ID"->idValidList,MaxItems->Length@idValidList}];*)
         itemList = 
+            (*if no ID found, return empty list.*)
             If[ idValidList==={},
                 {},
-                Normal@ServiceExecute["ArXiv","Search",{"ID"->idValidList,MaxItems->Length@idValidList}]
+                (*if the connection fails, return list of empty associations.*)
+                Enclose[
+                    ConfirmMatch[
+                        Quiet@Normal@ServiceExecute["ArXiv","Search",{"ID"->idValidList,MaxItems->Length@idValidList}],
+                        _List,
+                        Message[searchByID::connectionfailed]
+                    ],
+                    Table[<||>,Length@idValidList]&
+                ]
             ];
         itemNameList = itemList//Query[All,fileNameFormatter,FailureAction->"Replace"]//
 	        searchByID`fileNameRegulate[OptionValue["fileNameRegulate"]];
