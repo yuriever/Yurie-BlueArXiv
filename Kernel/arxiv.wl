@@ -199,6 +199,8 @@ extractID//Options = {
     "hidePath"->True,
     "mergeDuplicateID"->True
 };
+extractID::pdffailimport = 
+    "The PDF file fails to import: \n``";
 extractID[][arg_] :=
     extractID`kernel["string"][arg];
 extractID["string"][arg_] :=
@@ -245,7 +247,7 @@ extractID`getIDListFromFileOrPath//Options = {
 };
 extractID`getIDListFromFileOrPath[file_String,"file","notTryFileName"] :=
     Module[ {idList,idNumber},
-        idList = Import[file,{"Plaintext",1}]//StringSplit[#,RegularExpression["\\s"]]&//
+        idList = file//extractID`import//StringSplit[#,RegularExpression["\\s"]]&//
         	Map[extractID`getIDListFromString]//Flatten//DeleteDuplicates;
         idNumber = Length@idList;
         Which[
@@ -302,6 +304,17 @@ extractID`gatherAndSortByID[mergeDuplicateID_,list_] :=
 				Query[All,<|#,"ID"->First@#ID|>&]//Query[SortBy[#ID&]]
     ];
 
+extractID`import[file_] :=
+    Quiet[
+        Check[
+            Import[file,{"Plaintext",1}],
+            Message[extractID::pdffailimport,file];
+            "",
+            Import::fmterr
+        ],
+        {Import::fmterr}
+    ];
+    
 
 (* ::Subsection:: *)
 (*searchByID*)
