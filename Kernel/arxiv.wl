@@ -164,9 +164,9 @@ fileNameFormat`keyWordToFunction = {
     "date":>DateString[Query["Published"][#],"ISODate"],
     "title":>Query["Title"][#],
     "abs":>Query["Summary"][#],
-    "author":>StringRiffle[Query["Author",All,"Name"][#],", "],
-    "firstAuthor":>Query["Author",1,"Name"][#],
-    "firstThreeAuthor":>StringRiffle[Query["Author",1;;3,"Name"][#],", "],
+    "author":>RemoveDiacritics@StringRiffle[Query["Author",All,"Name"][#],", "],
+    "firstAuthor":>RemoveDiacritics@Query["Author",1,"Name"][#],
+    "firstThreeAuthor":>RemoveDiacritics@StringRiffle[Query["Author",1;;3,"Name"][#],", "],
     "journal":>DeleteMissing@Query["JournalReference"][#]
 };
 
