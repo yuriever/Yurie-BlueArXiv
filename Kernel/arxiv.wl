@@ -134,17 +134,9 @@ mergeByKey[data:{__?AssociationQ},rules:{___Rule},default:_:Identity] :=
 arXivIDQ[string_String] :=
     StringMatchQ[
         string,
-        arXivIDQ`IDNewFormat|arXivIDQ`IDOldFormat
+        RegularExpression["(\\d{4}\\.\\d{4,5})|((astro-ph|cond-mat|gr-qc|hep-ex|hep-lat|hep-ph|hep-th|math-ph|nlin|nucl-ex|nucl-th|physics|quant-ph|math|cs)/\\d{7})"]
     ];
 arXivIDQ[_] = False;
-
-arXivIDQ`IDNewFormat =
-    RegularExpression["\\d{4}\\.\\d{4,5}"];    
-arXivIDQ`IDOldFormat =
-    RegularExpression[
-        "astro-ph|cond-mat|gr-qc|hep-ex|hep-lat|hep-ph|hep-th|math-ph|
-        	nlin|nucl-ex|nucl-th|physics|quant-ph|math|cs"
-    ]~~"/"~~RegularExpression["\\d{7}"];
 
 
 (* ::Subsection:: *)
