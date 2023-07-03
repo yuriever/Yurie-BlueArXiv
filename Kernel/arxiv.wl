@@ -23,8 +23,6 @@ fileNameFormat::usage =
     "set the format of file names.";
 fileNameInPath::usage =
     "return a list of PDF file names in the path.";
-fileNameRegulate::usage =
-    "regulate the file name with characters like \"/\" and \"\n\".";
 
 
 extractID::usage =
@@ -53,78 +51,6 @@ arXivInterface::usage =
 
 
 Begin["`Private`"];
-
-
-(* ::Subsection:: *)
-(*lily`base`*)
-
-
-echo//Attributes = {HoldAll};
-echo[code_] :=
-    Module[ {codeResult},
-        codeResult = code;
-        Print[
-            ToString@Unevaluated@code,
-            " = ",
-            codeResult
-        ];
-        codeResult
-    ];
-
-associationTranspose =
-    GeneralUtilities`AssociationTranspose;
-
-mergeByKey[rules:{___Rule},default:_:Identity][data:{___?AssociationQ}] :=
-    mergeByKey[data,rules,default];
-mergeByKey[{<||>...},{___Rule},Repeated[_,{0,1}]] :=
-    <||>;
-mergeByKey[data:{__?AssociationQ},rules:{___Rule},default:_:Identity] :=
-    Module[ {
-            (* unique symbol that is used for identifying where the undefined keys were after transposing the association *)
-            missingToken,
-            assoc,
-            keys,
-            queryRules,
-            mergeRules = 
-                Replace[
-                    Flatten@Replace[
-                        rules,
-                        Verbatim[Rule][lst_List,fun_]:>Thread[lst->fun],
-                        {1}
-                    ],
-                    Verbatim[Rule][Key[k_],fun_]:>k->fun,
-                    {1}
-                ],
-            keysSameQ = SameQ@@Keys[data]
-        },
-        (* avoid KeyUnion if it's not necessary *)
-        If[ keysSameQ,
-            assoc = data,
-            assoc = KeyUnion[DeleteCases[data,<||>],missingToken&]
-        ];
-        keys = Keys[First@assoc];
-        (* this is essentially how GeneralUtilities`AssociationTranspose works *)
-        assoc = 
-            AssociationThread[
-                keys,
-                If[ keysSameQ,
-                    Transpose@Values[assoc],
-                    DeleteCases[Transpose@Values[assoc],missingToken,{2}]
-                ]
-            ];
-        keys = Key/@keys;
-        queryRules = 
-            DeleteCases[
-                Thread[
-                    keys->Lookup[mergeRules,keys,default]
-                ],
-                _->Identity
-            ];
-        If[ MatchQ[queryRules,{__Rule}],
-            Query[queryRules]@assoc,
-            assoc
-        ]
-    ];
 
 
 (* ::Subsection:: *)
@@ -168,6 +94,8 @@ fileNameInPath[path_] :=
 		Map@StringReplace[path~~"/"~~Longest[title__]~~".pdf":>title];
 
 
+fileNameRegulate::usage =
+    "regulate the file name with characters like \"/\" and \"\n\".";
 fileNameRegulate//Attributes = {Listable};
 fileNameRegulate[string_String] :=
     StringReplace[string,fileNameRegulate`ruleList];
@@ -306,7 +234,7 @@ extractID`import[file_] :=
         ],
         {Import::fmterr}
     ];
-    
+
 
 (* ::Subsection:: *)
 (*searchByID*)
@@ -357,7 +285,6 @@ searchByID`kernel[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
 
 
 (*helper functions*)
-
 
 searchByID`getItemDataFromID//Options = {
     "fileNameRegulate"->True
@@ -444,7 +371,7 @@ downloadByID`kernel[targetPath_String,tag:"string"|"file"|"path",opts:OptionsPat
         (*download to the target path and return file objects*)
         idDataList//Query[All,<|#,"fileObject"->downloadByID`download[targetPath,#URL,#item]|>&]
     ];
-     
+
 
 (*helper functions*)
 
