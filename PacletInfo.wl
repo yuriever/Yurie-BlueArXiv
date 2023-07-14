@@ -13,7 +13,7 @@ PacletObject[
                     "Context" -> 
 						{
 						    "lily`arxiv`",
-						    "lily`arxiv`interface`"
+						    "lily`pdf`"
 						}
                 },
                 {

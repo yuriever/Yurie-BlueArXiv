@@ -21,8 +21,6 @@ arXivIDQ::usage =
 
 fileNameFormat::usage = 
     "set the format of file names.";
-fileNameInPath::usage =
-    "return a list of PDF file names in the path.";
 
 
 extractID::usage =
@@ -40,6 +38,21 @@ generateBibTeXByID::usage =
 
 arXivInterface::usage = 
     "show the interface.";
+
+
+(* ::Section:: *)
+(*Context alias*)
+
+
+(*move the helper functions under lily`arxiv`, but can slow down the package loading.*)
+
+(*$ContextAliases["fileNameFormat`"] = "lily`arxiv`fileNameFormat`";
+$ContextAliases["addButtonTo`"] = "lily`arxiv`addButtonTo`";
+$ContextAliases["extractID`"] = "lily`arxiv`extractID`";
+$ContextAliases["searchByID`"] = "lily`arxiv`searchByID`";
+$ContextAliases["downloadByID`"] = "lily`arxiv`downloadByID`";
+$ContextAliases["generateBibTeXByID`"] = "lily`arxiv`generateBibTeXByID`";
+$ContextAliases["arXivInterface`"] = "lily`arxiv`arXivInterface`";*)
 
 
 (* ::Section:: *)
@@ -66,17 +79,18 @@ arXivIDQ[_] = False;
 
 
 (* ::Subsection:: *)
-(*fileNameFormat*)
+(*fileName**)
 
 
 fileNameFormatter::usage = 
     "formattor of file names, set by fileNameFormat.";
 fileNameFormat//Attributes = {HoldAll};
 fileNameFormat[format_] :=
-    Module[ {},
-        fileNameFormatter = Hold[format]/.fileNameFormat`keyWordToFunction/.
-            {Hold[expr_]:>Hold[(expr)&]}//ReleaseHold;
-    ];
+    (
+        fileNameFormatter = Hold[format]/.fileNameFormat`keyWordToFunction/.{Hold[expr_]:>Hold[(expr)&]}//ReleaseHold;
+    );
+
+
 fileNameFormat`keyWordToFunction = {
     "ID":>Query["ID"][#],
     "date":>DateString[Query["Published"][#],"ISODate"],
@@ -89,6 +103,8 @@ fileNameFormat`keyWordToFunction = {
 };
 
 
+fileNameInPath::usage =
+    "return a list of PDF file names in the path.";
 fileNameInPath[path_] :=
     FileNames[__~~".pdf"~~EndOfString,path]//
 		Map@StringReplace[path~~"/"~~Longest[title__]~~".pdf":>title];
@@ -99,8 +115,8 @@ fileNameRegulate::usage =
 fileNameRegulate//Attributes = {Listable};
 fileNameRegulate[string_String] :=
     StringReplace[string,fileNameRegulate`ruleList];
-fileNameRegulate[Missing[arg___]] :=
-    Missing[arg];
+fileNameRegulate[arg_Missing] :=
+    arg;
 fileNameRegulate`ruleList = {
     "/"->"::",
     "\n"->" ",
@@ -109,10 +125,35 @@ fileNameRegulate`ruleList = {
 
 
 (* ::Subsection:: *)
+(*addButtonTo*)
+
+
+addButtonTo[key_String][list_] :=
+    With[ {$$key = key},
+        list//Query[All,<|#,$$key->addButtonTo`copyToClipboard[Slot[$$key]]|>&]
+    ];
+addButtonTo["URL"][list_] :=
+    list//Query[All,<|#,"URL"->addButtonTo`hyperlink[#URL]|>&];
+addButtonTo[key_,restKeys__][list_] :=
+    list//addButtonTo[key]//addButtonTo[restKeys];
+
+
+addButtonTo`hyperlink[value_String] :=
+    Hyperlink[value,value,FrameMargins->Small];
+addButtonTo`hyperlink[_] :=
+    Missing["Failed"];
+
+addButtonTo`copyToClipboard[value_String] :=
+    Button[value,CopyToClipboard@value,Appearance->"Frameless",FrameMargins->Small];
+addButtonTo`copyToClipboard[_] :=
+    Missing["Failed"];
+
+
+(* ::Subsection:: *)
 (*extractID*)
 
 
-(*public function, wrapped by Dataset*)
+(*public function*)
 
 extractID//Options = {
     "tryFileName"->True,
@@ -126,32 +167,32 @@ extractID[][arg_] :=
 extractID["string"][arg_] :=
     extractID`kernel["string"][arg];
 extractID[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    extractID`kernel[tag,opts][arg]//Dataset;
+    extractID`kernel[tag,opts][arg]//addButtonTo["ID"]//Dataset;
 
 
-(*kernel function, called by others*)
+(*kernel function*)
 
 extractID`kernel//Options = {
     "tryFileName"->True,
     "hidePath"->True,
     "mergeDuplicateID"->True
 };
-(*acting on string*)
+(*act on string*)
 extractID`kernel["string"][string_String] :=
     extractID`getIDListFromString[string]//Sort;
 extractID`kernel["string"][list_List] :=
     extractID`getIDListFromString/@list//Flatten//DeleteDuplicates//Sort;
-(*acting on file or path*)
+(*act on file or path*)
 extractID`kernel[tag:"path"|"file",opts:OptionsPattern[]][fileOrPath_String] :=
-    Module[ {optsFiltered},
-        optsFiltered = FilterRules[{opts},Options[extractID`getIDListFromFileOrPath]];
-        extractID`getIDListFromFileOrPath[fileOrPath,tag,optsFiltered]//
+    Module[ {fopts},
+        fopts = FilterRules[{opts},Options[extractID`getIDListFromFileOrPath]];
+        extractID`getIDListFromFileOrPath[fileOrPath,tag,fopts]//
 		    extractID`gatherAndSortByID[OptionValue["mergeDuplicateID"],#]&
     ];
 extractID`kernel[tag:"path"|"file",opts:OptionsPattern[]][list_List] :=
-    Module[ {optsFiltered},
-        optsFiltered = FilterRules[{opts},Options[extractID`getIDListFromFileOrPath]];
-        extractID`getIDListFromFileOrPath[#,tag,optsFiltered]&/@list//Flatten//DeleteDuplicates//
+    Module[ {fopts},
+        fopts = FilterRules[{opts},Options[extractID`getIDListFromFileOrPath]];
+        extractID`getIDListFromFileOrPath[#,tag,fopts]&/@list//Flatten//DeleteDuplicates//
 		    extractID`gatherAndSortByID[OptionValue["mergeDuplicateID"],#]&
     ];
 
@@ -218,11 +259,10 @@ extractID`hidePath[path_,file_] :=
 extractID`gatherAndSortByID[mergeDuplicateID_,list_] :=
     Switch[mergeDuplicateID,
         False,
-            list//Query[SortBy[#ID&]],
+            list,
         True,
-            GatherBy[list,#ID&]//Map[Merge[Flatten@*Join]]//
-				Query[All,<|#,"ID"->First@#ID|>&]//Query[SortBy[#ID&]]
-    ];
+            GatherBy[list,#ID&]//Map[Merge[Flatten@*Join]]//Query[All,<|#,"ID"->First@#ID|>&]
+    ]//Query[SortBy[#ID&]];
 
 extractID`import[file_] :=
     Quiet[
@@ -249,11 +289,11 @@ searchByID//Options = {
 searchByID::connectionfailed =
     "connection failed.";
 searchByID[opts:OptionsPattern[]][arg_] :=
-    searchByID`kernel["string",opts][arg]//Dataset;    
+    searchByID`kernel["string",opts][arg]//addButtonTo["ID","item","URL"]//Dataset;    
 searchByID["string",opts:OptionsPattern[]][arg_] :=
-    searchByID`kernel["string",opts][arg]//Dataset;    
+    searchByID`kernel["string",opts][arg]//addButtonTo["ID","item","URL"]//Dataset;    
 searchByID[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    searchByID`kernel[tag,opts][arg]//Dataset;    
+    searchByID`kernel[tag,opts][arg]//addButtonTo["ID","item","URL"]//Dataset;    
 
 
 searchByID`kernel//Options = {
@@ -262,29 +302,25 @@ searchByID`kernel//Options = {
     "mergeDuplicateID"->True,
     "fileNameRegulate"->True
 };
-(*acting on string*)
 searchByID`kernel["string",opts:OptionsPattern[]][arg_] :=
-    Module[ {idList,optsFiltered},
-        optsFiltered = FilterRules[{opts},Options[searchByID`getItemDataFromID]];
+    Module[ {idList,fopts},
+        fopts = FilterRules[{opts},Options[searchByID`getItemDataFromID]];
         idList = extractID`kernel["string"][arg];
-        searchByID`getItemDataFromID[idList,optsFiltered]
+        searchByID`getItemDataFromID[idList,fopts]
     ];
-(*acting on file or path*)
 searchByID`kernel[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    Module[ {idDataList,idList,optsFiltered},
-        optsFiltered[1] = FilterRules[{opts},Options[extractID`kernel]];
-        optsFiltered[2] = FilterRules[{opts},Options[searchByID`getItemDataFromID]];
-        idDataList = extractID`kernel[tag,optsFiltered[1]][arg];
+    Module[ {idDataList,idList,fopts},
+        fopts[1] = FilterRules[{opts},Options[extractID`kernel]];
+        fopts[2] = FilterRules[{opts},Options[searchByID`getItemDataFromID]];
+        idDataList = extractID`kernel[tag,fopts[1]][arg];
         idList = idDataList//Query[All,#ID&];
         JoinAcross[
-            searchByID`getItemDataFromID[idList,optsFiltered[2]],
+            searchByID`getItemDataFromID[idList,fopts[2]],
             idDataList,
             "ID"
         ]
     ];
 
-
-(*helper functions*)
 
 searchByID`getItemDataFromID//Options = {
     "fileNameRegulate"->True
@@ -353,9 +389,9 @@ downloadByID//Options = {
     "fileNameRegulate"->True
 };
 downloadByID[targetPath_String,opts:OptionsPattern[]][arg_] :=
-    downloadByID`kernel[targetPath,"string",opts][arg]//Dataset;
+    downloadByID`kernel[targetPath,"string",opts][arg]//addButtonTo["ID","item","URL"]//Dataset;
 downloadByID[targetPath_String,tag:"string"|"file"|"path",opts:OptionsPattern[]][arg_] :=
-    downloadByID`kernel[targetPath,tag,opts][arg]//Dataset;
+    downloadByID`kernel[targetPath,tag,opts][arg]//addButtonTo["ID","item","URL"]//Dataset;
 
 
 downloadByID`kernel//Options = {
@@ -365,15 +401,13 @@ downloadByID`kernel//Options = {
     "fileNameRegulate"->True
 };
 downloadByID`kernel[targetPath_String,tag:"string"|"file"|"path",opts:OptionsPattern[]][arg_] :=
-    Module[ {idDataList,optsFiltered},
-        optsFiltered = FilterRules[{opts},Options[searchByID`kernel]];
-        idDataList = searchByID`kernel[tag,optsFiltered][arg];
+    Module[ {idDataList,fopts},
+        fopts = FilterRules[{opts},Options[searchByID`kernel]];
+        idDataList = searchByID`kernel[tag,fopts][arg];
         (*download to the target path and return file objects*)
         idDataList//Query[All,<|#,"fileObject"->downloadByID`download[targetPath,#URL,#item]|>&]
     ];
 
-
-(*helper functions*)
 
 downloadByID`download[targetPath_,url_,Missing["Failed"]] :=
     Missing["Failed"];
@@ -391,11 +425,11 @@ generateBibTeXByID//Options = {
     "mergeDuplicateID"->True
 };
 generateBibTeXByID[targetPath_String,bibName_String,opts:OptionsPattern[]][arg_] :=
-    generateBibTeXByID`kernel[targetPath,bibName,"string",opts][arg]//Dataset[#,HiddenItems->{"BibTeX"->True}]&;    
+    generateBibTeXByID`kernel[targetPath,bibName,"string",opts][arg]//addButtonTo["key","ID","BibTeX"]//Dataset[#,HiddenItems->{"BibTeX"->True}]&;    
 generateBibTeXByID[targetPath_String,bibName_String,"string",opts:OptionsPattern[]][arg_] :=
-    generateBibTeXByID`kernel[targetPath,bibName,"string",opts][arg]//Dataset[#,HiddenItems->{"BibTeX"->True}]&;    
+    generateBibTeXByID`kernel[targetPath,bibName,"string",opts][arg]//addButtonTo["key","ID","BibTeX"]//Dataset[#,HiddenItems->{"BibTeX"->True}]&;    
 generateBibTeXByID[targetPath_String,bibName_String,tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    generateBibTeXByID`kernel[targetPath,bibName,tag,opts][arg]//Dataset[#,HiddenItems->{"BibTeX"->True}]&;    
+    generateBibTeXByID`kernel[targetPath,bibName,tag,opts][arg]//addButtonTo["key","ID","BibTeX"]//Dataset[#,HiddenItems->{"BibTeX"->True}]&;    
 
 
 generateBibTeXByID`kernel//Options = {
@@ -403,20 +437,18 @@ generateBibTeXByID`kernel//Options = {
     "hidePath"->True,
     "mergeDuplicateID"->True
 };
-(*acting on string*)
 generateBibTeXByID`kernel[targetPath_String,bibName_String,"string",opts:OptionsPattern[]][arg_] :=
-    Module[ {idList,optsFiltered,itemList},
-        optsFiltered = FilterRules[{opts},Options[generateBibTeXByID`getBibTeXItemFromID]];
+    Module[ {idList,fopts,itemList},
+        fopts = FilterRules[{opts},Options[generateBibTeXByID`getBibTeXItemFromID]];
         idList = extractID`kernel["string"][arg];
         itemList = generateBibTeXByID`getBibTeXItemFromID[idList];
         generateBibTeXByID`exportBibTeX[targetPath,bibName,itemList];
         itemList
     ];
-(*acting on file or path*)
 generateBibTeXByID`kernel[targetPath_String,bibName_String,tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    Module[ {idDataList,idList,optsFiltered,itemList},
-        optsFiltered = FilterRules[{opts},Options[extractID`kernel]];
-        idDataList = extractID`kernel[tag,optsFiltered][arg];
+    Module[ {idDataList,idList,fopts,itemList},
+        fopts = FilterRules[{opts},Options[extractID`kernel]];
+        idDataList = extractID`kernel[tag,fopts][arg];
         idList = idDataList//Query[All,#ID&];
         itemList = JoinAcross[
             generateBibTeXByID`getBibTeXItemFromID[idList],
@@ -427,8 +459,6 @@ generateBibTeXByID`kernel[targetPath_String,bibName_String,tag:"path"|"file",opt
         itemList
     ];
 
-
-(*helper functions*)
 
 generateBibTeXByID`getBibTeXItemFromID[idList_] :=
     Map[
@@ -507,7 +537,7 @@ End[];
 Protect@@Names[$Context<>"*"];
 
 
-(*Default setting of file names*)
+(*default setting of file names*)
 fileNameFormat["ID"<>" "<>"title"<>", "<>"firstAuthor"];
 
 
