@@ -153,8 +153,6 @@ addButtonTo`copyToClipboard[_] :=
 (*extractID*)
 
 
-(*public function*)
-
 extractID//Options = {
     "tryFileName"->True,
     "hidePath"->True,
@@ -169,8 +167,6 @@ extractID["string"][arg_] :=
 extractID[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
     extractID`kernel[tag,opts][arg]//addButtonTo["ID"]//Dataset;
 
-
-(*kernel function*)
 
 extractID`kernel//Options = {
     "tryFileName"->True,
@@ -196,8 +192,6 @@ extractID`kernel[tag:"path"|"file",opts:OptionsPattern[]][list_List] :=
 		    extractID`gatherAndSortByID[OptionValue["mergeDuplicateID"],#]&
     ];
 
-
-(*helper functions*)
 
 extractID`getIDListFromString[string_String] :=
     DeleteDuplicates@StringCases[string,Longest[id__]/;arXivIDQ[id]:>id];
@@ -517,6 +511,8 @@ arXivInterface[] :=
         ],
         "Input"
     ];
+
+
 arXivInterface`targetUnit =
     Hold["Downloads location:",InputField[Dynamic[target],String,FieldHint->"Enter the downloads location.",FieldSize->{First@CurrentValue[WindowSize]/20,1}]];
 arXivInterface`inputUnit =

@@ -4,7 +4,7 @@
 (*Begin*)
 
 
-BeginPackage["lily`pdf`"];
+BeginPackage["lily`paper`"];
 
 
 Unprotect@@Names[$Context<>"*"];
@@ -15,7 +15,7 @@ ClearAll@@Names[$Context<>"*"]
 (*Usage*)
 
 
-extractTitle::usage = 
+extractTitleFromPDF::usage = 
     "extract title from first page of PDF by searching grouped texts with larger Y coordinates and fontsize.";
 
 
@@ -31,7 +31,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*mergeByKey*)
+(*Common*)
 
 
 mergeByKey::usage =
@@ -85,20 +85,16 @@ mergeByKey[data:{__?AssociationQ},ruleList:{___Rule},default:_:Identity] :=
     ];
 
 
-(* ::Subsection:: *)
-(*addButtonTo*)
-
-
 addButtonTo[key_String][list_] :=
     With[ {$$key = key},
-        list//Query[All,<|#,$$key->lily`pdf`addButtonTo`copyToClipboard[Slot[$$key]]|>&]
+        list//Query[All,<|#,$$key->lily`paper`Private`addButtonTo`copyToClipboard[Slot[$$key]]|>&]
     ];
 addButtonTo[key_,restKeys__][list_] :=
     list//addButtonTo[key]//addButtonTo[restKeys];
 
-lily`pdf`addButtonTo`copyToClipboard[value_String] :=
+lily`paper`Private`addButtonTo`copyToClipboard[value_String] :=
     Button[value,CopyToClipboard@value,Appearance->"Frameless",FrameMargins->Small];
-lily`pdf`addButtonTo`copyToClipboard[_] :=
+lily`paper`Private`addButtonTo`copyToClipboard[_] :=
     Missing["Failed"];
 
 
@@ -106,13 +102,13 @@ lily`pdf`addButtonTo`copyToClipboard[_] :=
 (*extractTitle*)
 
 
-extractTitle//Options = {
+extractTitleFromPDF//Options = {
     "hidePath"->True,
     "titleExtractMethod"->"plusYAndFontSize",
     "YResolution"->25
 };
-extractTitle[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    lily`pdf`extractTitle`kernel[tag,opts][arg]//addButtonTo["title"]//Dataset;
+extractTitleFromPDF[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
+    lily`paper`extractTitle`kernel[tag,opts][arg]//addButtonTo["title"]//Dataset;
 
 
 (* ::Subsection:: *)
@@ -134,7 +130,7 @@ Begin["`extractTitle`"];
 
 
 (* ::Subsection:: *)
-(*kernel*)
+(*Kernel*)
 
 
 kernel//Options = {
@@ -155,7 +151,7 @@ kernel[tag:"path"|"file",opts:OptionsPattern[]][list_List] :=
 
 
 (* ::Subsection:: *)
-(*helper*)
+(*Helper*)
 
 
 getTitleFromFileOrPath//Options = {
@@ -234,7 +230,7 @@ textRegulate[textList_List,opts:OptionsPattern[]] :=
     Module[ {textData},
         textData = textRegulate[#,opts]&/@textList;
         GatherBy[textData,#Y&]//Map[SortBy[#X&]]//
-			Map[lily`pdf`Private`mergeByKey[{"string"->StringJoin,"X"->Min},First]]
+			Map[lily`paper`Private`mergeByKey[{"string"->StringJoin,"X"->Min},First]]
     ];
 
 

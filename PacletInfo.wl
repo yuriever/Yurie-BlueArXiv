@@ -12,8 +12,9 @@ PacletObject[
                     "Root" -> "Kernel",
                     "Context" -> 
 						{
+						    "lily`arxiv`common`",
 						    "lily`arxiv`",
-						    "lily`pdf`"
+						    "lily`paper`"
 						}
                 },
                 {
