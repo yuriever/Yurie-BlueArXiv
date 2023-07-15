@@ -281,6 +281,36 @@ capitalize[string_String] :=
 End[];
 
 
+
+
+(* ::Section:: *)
+(*extractCiteKeyFromTeX*)
+
+
+(* ::Section:: *)
+(*extractTitle*)
+
+
+(* ::Subsection:: *)
+(*Begin*)
+
+
+Begin["`extractTitle`"];
+
+
+End[];
+
+
+
+
+
+
+
+
+
+
+
+
 (* ::Section:: *)
 (*End*)
 

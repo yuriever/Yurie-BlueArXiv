@@ -1,8 +1,16 @@
-.DS_Store
 .gitattributes
+
+# Mac files
+.DS_Store
+
+# Eclipse files
 .project
 .metadata
 .settings
+
+# notebooks
 *.nb
 Notebook
+
+# developing dictionary
 Workbench

@@ -195,14 +195,10 @@ extractID`kernel[tag:"path"|"file",opts:OptionsPattern[]][list_List] :=
 
 extractID`getIDListFromString[string_String] :=
     DeleteDuplicates@StringCases[string,Longest[id__]/;arXivIDQ[id]:>id];
-    
-extractID`getIDListFromFileOrPath//Options = {
-    "tryFileName"->True,
-    "hidePath"->True
-};
-extractID`getIDListFromFileOrPath[file_String,"file","notTryFileName"] :=
+
+extractID`getIDListFromFirstPageOfFile[file_String] :=
     Module[ {idList,idNumber},
-        idList = file//extractID`import//StringSplit[#,RegularExpression["\\s"]]&//
+        idList = file//extractID`importFirstPage//StringSplit[#,RegularExpression["\\s"]]&//
         	Map[extractID`getIDListFromString]//Flatten//DeleteDuplicates;
         idNumber = Length@idList;
         Which[
@@ -217,15 +213,20 @@ extractID`getIDListFromFileOrPath[file_String,"file","notTryFileName"] :=
                 ]                
         ]
     ];
+
+extractID`getIDListFromFileOrPath//Options = {
+    "tryFileName"->True,
+    "hidePath"->True
+};
 extractID`getIDListFromFileOrPath[file_String,"file",opts:OptionsPattern[]] :=
     Module[ {idData,idNumber,idList},
         If[ OptionValue["tryFileName"]===False,
-            idData = extractID`getIDListFromFileOrPath[file,"file","notTryFileName"],
+            idData = extractID`getIDListFromFirstPageOfFile[file],
             idList = extractID`getIDListFromString[file];
             idNumber = Length@idList;
             idData = Which[
                 idNumber===0,
-                    extractID`getIDListFromFileOrPath[file,"file","notTryFileName"],
+                    extractID`getIDListFromFirstPageOfFile[file],
                 idNumber===1,
                     {<|"ID"->First@idList,"file"->{file},"IDLocation"->{"foundInFileName"}|>},
                 idNumber>=2,
@@ -258,7 +259,7 @@ extractID`gatherAndSortByID[mergeDuplicateID_,list_] :=
             GatherBy[list,#ID&]//Map[Merge[Flatten@*Join]]//Query[All,<|#,"ID"->First@#ID|>&]
     ]//Query[SortBy[#ID&]];
 
-extractID`import[file_] :=
+extractID`importFirstPage[file_] :=
     Quiet[
         Check[
             Import[file,{"Plaintext",1}],
