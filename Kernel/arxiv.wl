@@ -84,14 +84,15 @@ arXivIDQ[_] = False;
 
 fileNameFormatter::usage = 
     "formattor of file names, set by fileNameFormat.";
-fileNameFormat//Attributes = {HoldAll};
+fileNameFormat//Attributes = 
+    {HoldAll};
 fileNameFormat[format_] :=
     (
-        fileNameFormatter = Hold[format]/.fileNameFormat`keyWordToFunction/.{Hold[expr_]:>Hold[(expr)&]}//ReleaseHold;
+        fileNameFormatter = Hold[format]/.fileNameFormat`keywordToFunction/.{Hold[expr_]:>Hold[(expr)&]}//ReleaseHold;
     );
 
 
-fileNameFormat`keyWordToFunction = {
+fileNameFormat`keywordToFunction = {
     "ID":>Query["ID"][#],
     "date":>DateString[Query["Published"][#],"ISODate"],
     "title":>Query["Title"][#],
@@ -112,21 +113,29 @@ fileNameInPath[path_] :=
 
 fileNameRegulate::usage =
     "regulate the file name with characters like \"/\" and \"\n\".";
-fileNameRegulate//Attributes = {Listable};
+fileNameRegulate//Attributes = 
+    {Listable};
 fileNameRegulate[string_String] :=
-    StringReplace[string,fileNameRegulate`ruleList];
+    StringReplace[
+        string,
+        {
+            "/"->"::",
+            "\n"->" ",
+            "\[CloseCurlyQuote]"->"'"
+        }
+    ];
 fileNameRegulate[arg_Missing] :=
     arg;
-fileNameRegulate`ruleList = {
-    "/"->"::",
-    "\n"->" ",
-    "\[CloseCurlyQuote]"->"'"
-};
 
 
 (* ::Subsection:: *)
 (*addButtonTo*)
 
+
+ifAddButtonTo[True,keys__][list_] :=
+    addButtonTo[keys][list];
+ifAddButtonTo[False,keys__][list_] :=
+    list;
 
 addButtonTo[key_String][list_] :=
     With[ {$$key = key},
@@ -144,7 +153,10 @@ addButtonTo`hyperlink[_] :=
     Missing["Failed"];
 
 addButtonTo`copyToClipboard[value_String] :=
-    Button[value,CopyToClipboard@value,Appearance->"Frameless",FrameMargins->Small];
+    Interpretation[{},
+        Button[value,CopyToClipboard@value,Appearance->"Frameless",FrameMargins->Small],
+        value
+    ];
 addButtonTo`copyToClipboard[_] :=
     Missing["Failed"];
 
@@ -156,16 +168,18 @@ addButtonTo`copyToClipboard[_] :=
 extractID//Options = {
     "tryFileName"->True,
     "hidePath"->True,
-    "mergeDuplicateID"->True
+    "mergeDuplicateID"->True,
+    "clickToCopy"->True
 };
 extractID::pdffailimport = 
-    "The PDF file fails to import: \n``";
-extractID[][arg_] :=
-    extractID`kernel["string"][arg];
-extractID["string"][arg_] :=
+    "the PDF file fails to import: \n``";
+extractID[tag:PatternSequence[]|"string"][arg_] :=
     extractID`kernel["string"][arg];
 extractID[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    extractID`kernel[tag,opts][arg]//addButtonTo["ID"]//Dataset;
+    Module[ {fopts},
+        fopts = FilterRules[{opts},Options[extractID`kernel]];
+        extractID`kernel[tag,fopts][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"ID"]//Dataset
+    ];
 
 
 extractID`kernel//Options = {
@@ -264,10 +278,10 @@ extractID`importFirstPage[file_] :=
         Check[
             Import[file,{"Plaintext",1}],
             Message[extractID::pdffailimport,file];
-            "",
-            Import::fmterr
+            ""
         ],
-        {Import::fmterr}
+        All,
+        {extractID::pdffailimport}
     ];
 
 
@@ -279,16 +293,18 @@ searchByID//Options = {
     "tryFileName"->True,
     "hidePath"->True,
     "mergeDuplicateID"->True,
-    "fileNameRegulate"->True
+    "fileNameRegulate"->True,
+    "clickToCopy"->True
 };
 searchByID::connectionfailed =
     "connection failed.";
 searchByID[opts:OptionsPattern[]][arg_] :=
-    searchByID`kernel["string",opts][arg]//addButtonTo["ID","item","URL"]//Dataset;    
-searchByID["string",opts:OptionsPattern[]][arg_] :=
-    searchByID`kernel["string",opts][arg]//addButtonTo["ID","item","URL"]//Dataset;    
-searchByID[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    searchByID`kernel[tag,opts][arg]//addButtonTo["ID","item","URL"]//Dataset;    
+    searchByID["string",opts][arg];
+searchByID[tag:"string"|"file"|"path",opts:OptionsPattern[]][arg_] :=
+    Module[ {fopts},
+        fopts = FilterRules[{opts},Options[searchByID`kernel]];
+        searchByID`kernel[tag,fopts][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"ID","item","URL"]//Dataset
+    ];
 
 
 searchByID`kernel//Options = {
@@ -381,12 +397,16 @@ downloadByID//Options = {
     "tryFileName"->True,
     "hidePath"->True,
     "mergeDuplicateID"->True,
-    "fileNameRegulate"->True
+    "fileNameRegulate"->True,
+    "clickToCopy"->True
 };
 downloadByID[targetPath_String,opts:OptionsPattern[]][arg_] :=
-    downloadByID`kernel[targetPath,"string",opts][arg]//addButtonTo["ID","item","URL"]//Dataset;
+    downloadByID[targetPath,"string",opts][arg];
 downloadByID[targetPath_String,tag:"string"|"file"|"path",opts:OptionsPattern[]][arg_] :=
-    downloadByID`kernel[targetPath,tag,opts][arg]//addButtonTo["ID","item","URL"]//Dataset;
+    Module[ {fopts},
+        fopts = FilterRules[{opts},Options[downloadByID`kernel]];
+        downloadByID`kernel[targetPath,tag,fopts][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"ID","item","URL"]//Dataset
+    ];
 
 
 downloadByID`kernel//Options = {
@@ -417,14 +437,17 @@ downloadByID`download[targetPath_,url_,item_String] :=
 generateBibTeXByID//Options = {
     "tryFileName"->True,
     "hidePath"->True,
-    "mergeDuplicateID"->True
+    "mergeDuplicateID"->True,
+    "clickToCopy"->True
 };
 generateBibTeXByID[targetPath_String,bibName_String,opts:OptionsPattern[]][arg_] :=
-    generateBibTeXByID`kernel[targetPath,bibName,"string",opts][arg]//addButtonTo["key","ID","BibTeX"]//Dataset[#,HiddenItems->{"BibTeX"->True}]&;    
-generateBibTeXByID[targetPath_String,bibName_String,"string",opts:OptionsPattern[]][arg_] :=
-    generateBibTeXByID`kernel[targetPath,bibName,"string",opts][arg]//addButtonTo["key","ID","BibTeX"]//Dataset[#,HiddenItems->{"BibTeX"->True}]&;    
-generateBibTeXByID[targetPath_String,bibName_String,tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    generateBibTeXByID`kernel[targetPath,bibName,tag,opts][arg]//addButtonTo["key","ID","BibTeX"]//Dataset[#,HiddenItems->{"BibTeX"->True}]&;    
+    generateBibTeXByID[targetPath,bibName,"string",opts][arg];
+generateBibTeXByID[targetPath_String,bibName_String,tag:"string"|"path"|"file",opts:OptionsPattern[]][arg_] :=
+    Module[ {fopts},
+        fopts = FilterRules[{opts},Options[generateBibTeXByID`kernel]];
+        generateBibTeXByID`kernel[targetPath,bibName,tag,fopts][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"key","ID","BibTeX"]//
+	    	Dataset[#,HiddenItems->{"BibTeX"->True}]&
+    ];
 
 
 generateBibTeXByID`kernel//Options = {

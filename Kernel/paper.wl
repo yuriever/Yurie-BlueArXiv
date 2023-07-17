@@ -18,6 +18,9 @@ ClearAll@@Names[$Context<>"*"]
 extractTitleFromPDF::usage = 
     "extract title from first page of PDF by searching grouped texts with larger Y coordinates and fontsize.";
 
+extractCiteKeyFromTeX::usage = 
+    "extract cite keys from TeX files.";
+
 
 (* ::Section:: *)
 (*Private*)
@@ -93,98 +96,82 @@ addButtonTo[key_,restKeys__][list_] :=
     list//addButtonTo[key]//addButtonTo[restKeys];
 
 lily`paper`Private`addButtonTo`copyToClipboard[value_String] :=
-    Button[value,CopyToClipboard@value,Appearance->"Frameless",FrameMargins->Small];
+    Interpretation[{},
+        Button[value,CopyToClipboard@value,Appearance->"Frameless",FrameMargins->Small],
+        value
+    ];
 lily`paper`Private`addButtonTo`copyToClipboard[_] :=
     Missing["Failed"];
 
 
 (* ::Subsection:: *)
-(*extractTitle*)
+(*extractTitleFromPDF*)
 
 
+extractTitleFromPDF::pdffailimport = 
+    "the PDF file fails to import: \n``";
 extractTitleFromPDF//Options = {
     "hidePath"->True,
     "titleExtractMethod"->"plusYAndFontSize",
     "YResolution"->25
 };
 extractTitleFromPDF[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
-    lily`paper`extractTitle`kernel[tag,opts][arg]//addButtonTo["title"]//Dataset;
+    extractTitleFromPDF`kernel[tag,opts][arg]//addButtonTo["title"]//Dataset;
 
 
-(* ::Subsection:: *)
-(*End*)
-
-
-End[];
-
-
-(* ::Section:: *)
-(*extractTitle*)
-
-
-(* ::Subsection:: *)
-(*Begin*)
-
-
-Begin["`extractTitle`"];
-
-
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*Kernel*)
 
 
-kernel//Options = {
+extractTitleFromPDF`kernel//Options = {
     "hidePath"->True,
     "titleExtractMethod"->"plusYAndFontSize",
     "YResolution"->25
 };
-kernel[tag:"path"|"file",opts:OptionsPattern[]][fileOrPath_String] :=
+extractTitleFromPDF`kernel[tag:"path"|"file",opts:OptionsPattern[]][fileOrPath_String] :=
     Module[ {fopts},
-        fopts = FilterRules[{opts},Options[getTitleFromFileOrPath]];
-        getTitleFromFileOrPath[fileOrPath,tag,fopts]//Query[SortBy[#file&]]
+        fopts = FilterRules[{opts},Options[extractTitleFromPDF`getTitleFromFileOrPath]];
+        extractTitleFromPDF`getTitleFromFileOrPath[fileOrPath,tag,fopts]//Query[SortBy[#file&]]
     ];
-kernel[tag:"path"|"file",opts:OptionsPattern[]][list_List] :=
+extractTitleFromPDF`kernel[tag:"path"|"file",opts:OptionsPattern[]][list_List] :=
     Module[ {fopts},
-        fopts = FilterRules[{opts},Options[getTitleFromFileOrPath]];
-        getTitleFromFileOrPath[#,tag,fopts]&/@list//Flatten//DeleteDuplicates//Query[SortBy[#file&]]
+        fopts = FilterRules[{opts},Options[extractTitleFromPDF`getTitleFromFileOrPath]];
+        extractTitleFromPDF`getTitleFromFileOrPath[#,tag,fopts]&/@list//Flatten//DeleteDuplicates//Query[SortBy[#file&]]
     ];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
 (*Helper*)
 
 
-getTitleFromFileOrPath//Options = {
+extractTitleFromPDF`getTitleFromFileOrPath//Options = {
     "hidePath"->True,
-    "titleExtractMethod"->"sortYAndFontSize",
+    "titleExtractMethod"->"plusYAndFontSize",
     "YResolution"->25
 };
-(*acting on file*)
-getTitleFromFileOrPath[file_String,"file",opts:OptionsPattern[]] :=
+extractTitleFromPDF`getTitleFromFileOrPath[file_String,"file",opts:OptionsPattern[]] :=
     Module[ {title,fopts},
-        fopts = FilterRules[{opts},Options[useMethod]];
-        title = useMethod[file,OptionValue["titleExtractMethod"],fopts]//regulateTitle;
+        fopts = FilterRules[{opts},Options[extractTitleFromPDF`useMethod]];
+        title = extractTitleFromPDF`useMethod[file,OptionValue["titleExtractMethod"],fopts]//extractTitleFromPDF`regulateTitle;
         {<|"title"->title,"file"->file|>}
     ];
-(*acting on path*)
-getTitleFromFileOrPath[path_String,"path",opts:OptionsPattern[]] :=
+extractTitleFromPDF`getTitleFromFileOrPath[path_String,"path",opts:OptionsPattern[]] :=
     Module[ {fileList,titleDataList},
         fileList = FileNames[__~~".pdf"~~EndOfString,path];
-        titleDataList = getTitleFromFileOrPath[#,"file",opts]&/@fileList//Flatten;
+        titleDataList = extractTitleFromPDF`getTitleFromFileOrPath[#,"file",opts]&/@fileList//Flatten;
         If[ OptionValue["hidePath"]===True,
-            titleDataList = titleDataList//Query[All,<|#,"file"->hidePath[path,#file]|>&]
+            titleDataList = titleDataList//Query[All,<|#,"file"->extractTitleFromPDF`hidePath[path,#file]|>&]
         ];
         titleDataList
     ];
 
-
-useMethod//Options = {
+extractTitleFromPDF`useMethod//Options = {
     "YResolution"->25
 };
-useMethod[file_,"sortYAndFontSize",opts:OptionsPattern[]] :=
+extractTitleFromPDF`useMethod[file_,"sortYAndFontSize",opts:OptionsPattern[]] :=
     Module[ {textData,counter,resultTextData,searchFirstNTexts},
         textData = 
-            textRegulate[Import[file,{"PagePositionedText",1}],opts];
+            extractTitleFromPDF`textRegulate[extractTitleFromPDF`importFirstPage@file,opts];
         searchFirstNTexts[data_List,n_] :=
             Intersection[
                 data//Query[ReverseSortBy[#Y&]]//Query[1;;n],
@@ -200,10 +187,10 @@ useMethod[file_,"sortYAndFontSize",opts:OptionsPattern[]] :=
         ];
         resultTextData//Query[MaximalBy[StringLength[#string]&],FailureAction->"Replace"]//Query[1,#string&,FailureAction->"Replace"]
     ];
-useMethod[file_,"plusYAndFontSize",opts:OptionsPattern[]] :=
+extractTitleFromPDF`useMethod[file_,"plusYAndFontSize",opts:OptionsPattern[]] :=
     Module[ {textData,maxY,maxFontSize,textDataNormalized},
         textData = 
-            textRegulate[Import[file,{"PagePositionedText",1}],opts];
+            extractTitleFromPDF`textRegulate[extractTitleFromPDF`importFirstPage@file,opts];
         maxY = 
             textData//Query[All,#Y&]//Max;
         maxFontSize = 
@@ -213,11 +200,10 @@ useMethod[file_,"plusYAndFontSize",opts:OptionsPattern[]] :=
         textDataNormalized//Query[MaximalBy[StringLength[#string]&],FailureAction->"Replace"]//Query[1,#string&,FailureAction->"Replace"]
     ];
 
-
-textRegulate//Options = {
+extractTitleFromPDF`textRegulate//Options = {
     "YResolution"->25
 };
-textRegulate[text_Text,opts:OptionsPattern[]] :=
+extractTitleFromPDF`textRegulate[text_Text,opts:OptionsPattern[]] :=
     text/.Text[Style[string_String,color_,styleOptions___Rule],coords_List,offset_List]:>
         KeyMap[ToString]@<|
             "string"->string,
@@ -226,46 +212,54 @@ textRegulate[text_Text,opts:OptionsPattern[]] :=
             "Y"->Round[coords[[2]],OptionValue["YResolution"]],
             "offset"->offset
         |>;
-textRegulate[textList_List,opts:OptionsPattern[]] :=
+extractTitleFromPDF`textRegulate[textList_List,opts:OptionsPattern[]] :=
     Module[ {textData},
-        textData = textRegulate[#,opts]&/@textList;
+        textData = extractTitleFromPDF`textRegulate[#,opts]&/@textList;
         GatherBy[textData,#Y&]//Map[SortBy[#X&]]//
-			Map[lily`paper`Private`mergeByKey[{"string"->StringJoin,"X"->Min},First]]
+			Map[mergeByKey[{"string"->StringJoin,"X"->Min},First]]
     ];
 
-
-hidePath[path_,file_] :=
+extractTitleFromPDF`hidePath[path_,file_] :=
     StringReplace[file,path~~"/"~~Longest[title__]~~EndOfString:>title];
 
+extractTitleFromPDF`importFirstPage[file_] :=
+    Quiet[
+        Check[
+            Import[file,{"PagePositionedText",1}],
+            Message[extractTitleFromPDF::pdffailimport,file];
+            Text[""]
+        ],
+        All,
+        {extractTitleFromPDF::pdffailimport}
+    ];
 
-regulateTitle//Attributes = 
+extractTitleFromPDF`regulateTitle//Attributes = 
     {Listable};
-regulateTitle[""] = 
+extractTitleFromPDF`regulateTitle[""] = 
     "";
-regulateTitle[arg_Missing] :=
+extractTitleFromPDF`regulateTitle[arg_Missing] :=
     arg;
-regulateTitle[string_String] :=
-    string//StringSplit//toLowerCase//capitalize//StringReplace[regulateTitleRuleList]//StringRiffle;
-regulateTitleRuleList =
+extractTitleFromPDF`regulateTitle[string_String] :=
+    string//StringSplit//extractTitleFromPDF`toLowerCase//extractTitleFromPDF`capitalize//
+    	StringReplace[extractTitleFromPDF`regulateTitleRuleList]//StringRiffle;
+extractTitleFromPDF`regulateTitleRuleList =
     {
         ":"->"/",
         "\n"->" ",
         "\[CloseCurlyQuote]"->"'"
     };
 
-
-toLowerCase//Attributes = 
+extractTitleFromPDF`toLowerCase//Attributes = 
     {Listable};
-toLowerCase[string_] :=
+extractTitleFromPDF`toLowerCase[string_] :=
     If[ Not@LowerCaseQ[string],
         ToLowerCase[string],
         string
     ];
 
-
-capitalize//Attributes = 
+extractTitleFromPDF`capitalize//Attributes = 
     {Listable};
-capitalize[string_String] :=
+extractTitleFromPDF`capitalize[string_String] :=
     (*ignore the stop words.*)
     If[ DeleteStopwords[#]==#&[string],
         (*deal with hyphenated names.*)
@@ -275,40 +269,63 @@ capitalize[string_String] :=
 
 
 (* ::Subsection:: *)
+(*extractCiteKeyFromTeX*)
+
+
+extractCiteKeyFromTeX::texfailimport = 
+    "the TeX file fails to import: \n``";
+extractCiteKeyFromTeX//Options = {
+};
+extractCiteKeyFromTeX[tag:"path"|"file",opts:OptionsPattern[]][arg_] :=
+    {};
+
+
+(* ::Subsubsection:: *)
+(*Kernel*)
+
+
+extractCiteKeyFromTeX`kernel//Options = {
+};
+extractCiteKeyFromTeX`kernel[tag:"path"|"file",opts:OptionsPattern[]][fileOrPath_String] :=
+    Module[ {},
+        extractCiteKeyFromTeX`getCiteKeyFromTeX[fileOrPath,tag,fopts]//Query[SortBy[#file&]]
+    ];
+extractCiteKeyFromTeX`kernel[tag:"path"|"file",opts:OptionsPattern[]][list_List] :=
+    Module[ {fopts},
+        fopts = FilterRules[{opts},Options[getTitleFromFileOrPath]];
+        getTitleFromFileOrPath[#,tag,fopts]&/@list//Flatten//DeleteDuplicates//Query[SortBy[#file&]]
+    ];
+
+
+extractCiteKeyFromTeX`getCiteKeyFromTeX[file_,"file"] :=
+    file//extractCiteKeyFromTeX`importStringFromTeX//StringSplit//StringCases[RegularExpression["(\\\\cite{)(\\S*?)(})"]:>"$2"]//
+    	Flatten//StringSplit[#,","]&//Flatten//DeleteDuplicates//DeleteCases[""];
+
+extractCiteKeyFromTeX`getCiteKeyFromTeX[path_,"path"] :=
+    extractCiteKeyFromTeX`getCiteKeyFromTeX[#,"file"]&/@FileNames[__~~".tex"~~EndOfString,path];
+
+
+extractCiteKeyFromTeX`importStringFromTeX[file_] :=
+    Quiet[
+        Check[
+            Import[file,"Text"],
+            Message[extractCiteKeyFromTeX::texfailimport,file];
+            ""
+        ],
+        All,
+        {extractCiteKeyFromTeX::texfailimport}
+    ];    
+
+
+(* ::Subsubsection:: *)
+(*Helper*)
+
+
+(* ::Subsection:: *)
 (*End*)
 
 
 End[];
-
-
-
-
-(* ::Section:: *)
-(*extractCiteKeyFromTeX*)
-
-
-(* ::Section:: *)
-(*extractTitle*)
-
-
-(* ::Subsection:: *)
-(*Begin*)
-
-
-Begin["`extractTitle`"];
-
-
-End[];
-
-
-
-
-
-
-
-
-
-
 
 
 (* ::Section:: *)
