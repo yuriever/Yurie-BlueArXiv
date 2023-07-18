@@ -2,7 +2,7 @@
 
 PacletObject[
     <|
-        "Name" -> "lily-arxiv",
+        "Name" -> "lily-paper",
         "Version" -> "0.0.1",
         "WolframVersion" -> "13+",
         "Extensions" ->
@@ -11,11 +11,10 @@ PacletObject[
                     "Kernel",
                     "Root" -> "Kernel",
                     "Context" -> 
-						{
-						    "lily`arxiv`common`",
-						    "lily`arxiv`",
-						    "lily`paper`"
-						}
+                        {
+                            "lily`paper`",
+                            "lily`arxiv`"
+                        }
                 },
                 {
                     "Documentation",
