@@ -4,7 +4,7 @@ PacletObject[
         "Version"->"0.1",
         "WolframVersion"->"13+",
         "Creator"->"yurie",
-        "Description"->"A Mathematica package for downloading preprints and generating BibTeX by arXiv ID.",
+        "Description"->"A Mathematica package for downloading preprints and generating BibTeXs by arXiv IDs.",
         "License"->"MIT",
         "Extensions"->{
             {
