@@ -19,8 +19,10 @@ $arXivIDPattern::usage =
     "string pattern of valid arXiv ID.";
 $arXivPDFNameFormat::usage = 
     "formattor of file names, set by arXivPDFNameFormat.";
+
 $citeKeyPattern::usage = 
 	"string pattern of cite key.";
+
 
 (* ::Subsection:: *)
 (*Common functions*)
