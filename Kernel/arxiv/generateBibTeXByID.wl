@@ -35,7 +35,7 @@ generateBibTeXByID//Options = {
     "mergeDuplicateID"->True,
     "clickToCopy"->True
 };
-generateBibTeXByID["string",targetFolder_?DirectoryQ,bibName_String,opts:OptionsPattern[]][arg_] :=
+generateBibTeXByID["string",targetFolder_?DirectoryQ,bibName_String,OptionsPattern[]][arg_] :=
     generateBibTeXByIDFromStringAsItemList[targetFolder,bibName][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"key","ID","BibTeX"]//
     	Dataset[#,HiddenItems->{"BibTeX"->True}]&
 generateBibTeXByID["path",targetFolder_?DirectoryQ,bibName_String,opts:OptionsPattern[]][arg_] :=

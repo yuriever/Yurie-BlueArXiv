@@ -97,7 +97,7 @@ searchByIDFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
 getItemDataFromIDAsList//Options = {
     "fileNameRegulate"->True
 };
-getItemDataFromIDAsList[opts:OptionsPattern[]][idList_] :=
+getItemDataFromIDAsList[OptionsPattern[]][idList_] :=
     Module[ {itemList,idValidList,itemNameList,urlList,itemData},
         idValidList = 
             DeleteDuplicates@DeleteCases[idList,"notFound"];

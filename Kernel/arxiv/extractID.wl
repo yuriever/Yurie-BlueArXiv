@@ -38,7 +38,7 @@ extractID//Options = {
 };
 extractID::pdffailimport = 
     "the PDF file fails to import: \n``";
-extractID["string",opts:OptionsPattern[]][stringOrStringList_] :=
+extractID["string",OptionsPattern[]][stringOrStringList_] :=
     stringOrStringList//extractIDFromStringAsItemList//ifAddButtonTo[OptionValue["clickToCopy"]];
 extractID["path",opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {fopts},
@@ -97,7 +97,7 @@ getIDDataFromPDFAsList//Options = {
     "tryFileName"->True,
     "hideDirectory"->True
 };
-getIDDataFromPDFAsList[opts:OptionsPattern[]][file_] :=
+getIDDataFromPDFAsList[OptionsPattern[]][file_] :=
     Module[ {idData,idNumber,idList},
         If[ OptionValue["tryFileName"],
             (*True*)

@@ -9,8 +9,11 @@
 .settings
 
 # notebooks
-*.nb
 Notebook
 
 # developing dictionary
 Workbench
+
+$ sample data
+SampleData/pdf/**
+SampleData/tex/aux/**

@@ -37,7 +37,7 @@ extractCiteKey//Options = {
 };
 extractCiteKey::texfailimport = 
     "the TeX file fails to import: \n``";
-extractCiteKey["string",opts:OptionsPattern[]][stringOrStringList_] :=
+extractCiteKey["string",OptionsPattern[]][stringOrStringList_] :=
     stringOrStringList//extractCiteKeyFromStringAsItemList//ifAddButtonTo[OptionValue["clickToCopy"]];
 extractCiteKey["path",opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {fopts,itemList},
@@ -70,7 +70,7 @@ extractCiteKeyFromTeXAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
 getCiteKeyFromTeXAsList//Options = {
     "hideDirectory"->True
 };
-getCiteKeyFromTeXAsList[opts:OptionsPattern[]][file_] :=
+getCiteKeyFromTeXAsList[OptionsPattern[]][file_] :=
     Module[ {citeKeyList,itemList},
         citeKeyList = file//importStringFromTeX//getCiteKeyFromStringAsList;
         itemList = <|"citeKey"->#,"file"->file|>&/@citeKeyList;

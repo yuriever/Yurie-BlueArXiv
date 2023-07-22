@@ -34,7 +34,7 @@ extractTitleFromPDF::pdffailimport =
 extractTitleFromPDF//Options = {
     "hideDirectory"->True,
     "clickToCopy"->True,
-    "titleExtractMethod"->"sumYAndFontSize",
+    "titleExtractMethod"->"sortYAndFontSize",
     "YResolution"->25
 };
 extractTitleFromPDF[opts:OptionsPattern[]][pathOrPathList_] :=
@@ -79,6 +79,7 @@ getTitleFromPDFAsItemList[opts:OptionsPattern[]][fileList_List] :=
 recognizeTitleFromPDFBy//Options = {
     "YResolution"->25
 };
+(*search grouped texts with larger Y coordinate and fontsize.*)
 recognizeTitleFromPDFBy["sortYAndFontSize",opts:OptionsPattern[]][file_] :=
     Module[ {textData,counter,resultTextData,searchFirstNTexts},
         textData = 
@@ -117,8 +118,8 @@ recognizeTitleFromPDFBy["sumYAndFontSize",opts:OptionsPattern[]][file_] :=
 regulateTextList//Options = {
     "YResolution"->25
 };
-regulateTextList[opts:OptionsPattern[]][text_Text] :=
-    text/.Text[Style[string_String,color_,styleOptions___Rule],coords_List,offset_List]:>
+regulateTextList[OptionsPattern[]][text_Text] :=
+    text/.Text[Style[string_String,_,styleOptions___Rule],coords_List,offset_List]:>
         KeyMap[ToString]@<|
             "string"->string,
             FilterRules[{styleOptions},{FontSize}],

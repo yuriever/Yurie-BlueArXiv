@@ -8,7 +8,7 @@ BeginPackage["lily`arxiv`"];
 
 Unprotect@@Names["`*"];
 ClearAll@@Names["`*"];
-ClearAll@@Names["`*`*"];
+(*ClearAll@@Names["`*`*"];*)
 
 Get["lily`arxiv`common`"];
 
@@ -18,7 +18,7 @@ Get["lily`arxiv`common`"];
 
 
 arXivIDQ::usage =
-    "check whether a string is a valid arXiv ID.";
+    "check whether the string is a syntactically valid arXiv ID.";
 
 arXivPDFNameFormat::usage = 
     "set the format of arXiv PDF names.";
@@ -29,14 +29,11 @@ arXivInterface::usage =
 extractID::usage =
     "extract arXiv IDs from string or PDF file/folder path.";
 searchByID::usage = 
-    "search by IDs extracted from string or PDF file/folder path, "<>
-    "and return the found items on arXiv with formatted names.";
+    "search by arXiv IDs extracted from string or PDF file/folder path.";
 downloadByID::usage = 
-    "download by IDs extracted from string or PDF file/folder path to the target folder, "<>
-    "and return the file objects with formatted names."
+    "download by arXiv IDs extracted from string or PDF file/folder path.";
 generateBibTeXByID::usage = 
-    "export the found BibTeX entries on inspirehep by IDs extracted string or PDF file/folder path, "<>
-    "and return the BibTeX keys.";
+    "generate BibTeX entries on INSPIRE by arXiv IDs extracted from string or PDF file/folder path.";
 
 
 (* ::Section:: *)

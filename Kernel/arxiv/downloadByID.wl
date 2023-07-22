@@ -33,6 +33,7 @@ Begin["`Private`"];
 downloadByID//Options = {
     "tryFileName"->True,
     "hideDirectory"->True,
+    "hideFileObject"->False,
     "mergeDuplicateID"->True,
     "fileNameRegulate"->True,
     "clickToCopy"->True
@@ -50,6 +51,7 @@ downloadByID[targetFolder_?DirectoryQ,opts:OptionsPattern[]][arg_] :=
 downloadByIDAsItemList//Options = {
     "tryFileName"->True,
     "hideDirectory"->True,
+    "hideFileObject"->False,
     "mergeDuplicateID"->True,
     "fileNameRegulate"->True
 };
@@ -58,11 +60,15 @@ downloadByIDAsItemList[tag_,targetFolder_,opts:OptionsPattern[]][arg_] :=
         fopts = FilterRules[{opts},Options[searchByIDAsItemList]];
         idDataList = searchByIDAsItemList[tag,fopts][arg];
         (*download to the target path and return file objects*)
-        idDataList//Query[All,<|#,"fileObject"->downloadPDFFromURLAsFileObject[targetFolder,#URL,#item]|>&]
+        idDataList//Query[All,<|#,"fileObject"->downloadPDFFromURLAsFileObject[targetFolder,#URL,#item]|>&];
+        If[OptionValue["hideFileObject"],
+        	idDataList//KeyDrop["fileObject"],
+        	idDataList
+        ]
     ];
 
 
-downloadPDFFromURLAsFileObject[targetFolder_,url_,Missing["Failed"]] :=
+downloadPDFFromURLAsFileObject[_,_,Missing[_]] :=
     Missing["Failed"];
 downloadPDFFromURLAsFileObject[targetFolder_,url_,item_String] :=
     URLDownload[url,FileNameJoin@{targetFolder,item<>".pdf"}];

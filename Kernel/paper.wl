@@ -18,7 +18,7 @@ Get["lily`arxiv`common`"];
 
 
 extractTitleFromPDF::usage = 
-    "extract title from first page of PDF by searching grouped texts with larger Y coordinate and fontsize.";
+    "extract title from PDF file/folder path.";
 
 extractCiteKey::usage = 
     "extract cite keys from string or TeX file/folder path.";
