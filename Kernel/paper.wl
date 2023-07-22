@@ -8,7 +8,7 @@ BeginPackage["lily`paper`"];
 
 Unprotect@@Names["`*"];
 ClearAll@@Names["`*"];
-ClearAll@@Names["`*`*"];
+(*ClearAll@@Names["`*`*"];*)
 
 Get["lily`arxiv`common`"];
 
