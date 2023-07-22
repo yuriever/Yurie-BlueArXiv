@@ -24,6 +24,9 @@ $citeKeyPattern::usage =
 	"string pattern of cite key.";
 
 
+test;
+
+
 (* ::Subsection:: *)
 (*Common functions*)
 
