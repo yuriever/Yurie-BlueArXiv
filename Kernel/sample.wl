@@ -8,14 +8,14 @@ BeginPackage["lily`arxiv`sample`"];
 
 
 sampleFileDirectory::usage = 
-	"directory of the sample files.";
+    "directory of the sample files.";
 
 sampleFilePrepare::usage = 
     "create and download the sample files.";
 
 sampleString::usage = 
-	"sample strings.";
-	
+    "sample strings.";
+    
 (*samplePaperData;*)
 
 
@@ -88,19 +88,19 @@ sampleString :=
 
 
 sampleFilePrepare::connectionfailed = 
-    "The network connection fails."
+    "The network connection fails.";
 sampleFilePrepare[] :=
     Module[ {folder},
         folder = sampleFileDirectory["pdf"];
         Which[ 
-        	!$NetworkConnected,
-	            sampleFilePrepare::connectionfailed,
+            !$NetworkConnected,
+                sampleFilePrepare::connectionfailed,
             samplePaperData//Query[All,FileExistsQ@FileNameJoin@{folder,#name}&]//AllTrue[TrueQ]//Not,
-	            Export[
-	                FileNameJoin@{folder,samplePaperData//Query[4,#name&]},
-	                "This is an example PDF file."
-	            ];
-	            samplePaperData//Query[1;;3,URLDownload[#URL,FileNameJoin@{folder,#name}]&]
+                Export[
+                    FileNameJoin@{folder,samplePaperData//Query[4,#name&]},
+                    "This is an example PDF file."
+                ];
+                samplePaperData//Query[1;;3,URLDownload[#URL,FileNameJoin@{folder,#name}]&]
         ];
     ];
 
