@@ -6,7 +6,7 @@
 
 BeginPackage["lily`arxiv`extractID`"];
 
-Needs["lily`paper`common`"];
+Needs["lily`arxiv`common`"];
 Needs["lily`arxiv`"];
 
 
@@ -38,21 +38,21 @@ extractID//Options = {
 };
 extractID::pdffailimport = 
     "the PDF file fails to import: \n``";
-extractID["string"][stringOrStringList_] :=
-    extractIDFromStringAsItemList[stringOrStringList];
+extractID["string",opts:OptionsPattern[]][stringOrStringList_] :=
+    stringOrStringList//extractIDFromStringAsItemList//ifAddButtonTo[OptionValue["clickToCopy"]];
 extractID["path",opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {fopts},
         fopts = FilterRules[{opts},Options[extractIDFromPathAsItemList]];
-        extractIDFromPathAsItemList[fopts][pathOrPathList]//ifAddButtonTo[OptionValue["clickToCopy"],"ID"]//Dataset
+        pathOrPathList//extractIDFromPathAsItemList[fopts]//ifAddButtonTo[OptionValue["clickToCopy"],"ID"]//Dataset
     ];
 
-extractID[][stringOrStringList_] :=
-    extractID["string"][stringOrStringList];
+extractID[opts:OptionsPattern[]][stringOrStringList_] :=
+    extractID["string",opts][stringOrStringList];
 
 
 (*act on string*)
 extractIDFromStringAsItemList[stringOrStringList_] :=
-    getIDFromStringAsList[stringOrStringList]//Sort;
+    stringOrStringList//getIDFromStringAsList//Sort;
 
 
 (*act on path*)
@@ -69,14 +69,15 @@ extractIDFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
 
 
 getIDFromStringAsList[string_String] :=
-    string//StringCases[Longest[id__]/;arXivIDQ[id]:>id]//DeleteDuplicates;
+    string//StringCases[$arXivIDPattern]//DeleteDuplicates;
 getIDFromStringAsList[stringList_List] :=
     stringList//Map[getIDFromStringAsList]//Flatten//DeleteDuplicates;
 
 
+
 getIDDataFromPDFFirstPageAsList[file_] :=
     Module[ {idList,idNumber},
-        idList = file//importPDFFirstPageAsStringList//getIDFromStringAsList;
+        idList = file//importPDFFirstPageAsString//getIDFromStringAsList;
         idNumber = Length@idList;
         Switch[ idNumber,
             0,
@@ -140,10 +141,10 @@ ifGatherAndSortByID[False][list_] :=
     list//Query[SortBy[#ID&]];
 
 
-importPDFFirstPageAsStringList[file_] :=
+importPDFFirstPageAsString[file_] :=
     Quiet[
         Check[
-            StringSplit@Import[file,{"Plaintext",1}],
+            Import[file,{"Plaintext",1}],
             (*fail*)
             Message[extractID::pdffailimport,file];
             {}

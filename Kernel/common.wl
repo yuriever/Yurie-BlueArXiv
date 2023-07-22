@@ -4,15 +4,26 @@
 (*Begin*)
 
 
-BeginPackage["lily`paper`common`"];
+BeginPackage["lily`arxiv`common`"];
 
 
 (* ::Section:: *)
 (*Usage*)
 
 
+(* ::Subsection:: *)
+(*Common symbols*)
+
+
+$arXivIDPattern::usage = 
+    "string pattern of valid arXiv ID.";
 $arXivPDFNameFormat::usage = 
     "formattor of file names, set by arXivPDFNameFormat.";
+$citeKeyPattern::usage = 
+	"string pattern of cite key.";
+
+(* ::Subsection:: *)
+(*Common functions*)
 
 
 fileNameRegulate::usage =
@@ -46,6 +57,20 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
+(*Common symbols*)
+
+
+$arXivIDPattern =
+    RegularExpression["(\\d{4}\\.\\d{4,5})|((astro-ph|cond-mat|gr-qc|hep-ex|hep-lat|hep-ph|hep-th|math-ph|nlin|nucl-ex|nucl-th|physics|quant-ph|math|cs)/\\d{7})"];
+
+$arXivPDFNameFormat =
+    Query["ID"];
+
+$citeKeyPattern = 
+	(*no whitespace tolerance*)
+    RegularExpression["(\\\\cite{)(\\S*?)(})"];
+
+(* ::Subsection:: *)
 (*fileNameRegulate*)
 
 
@@ -69,12 +94,12 @@ fileNameRegulate[arg_Missing] :=
 
 
 getFileByExtension[extension_][path_] :=
-    lily`paper`common`getFileByExtension`kernel[extension][path];
+    `getFileByExtension`kernel[extension][path];
 getFileByExtension[extension_][pathList_List] :=
-    lily`paper`common`getFileByExtension`kernel[extension]/@pathList//Flatten//DeleteDuplicates;
+    `getFileByExtension`kernel[extension]/@pathList//Flatten//DeleteDuplicates;
 
 
-lily`paper`common`getFileByExtension`kernel[extension_][path_] :=
+`getFileByExtension`kernel[extension_][path_] :=
     Which[
         DirectoryQ[path],
             FileNames[__~~"."~~extension~~EndOfString,path],
@@ -96,32 +121,35 @@ getFileNameByExtension[extension_][pathOrPathList_] :=
 (*addButtonTo*)
 
 
-ifAddButtonTo[True,keys__][list_] :=
+ifAddButtonTo[True][list:{___String}] :=
+    `addButtonTo`copyToClipboard/@list;
+ifAddButtonTo[True,keys__][list:{___Association}] :=
     addButtonTo[keys][list];
-ifAddButtonTo[False,keys__][list_] :=
+ifAddButtonTo[False,___][list_] :=
     list;
+
 
 addButtonTo[key_String][list_] :=
     With[ {$$key = key},
-        list//Query[All,<|#,$$key->lily`paper`common`addButtonTo`copyToClipboard[Slot[$$key]]|>&]
+        list//Query[All,<|#,$$key->`addButtonTo`copyToClipboard[Slot[$$key]]|>&]
     ];
 addButtonTo["URL"][list_] :=
-    list//Query[All,<|#,"URL"->lily`paper`common`addButtonTo`hyperlink[#URL]|>&];
+    list//Query[All,<|#,"URL"->`addButtonTo`hyperlink[#URL]|>&];
 addButtonTo[key_,restKeys__][list_] :=
     list//addButtonTo[key]//addButtonTo[restKeys];
 
 
-lily`paper`common`addButtonTo`hyperlink[value_String] :=
+`addButtonTo`hyperlink[value_String] :=
     Hyperlink[value,value,FrameMargins->Small];
-lily`paper`common`addButtonTo`hyperlink[_] :=
+`addButtonTo`hyperlink[_] :=
     Missing["Failed"];
 
-lily`paper`common`addButtonTo`copyToClipboard[value_String] :=
+`addButtonTo`copyToClipboard[value_String] :=
     Interpretation[{},
         Button[value,CopyToClipboard@value,Appearance->"Frameless",FrameMargins->Small],
         value
     ];
-lily`paper`common`addButtonTo`copyToClipboard[_] :=
+`addButtonTo`copyToClipboard[_] :=
     Missing["Failed"];
 
 
@@ -174,6 +202,7 @@ mergeByKey[data:{__?AssociationQ},ruleList:{___Rule},default:_:Identity] :=
             assoc
         ]
     ];
+
 
 (* ::Subsection:: *)
 (*End*)

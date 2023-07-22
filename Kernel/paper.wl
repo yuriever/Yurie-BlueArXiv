@@ -10,7 +10,7 @@ Unprotect@@Names["`*"];
 ClearAll@@Names["`*"];
 ClearAll@@Names["`*`*"];
 
-Needs["lily`paper`common`"];
+Get["lily`arxiv`common`"];
 
 
 (* ::Section:: *)
@@ -18,10 +18,10 @@ Needs["lily`paper`common`"];
 
 
 extractTitleFromPDF::usage = 
-    "extract title from first page of PDF by searching grouped texts with larger Y coordinates and fontsize.";
+    "extract title from first page of PDF by searching grouped texts with larger Y coordinate and fontsize.";
 
-extractCiteKeyFromTeX::usage = 
-    "extract cite keys from TeX files.";
+extractCiteKey::usage = 
+    "extract cite keys from string or TeX file/folder path.";
 
 
 (* ::Section:: *)
@@ -40,7 +40,7 @@ Begin["`Private`"];
 
 
 Get["lily`paper`extractTitleFromPDF`"];
-Get["lily`paper`extractCiteKeyFromTeX`"];
+Get["lily`paper`extractCiteKey`"];
 
 
 (* ::Subsection:: *)

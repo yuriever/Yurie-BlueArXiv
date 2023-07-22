@@ -6,7 +6,7 @@
 
 BeginPackage["lily`arxiv`searchByID`"];
 
-Needs["lily`paper`common`"];
+Needs["lily`arxiv`common`"];
 Needs["lily`arxiv`"];
 Needs["lily`arxiv`extractID`"];
 
