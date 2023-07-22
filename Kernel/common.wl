@@ -17,11 +17,12 @@ BeginPackage["lily`arxiv`common`"];
 
 $arXivIDPattern::usage = 
     "string pattern of valid arXiv ID.";
+
 $arXivPDFNameFormat::usage = 
     "formattor of file names, set by arXivPDFNameFormat.";
 
 $citeKeyPattern::usage = 
-	"string pattern of cite key.";
+    "string pattern of cite key.";
 
 
 (* ::Subsection:: *)
@@ -66,11 +67,18 @@ $arXivIDPattern =
     RegularExpression["(\\d{4}\\.\\d{4,5})|((astro-ph|cond-mat|gr-qc|hep-ex|hep-lat|hep-ph|hep-th|math-ph|nlin|nucl-ex|nucl-th|physics|quant-ph|math|cs)/\\d{7})"];
 
 $arXivPDFNameFormat =
-    Query["ID"];
+    (*set the default format of PDF names.*)
+    (*arXivPDFNameFormat["ID"<>" "<>"title"<>", "<>"firstAuthor"]*)
+    (
+        Query["ID"][#]<>" "<>
+        Query["Title"][#]<>", "<>
+        RemoveDiacritics[Query["Author",1,"Name"][#]]
+    )&;
 
 $citeKeyPattern = 
-	(*no whitespace tolerance*)
+    (*no whitespace tolerance.*)
     RegularExpression["(\\\\cite{)(\\S*?)(})"];
+
 
 (* ::Subsection:: *)
 (*fileNameRegulate*)

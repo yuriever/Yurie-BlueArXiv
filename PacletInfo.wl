@@ -1,11 +1,11 @@
-(* ::Package:: *)
-
 PacletObject[
     <|
         "Name"->"lily/arxiv",
         "Version"->"0.1",
         "WolframVersion"->"13+",
+        "Creator"->"yurie",
         "Description"->"A Mathematica package for downloading preprints and generating BibTeX by arXiv ID.",
+        "License"->"MIT",
         "Extensions"->{
             {
                 "Kernel",
@@ -19,6 +19,15 @@ PacletObject[
             {
                 "Documentation",
                 "Language"->"English"
+            },
+            {
+                "Asset",
+                "Root"->".",
+                "Assets"->{
+                    {"License","LICENSE"},
+                    {"ReadMe","README.md"},
+                    {"SampleData","SampleData"}
+                }
             }
         }
     |>

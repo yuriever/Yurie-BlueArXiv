@@ -50,12 +50,20 @@ generateBibTeXByID::usage =
 Begin["`Private`"];
 
 
+(* ::Subsection:: *)
+(*arXivIDQ*)
+
 
 arXivIDQ[string_String] :=
     StringMatchQ[string,$arXivIDPattern];
 arXivIDQ[_] = False;
 
 
+(* ::Subsection:: *)
+(*functions*)
+
+
+Get["lily`arxiv`arXivPDFNameFormat`"];
 Get["lily`arxiv`extractID`"];
 Get["lily`arxiv`searchByID`"];
 Get["lily`arxiv`downloadByID`"];
@@ -76,7 +84,5 @@ End[];
 
 Protect@@Names["`*"];
 
-(*set the default format of PDF names.*)
-arXivPDFNameFormat["ID"<>" "<>"title"<>", "<>"firstAuthor"];
 
 EndPackage[];
