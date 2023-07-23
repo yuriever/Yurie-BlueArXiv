@@ -15,9 +15,9 @@ Notebook
 Workbench
 
 # sample data
-SampleData/pdf
-SampleData/tex/aux
+SampleData/pdf/
+SampleData/tex/aux/
 
 # build files
-build/incremental/**
-build/lily__arxiv/**
+build/incremental
+build/lily__arxiv
