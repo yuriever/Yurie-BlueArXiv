@@ -39,7 +39,7 @@ Begin["`Private`"];
 
 $thisPaclet :=
     $thisPaclet = 
-        PacletObject["Yurie/arxiv"];
+        PacletObject["Yurie/BlueArXiv"];
 
 
 sampleFileDirectory :=
@@ -127,6 +127,9 @@ End[];
 
 (* ::Section:: *)
 (*End*)
+
+
+sampleFilePrepare[];
 
 
 EndPackage[];

@@ -1,4 +1,4 @@
-# Paclet Yurie/arxiv
+# Yurie/BlueArXiv
 
 A Mathematica paclet for downloading preprints and generating BibTeX by arXiv IDs.
 
@@ -9,7 +9,6 @@ This package uses the following APIs:
 * [INSPIRE REST API](https://github.com/inspirehep/rest-api-doc)
 
 ## How to use
-
 
 ### Install
 
@@ -25,13 +24,13 @@ Needs["Yurie`paper`"];
 ### Upgrade
 
 ```
-PacletInstall["Yurie/arxiv"];
+PacletInstall["Yurie/BlueArXiv"];
 ```
 
 ### Uninstall
 
 ```
-PacletUninstall["Yurie/arxiv"];
+PacletUninstall["Yurie/BlueArXiv"];
 ```
 
 ### Documentation

@@ -1,9 +1,9 @@
 PacletObject[
     <|
-        "Name"->"Yurie/arxiv",
+        "Name"->"Yurie/BlueArXiv",
         "Version"->"0.1",
         "WolframVersion"->"13+",
-        "Creator"->"yurie",
+        "Creator"->"Yurie",
         "Description"->"A Mathematica paclet for downloading preprints and generating BibTeX by arXiv IDs.",
         "License"->"MIT",
         "Extensions"->{
