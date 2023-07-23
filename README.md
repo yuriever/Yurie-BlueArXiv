@@ -24,6 +24,8 @@ Install from this repository:
 
 2. `PacletInstall@File["the/path/of/*.paclet"]`
 
+Load the packages
+
 ```
 Needs["Yurie`arxiv`"];
 Needs["Yurie`paper`"];
