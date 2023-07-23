@@ -12,9 +12,17 @@ This paclet uses the following APIs:
 
 ### Install
 
+Install via the Wolfram Language Paclet Repository (may need `PacletSiteUpdate@PacletSites[]`):
+
 ```
 PacletInstall["Yurie/BlueArXiv"]
 ```
+
+Install from this repository:
+
+	1. download the built paclet `build/Yurie__BlueArXiv-1.0.0.paclet`;
+	
+	2. `PacletInstall@File["the path of *.paclet"]`
 
 ```
 Needs["Yurie`arxiv`"];
@@ -36,3 +44,4 @@ PacletUninstall["Yurie/BlueArXiv"];
 ### Documentation
 
 [Yurie/BlueArXiv](https://resources.wolframcloud.com/PacletRepository/resources/Yurie/BlueArXiv/)
+
