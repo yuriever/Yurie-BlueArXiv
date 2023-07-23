@@ -4,7 +4,7 @@
 (*Begin*)
 
 
-BeginPackage["lily`arxiv`sample`"];
+BeginPackage["Yurie`arxiv`sample`"];
 
 
 sampleFileDirectory::usage = 
@@ -39,7 +39,7 @@ Begin["`Private`"];
 
 $thisPaclet :=
     $thisPaclet = 
-        PacletObject["lily/arxiv"];
+        PacletObject["Yurie/arxiv"];
 
 
 sampleFileDirectory :=

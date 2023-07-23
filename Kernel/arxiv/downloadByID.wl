@@ -4,11 +4,11 @@
 (*Begin*)
 
 
-BeginPackage["lily`arxiv`downloadByID`"];
+BeginPackage["Yurie`arxiv`downloadByID`"];
 
-Needs["lily`arxiv`common`"];
-Needs["lily`arxiv`"];
-Needs["lily`arxiv`searchByID`"];
+Needs["Yurie`arxiv`common`"];
+Needs["Yurie`arxiv`"];
+Needs["Yurie`arxiv`searchByID`"];
 
 
 downloadByID;

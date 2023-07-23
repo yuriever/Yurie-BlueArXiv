@@ -4,13 +4,13 @@
 (*Begin*)
 
 
-BeginPackage["lily`paper`"];
+BeginPackage["Yurie`paper`"];
 
 Unprotect@@Names["`*"];
 ClearAll@@Names["`*"];
 (*ClearAll@@Names["`*`*"];*)
 
-Get["lily`arxiv`common`"];
+Get["Yurie`arxiv`common`"];
 
 
 (* ::Section:: *)
@@ -39,8 +39,8 @@ Begin["`Private`"];
 (*extractTitleFromPDF|extractCiteKeyFromTeX*)
 
 
-Get["lily`paper`extractTitleFromPDF`"];
-Get["lily`paper`extractCiteKey`"];
+Get["Yurie`paper`extractTitleFromPDF`"];
+Get["Yurie`paper`extractCiteKey`"];
 
 
 (* ::Subsection:: *)

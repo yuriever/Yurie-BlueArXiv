@@ -4,10 +4,10 @@
 (*Begin*)
 
 
-BeginPackage["lily`paper`extractCiteKey`"];
+BeginPackage["Yurie`paper`extractCiteKey`"];
 
-Needs["lily`arxiv`common`"];
-Needs["lily`paper`"];
+Needs["Yurie`arxiv`common`"];
+Needs["Yurie`paper`"];
 
 
 extractCiteKey;

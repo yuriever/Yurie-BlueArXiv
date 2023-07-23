@@ -1,10 +1,10 @@
 PacletObject[
     <|
-        "Name"->"lily/arxiv",
+        "Name"->"Yurie/arxiv",
         "Version"->"0.1",
         "WolframVersion"->"13+",
         "Creator"->"yurie",
-        "Description"->"A Mathematica package for downloading preprints and generating BibTeXs by arXiv IDs.",
+        "Description"->"A Mathematica paclet for downloading preprints and generating BibTeX by arXiv IDs.",
         "License"->"MIT",
         "Extensions"->{
             {
@@ -12,8 +12,8 @@ PacletObject[
                 "Root"->"Kernel",
                 "Context"->
                     {
-                        "lily`arxiv`",
-                        "lily`paper`"
+                        "Yurie`arxiv`",
+                        "Yurie`paper`"
                     }
             },
             {

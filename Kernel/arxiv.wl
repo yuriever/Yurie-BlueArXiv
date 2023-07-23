@@ -4,13 +4,13 @@
 (*Begin*)
 
 
-BeginPackage["lily`arxiv`"];
+BeginPackage["Yurie`arxiv`"];
 
 Unprotect@@Names["`*"];
 ClearAll@@Names["`*"];
 (*ClearAll@@Names["`*`*"];*)
 
-Get["lily`arxiv`common`"];
+Get["Yurie`arxiv`common`"];
 
 
 (* ::Section:: *)
@@ -60,12 +60,12 @@ arXivIDQ[_] = False;
 (*functions*)
 
 
-Get["lily`arxiv`arXivPDFNameFormat`"];
-Get["lily`arxiv`extractID`"];
-Get["lily`arxiv`searchByID`"];
-Get["lily`arxiv`downloadByID`"];
-Get["lily`arxiv`generateBibTeXByID`"];
-Get["lily`arxiv`arXivInterface`"];
+Get["Yurie`arxiv`arXivPDFNameFormat`"];
+Get["Yurie`arxiv`extractID`"];
+Get["Yurie`arxiv`searchByID`"];
+Get["Yurie`arxiv`downloadByID`"];
+Get["Yurie`arxiv`generateBibTeXByID`"];
+Get["Yurie`arxiv`arXivInterface`"];
 
 
 (* ::Subsection:: *)

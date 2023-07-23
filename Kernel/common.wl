@@ -4,7 +4,7 @@
 (*Begin*)
 
 
-BeginPackage["lily`arxiv`common`"];
+BeginPackage["Yurie`arxiv`common`"];
 
 
 (* ::Section:: *)

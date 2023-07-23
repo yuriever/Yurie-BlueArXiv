@@ -4,10 +4,10 @@
 (*Begin*)
 
 
-BeginPackage["lily`paper`extractTitleFromPDF`"];
+BeginPackage["Yurie`paper`extractTitleFromPDF`"];
 
-Needs["lily`arxiv`common`"];
-Needs["lily`paper`"];
+Needs["Yurie`arxiv`common`"];
+Needs["Yurie`paper`"];
 
 
 extractTitleFromPDF;

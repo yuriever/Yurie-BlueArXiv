@@ -4,10 +4,10 @@
 (*Begin*)
 
 
-BeginPackage["lily`arxiv`extractID`"];
+BeginPackage["Yurie`arxiv`extractID`"];
 
-Needs["lily`arxiv`common`"];
-Needs["lily`arxiv`"];
+Needs["Yurie`arxiv`common`"];
+Needs["Yurie`arxiv`"];
 
 
 extractID;

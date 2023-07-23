@@ -4,14 +4,14 @@
 (*Begin*)
 
 
-BeginPackage["lily`arxiv`arXivInterface`"];
+BeginPackage["Yurie`arxiv`arXivInterface`"];
 
-Needs["lily`arxiv`common`"];
-Needs["lily`arxiv`"];
-Needs["lily`arxiv`extractID`"];
-Needs["lily`arxiv`searchByID`"];
-Needs["lily`arxiv`downloadByID`"];
-Needs["lily`arxiv`generateBibTeXByID`"];
+Needs["Yurie`arxiv`common`"];
+Needs["Yurie`arxiv`"];
+Needs["Yurie`arxiv`extractID`"];
+Needs["Yurie`arxiv`searchByID`"];
+Needs["Yurie`arxiv`downloadByID`"];
+Needs["Yurie`arxiv`generateBibTeXByID`"];
 
 
 arXivInterface;

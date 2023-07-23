@@ -1,14 +1,12 @@
-# Paclet lily/arxiv
+# Paclet Yurie/arxiv
 
-A Mathematica package for downloading preprints and generating BibTeX by arXiv IDs.
-
-// The documentation can be found on [my website](https://yuriever.github.io/symbolic/).
+A Mathematica paclet for downloading preprints and generating BibTeX by arXiv IDs.
 
 This package uses the following APIs:
 
-* [INSPIRE REST API](https://github.com/inspirehep/rest-api-doc)
-
 * [arXiv API](https://info.arxiv.org/help/api/index.html)
+
+* [INSPIRE REST API](https://github.com/inspirehep/rest-api-doc)
 
 ## How to use
 
@@ -16,28 +14,30 @@ This package uses the following APIs:
 ### Install
 
 ```
-PacletInstall["https://www.wolframcloud.com/obj/lily-ric/lily__arxiv-0.1.paclet"];
+PacletInstall[];
 ```
 
 ```
-Needs["lily`arxiv`"];
-Needs["lily`paper`"];
+Needs["Yurie`arxiv`"];
+Needs["Yurie`paper`"];
 ```
 
 ### Upgrade
 
 ```
-PacletInstall["lily/arxiv"];
+PacletInstall["Yurie/arxiv"];
 ```
 
 ### Uninstall
 
 ```
-PacletUninstall["lily/arxiv"];
+PacletUninstall["Yurie/arxiv"];
 ```
 
 ### Documentation
 
 ```
-lily/arxiv/guide/lilyarxiv
+
 ```
+
+The documentation can be found on [my website](https://yuriever.github.io/symbolic/).
