@@ -13,7 +13,7 @@ This paclet uses the following APIs:
 ### Install
 
 ```
-PacletInstall[ResourceObject["https://wolfr.am/1f7OhDvTa"]]
+PacletInstall["Yurie/BlueArXiv"]
 ```
 
 ```
@@ -35,4 +35,4 @@ PacletUninstall["Yurie/BlueArXiv"];
 
 ### Documentation
 
-[Yurie/BlueArXiv](https://www.wolframcloud.com/obj/yurie/DeployedResources/Paclet/Yurie/BlueArXiv/)
+[Yurie/BlueArXiv](https://resources.wolframcloud.com/PacletRepository/resources/Yurie/BlueArXiv/)
