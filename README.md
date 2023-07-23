@@ -20,9 +20,9 @@ PacletInstall["Yurie/BlueArXiv"]
 
 Install from this repository:
 
-	1. download the built paclet `build/Yurie__BlueArXiv-1.0.0.paclet`;
-	
-	2. `PacletInstall@File["the path of *.paclet"]`
+1. download the built paclet `build/*.paclet`;
+
+2. `PacletInstall@File["the/path/of/*.paclet"]`
 
 ```
 Needs["Yurie`arxiv`"];
