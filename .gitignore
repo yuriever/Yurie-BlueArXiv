@@ -20,4 +20,5 @@ SampleData/tex/aux
 
 # build files
 build/incremental
-build/lily__arxiv
+build/Yurie__BlueArXiv
+build/HTML

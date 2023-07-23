@@ -2,7 +2,7 @@
 
 A Mathematica paclet for downloading preprints and generating BibTeX by arXiv IDs.
 
-This package uses the following APIs:
+This paclet uses the following APIs:
 
 * [arXiv API](https://info.arxiv.org/help/api/index.html)
 
@@ -13,7 +13,7 @@ This package uses the following APIs:
 ### Install
 
 ```
-PacletInstall[];
+PacletInstall[ResourceObject["https://wolfr.am/1f7OhDvTa"]]
 ```
 
 ```
@@ -35,8 +35,4 @@ PacletUninstall["Yurie/BlueArXiv"];
 
 ### Documentation
 
-```
-
-```
-
-The documentation can be found on [my website](https://yuriever.github.io/symbolic/).
+[Yurie/BlueArXiv](https://www.wolframcloud.com/obj/yurie/DeployedResources/Paclet/Yurie/BlueArXiv/)
