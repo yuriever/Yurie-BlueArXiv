@@ -10,6 +10,7 @@ PacletObject[
     "Version" -> "1.0.1",
     "WolframVersion" -> "13+",
     "PrimaryContext" -> "Yurie`arxiv`",
+    "SourceControlURL" -> "https://github.com/yuriever/Yurie-BlueArXiv",
     "Extensions" -> {
       {
         "Kernel",

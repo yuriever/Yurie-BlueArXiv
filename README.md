@@ -15,14 +15,14 @@ This paclet uses the following APIs:
 Install via the Wolfram Language Paclet Repository (may need `PacletSiteUpdate@PacletSites[]`):
 
 ```
-PacletInstall["Yurie/BlueArXiv"]
+PacletInstall["Yurie/BlueArXiv"];
 ```
 
 Install from this repository:
 
 1. download the built paclet `build/*.paclet`;
 
-2. `PacletInstall@File["the/path/of/*.paclet"]`
+2. `PacletInstall@File["the/path/of/*.paclet"];`
 
 Load the packages:
 
