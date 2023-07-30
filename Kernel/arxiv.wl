@@ -7,9 +7,9 @@
 BeginPackage["Yurie`arxiv`"];
 
 
-Unprotect@@Names["`*"];
-ClearAll@@Names["`*"];
-(*ClearAll@@Names["`*`*"];*)
+Unprotect["`*"];
+ClearAll["`*"];
+(*ClearAll["`*`*"];*)
 
 
 Get["Yurie`arxiv`common`"];
@@ -81,7 +81,7 @@ End[];
 (*End*)
 
 
-Protect@@Names["`*"];
+Protect["`*"];
 
 
 EndPackage[];
