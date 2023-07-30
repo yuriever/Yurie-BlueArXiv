@@ -6,9 +6,11 @@
 
 BeginPackage["Yurie`paper`"];
 
+
 Unprotect@@Names["`*"];
 ClearAll@@Names["`*"];
 (*ClearAll@@Names["`*`*"];*)
+
 
 Get["Yurie`arxiv`common`"];
 
