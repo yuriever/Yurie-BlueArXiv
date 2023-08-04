@@ -4,7 +4,7 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`arxiv`sample`"];
+BeginPackage["Yurie`BlueArXiv`sample`"];
 
 
 sampleFileDirectory::usage = 
@@ -101,7 +101,7 @@ sampleFilePrepare[] :=
             samplePaperData//Query[All,FileExistsQ@FileNameJoin@{dir,#name}&]//AllTrue[TrueQ]//Not,
                 Export[
                     FileNameJoin@{dir,samplePaperData//Query[4,#name&]},
-                    "This is an example PDF file."
+                    "This is an example file."
                 ];
                 samplePaperData//Query[1;;3,URLDownload[#URL,FileNameJoin@{dir,#name}]&]
         ];

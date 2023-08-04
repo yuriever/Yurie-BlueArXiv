@@ -4,12 +4,12 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`arxiv`downloadByID`"];
+BeginPackage["Yurie`BlueArXiv`downloadByID`"];
 
 
-Needs["Yurie`arxiv`common`"];
-Needs["Yurie`arxiv`"];
-Needs["Yurie`arxiv`searchByID`"];
+Needs["Yurie`BlueArXiv`common`"];
+Needs["Yurie`BlueArXiv`"];
+Needs["Yurie`BlueArXiv`searchByID`"];
 
 
 downloadByID;
@@ -28,17 +28,24 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
+(*Option*)
+
+
+downloadByIDAsItemList//Options = {
+    "hideFileObject"->False,
+    Splice@Options@searchByIDAsItemList
+};
+
+downloadByID//Options = {
+    "clickToCopy"->True,
+	Splice@Options@downloadByIDAsItemList
+};
+
+
+(* ::Subsection:: *)
 (*downloadByID*)
 
 
-downloadByID//Options = {
-    "tryFileName"->True,
-    "hideDirectory"->True,
-    "hideFileObject"->False,
-    "mergeDuplicateID"->True,
-    "fileNameRegulate"->True,
-    "clickToCopy"->True
-};
 downloadByID[tag:"string"|"path",targetFolder_?DirectoryQ,opts:OptionsPattern[]][arg_] :=
     Module[ {fopts},
         fopts = FilterRules[{opts},Options[downloadByIDAsItemList]];
@@ -49,23 +56,13 @@ downloadByID[targetFolder_?DirectoryQ,opts:OptionsPattern[]][arg_] :=
     downloadByID["string",targetFolder,opts][arg];
 
 
-downloadByIDAsItemList//Options = {
-    "tryFileName"->True,
-    "hideDirectory"->True,
-    "hideFileObject"->False,
-    "mergeDuplicateID"->True,
-    "fileNameRegulate"->True
-};
 downloadByIDAsItemList[tag_,targetFolder_,opts:OptionsPattern[]][arg_] :=
     Module[ {idDataList,fopts},
         fopts = FilterRules[{opts},Options[searchByIDAsItemList]];
         idDataList = searchByIDAsItemList[tag,fopts][arg];
         (*download to the target path and return file objects*)
-        idDataList//Query[All,<|#,"fileObject"->downloadPDFFromURLAsFileObject[targetFolder,#URL,#item]|>&];
-        If[OptionValue["hideFileObject"],
-        	idDataList//KeyDrop["fileObject"],
-        	idDataList
-        ]
+        idDataList//Query[All,<|#,"fileObject"->downloadPDFFromURLAsFileObject[targetFolder,#URL,#item]|>&]//
+        	ifHideFileObject[OptionValue["hideFileObject"]]
     ];
 
 
@@ -73,6 +70,12 @@ downloadPDFFromURLAsFileObject[_,_,Missing[_]] :=
     Missing["Failed"];
 downloadPDFFromURLAsFileObject[targetFolder_,url_,item_String] :=
     URLDownload[url,FileNameJoin@{targetFolder,item<>".pdf"}];
+
+
+ifHideFileObject[True][idDataList_]:=
+	idDataList//KeyDrop["fileObject"];
+ifHideFileObject[False][idDataList_]:=
+	idDataList;
 
 
 (* ::Subsection:: *)

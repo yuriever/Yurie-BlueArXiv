@@ -4,11 +4,11 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`paper`extractCiteKey`"];
+BeginPackage["Yurie`PaperTool`extractCiteKey`"];
 
 
-Needs["Yurie`arxiv`common`"];
-Needs["Yurie`paper`"];
+Needs["Yurie`BlueArXiv`common`"];
+Needs["Yurie`PaperTool`"];
 
 
 extractCiteKey;
@@ -28,14 +28,27 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*extractCiteKey*)
+(*Option*)
 
+
+getCiteKeyFromTeXAsList//Options = {
+    "hideDirectory"->True
+};
+
+extractCiteKeyFromTeXAsItemList//Options = 
+	Options@getCiteKeyFromTeXAsList;
 
 extractCiteKey//Options = {
     "clickToCopy"->True,
-    "hideDirectory"->True,
-    "rawCiteKey"->False
+    "rawCiteKey"->False,
+    Splice@Options@extractCiteKeyFromTeXAsItemList
 };
+
+
+(* ::Subsection:: *)
+(*extractCiteKey*)
+
+
 extractCiteKey::texfailimport = 
     "the TeX file fails to import: \n``";
 extractCiteKey["string",OptionsPattern[]][stringOrStringList_] :=
@@ -58,9 +71,6 @@ extractCiteKeyFromStringAsItemList[stringOrStringList_] :=
     stringOrStringList//getCiteKeyFromStringAsList//Sort;
 
 
-extractCiteKeyFromTeXAsItemList//Options = {
-    "hideDirectory"->True
-};
 extractCiteKeyFromTeXAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {fopts},
         fopts = FilterRules[{opts},Options[getCiteKeyFromTeXAsList]];
@@ -68,9 +78,6 @@ extractCiteKeyFromTeXAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
     ];
 
 
-getCiteKeyFromTeXAsList//Options = {
-    "hideDirectory"->True
-};
 getCiteKeyFromTeXAsList[OptionsPattern[]][file_] :=
     Module[ {citeKeyList,itemList},
         citeKeyList = file//importStringFromTeX//getCiteKeyFromStringAsList;

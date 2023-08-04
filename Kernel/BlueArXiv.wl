@@ -4,7 +4,7 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`arxiv`"];
+BeginPackage["Yurie`BlueArXiv`"];
 
 
 Unprotect["`*"];
@@ -12,7 +12,7 @@ ClearAll["`*"];
 (*ClearAll["`*`*"];*)
 
 
-Get["Yurie`arxiv`common`"];
+Get["Yurie`BlueArXiv`common`"];
 
 
 (* ::Section:: *)
@@ -62,12 +62,12 @@ arXivIDQ[_] = False;
 (*functions*)
 
 
-Get["Yurie`arxiv`arXivPDFNameFormat`"];
-Get["Yurie`arxiv`extractID`"];
-Get["Yurie`arxiv`searchByID`"];
-Get["Yurie`arxiv`downloadByID`"];
-Get["Yurie`arxiv`generateBibTeXByID`"];
-Get["Yurie`arxiv`arXivInterface`"];
+Get["Yurie`BlueArXiv`arXivPDFNameFormat`"];
+Get["Yurie`BlueArXiv`extractID`"];
+Get["Yurie`BlueArXiv`searchByID`"];
+Get["Yurie`BlueArXiv`downloadByID`"];
+Get["Yurie`BlueArXiv`generateBibTeXByID`"];
+Get["Yurie`BlueArXiv`arXivInterface`"];
 
 
 (* ::Subsection:: *)

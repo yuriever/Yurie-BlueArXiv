@@ -4,15 +4,15 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`arxiv`arXivInterface`"];
+BeginPackage["Yurie`BlueArXiv`arXivInterface`"];
 
 
-Needs["Yurie`arxiv`common`"];
-Needs["Yurie`arxiv`"];
-Needs["Yurie`arxiv`extractID`"];
-Needs["Yurie`arxiv`searchByID`"];
-Needs["Yurie`arxiv`downloadByID`"];
-Needs["Yurie`arxiv`generateBibTeXByID`"];
+Needs["Yurie`BlueArXiv`common`"];
+Needs["Yurie`BlueArXiv`"];
+Needs["Yurie`BlueArXiv`extractID`"];
+Needs["Yurie`BlueArXiv`searchByID`"];
+Needs["Yurie`BlueArXiv`downloadByID`"];
+Needs["Yurie`BlueArXiv`generateBibTeXByID`"];
 
 
 arXivInterface;

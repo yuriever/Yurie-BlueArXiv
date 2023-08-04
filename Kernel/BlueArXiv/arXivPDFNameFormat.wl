@@ -4,11 +4,11 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`arxiv`arXivPDFNameFormat`"];
+BeginPackage["Yurie`BlueArXiv`arXivPDFNameFormat`"];
 
 
-Needs["Yurie`arxiv`common`"];
-Needs["Yurie`arxiv`"];
+Needs["Yurie`BlueArXiv`common`"];
+Needs["Yurie`BlueArXiv`"];
 
 
 arXivPDFNameFormat;

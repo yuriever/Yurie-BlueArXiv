@@ -4,12 +4,12 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`arxiv`searchByID`"];
+BeginPackage["Yurie`BlueArXiv`searchByID`"];
 
 
-Needs["Yurie`arxiv`common`"];
-Needs["Yurie`arxiv`"];
-Needs["Yurie`arxiv`extractID`"];
+Needs["Yurie`BlueArXiv`common`"];
+Needs["Yurie`BlueArXiv`"];
+Needs["Yurie`BlueArXiv`extractID`"];
 
 
 searchByID;
@@ -28,16 +28,34 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
+(*Option*)
+
+
+getItemDataFromIDAsList//Options = {
+    "fileNameRegulate"->True
+};
+
+searchByIDFromStringAsItemList//Options = 
+	Options@getItemDataFromIDAsList;
+
+searchByIDFromPathAsItemList//Options = {
+    Splice@Options@extractIDFromPathAsItemList,
+    Splice@Options@getItemDataFromIDAsList
+};
+
+searchByIDAsItemList//Options = 
+	Options@searchByIDFromPathAsItemList;
+
+searchByID//Options = {
+    "clickToCopy"->True,
+    Splice@Options@searchByIDAsItemList
+};
+
+
+(* ::Subsection:: *)
 (*searchByID*)
 
 
-searchByID//Options = {
-    "tryFileName"->True,
-    "hideDirectory"->True,
-    "mergeDuplicateID"->True,
-    "fileNameRegulate"->True,
-    "clickToCopy"->True
-};
 searchByID::connectionfailed =
     "connection failed.";
 searchByID[tag:"string"|"path",opts:OptionsPattern[]][arg_] :=
@@ -50,37 +68,19 @@ searchByID[opts:OptionsPattern[]][arg_] :=
     searchByID["string",opts][arg];
 
 
-searchByIDAsItemList//Options = {
-    "tryFileName"->True,
-    "hideDirectory"->True,
-    "mergeDuplicateID"->True,
-    "fileNameRegulate"->True
-};
 searchByIDAsItemList["string",opts:OptionsPattern[]][stringOrStringList_] :=
     Module[ {fopts},
         fopts = FilterRules[{opts},Options[searchByIDFromStringAsItemList]];
         searchByIDFromStringAsItemList[fopts][stringOrStringList]
     ];
 searchByIDAsItemList["path",opts:OptionsPattern[]][pathOrPathList_] :=
-    Module[ {fopts},
-        fopts = FilterRules[{opts},Options[searchByIDFromPathAsItemList]];
-        searchByIDFromPathAsItemList[fopts][pathOrPathList]
-    ];
+    searchByIDFromPathAsItemList[opts][pathOrPathList];
 
 
-searchByIDFromStringAsItemList//Options = {
-    "fileNameRegulate"->True
-};
 searchByIDFromStringAsItemList[opts:OptionsPattern[]][stringOrStringList_] :=
     stringOrStringList//extractIDFromStringAsItemList//getItemDataFromIDAsList[opts];
 
 
-searchByIDFromPathAsItemList//Options = {
-    "tryFileName"->True,
-    "hideDirectory"->True,
-    "mergeDuplicateID"->True,
-    "fileNameRegulate"->True
-};
 searchByIDFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {idDataList,idList,fopts},
         fopts[1] = FilterRules[{opts},Options[extractIDFromPathAsItemList]];
@@ -95,9 +95,6 @@ searchByIDFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
     ];
 
 
-getItemDataFromIDAsList//Options = {
-    "fileNameRegulate"->True
-};
 getItemDataFromIDAsList[OptionsPattern[]][idList_] :=
     Module[ {itemList,idValidList,itemNameList,urlList,itemData},
         idValidList = 

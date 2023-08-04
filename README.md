@@ -27,8 +27,8 @@ Install from this repository:
 Load the packages:
 
 ```
-Needs["Yurie`arxiv`"];
-Needs["Yurie`paper`"];
+Needs["Yurie`BlueArXiv`"];
+Needs["Yurie`PaperTool`"];
 ```
 
 ### Upgrade

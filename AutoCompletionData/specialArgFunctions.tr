@@ -1,0 +1,42 @@
+{
+    "extractID" -> {
+        {
+        	"string",
+        	"path"
+        },
+        {
+            "clickToCopy",
+            "mergeDuplicateID",
+            "tryFileName",
+            "hideDirectory"
+        }
+    },
+    "searchByID" -> {
+        {
+        	"string",
+        	"path"
+        },
+        {
+            "clickToCopy",
+            "mergeDuplicateID",
+            "tryFileName",
+            "hideDirectory",
+            "fileNameRegulate"
+        }
+    },
+    "downloadByID" -> {
+        {
+        	"string",
+        	"path"
+        },
+        8,
+        {
+            "clickToCopy",
+            "hideFileObject",
+            "mergeDuplicateID",
+            "tryFileName",
+            "hideDirectory",
+            "fileNameRegulate"
+        }
+    }
+}

@@ -4,7 +4,7 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`paper`"];
+BeginPackage["Yurie`PaperTool`"];
 
 
 Unprotect["`*"];
@@ -12,7 +12,7 @@ ClearAll["`*"];
 (*ClearAll["`*`*"];*)
 
 
-Get["Yurie`arxiv`common`"];
+Get["Yurie`BlueArXiv`common`"];
 
 
 (* ::Section:: *)
@@ -41,8 +41,8 @@ Begin["`Private`"];
 (*extractTitleFromPDF|extractCiteKeyFromTeX*)
 
 
-Get["Yurie`paper`extractTitleFromPDF`"];
-Get["Yurie`paper`extractCiteKey`"];
+Get["Yurie`PaperTool`extractTitleFromPDF`"];
+Get["Yurie`PaperTool`extractCiteKey`"];
 
 
 (* ::Subsection:: *)
