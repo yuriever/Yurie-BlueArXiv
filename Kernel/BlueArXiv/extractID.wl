@@ -4,11 +4,11 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`arxiv`extractID`"];
+BeginPackage["Yurie`BlueArXiv`extractID`"];
 
 
-Needs["Yurie`arxiv`common`"];
-Needs["Yurie`arxiv`"];
+Needs["Yurie`BlueArXiv`common`"];
+Needs["Yurie`BlueArXiv`"];
 
 
 extractID;
@@ -28,15 +28,29 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
+(*Option*)
+
+
+getIDDataFromPDFAsList//Options = {
+    "tryFileName"->True,
+    "hideDirectory"->True
+};
+
+extractIDFromPathAsItemList//Options = {
+    "mergeDuplicateID"->True,
+    Splice@Options@getIDDataFromPDFAsList
+};
+
+extractID//Options = {
+    "clickToCopy"->True,
+	Splice@Options@extractIDFromPathAsItemList
+};
+
+
+(* ::Subsection:: *)
 (*extractID*)
 
 
-extractID//Options = {
-    "tryFileName"->True,
-    "hideDirectory"->True,
-    "mergeDuplicateID"->True,
-    "clickToCopy"->True
-};
 extractID::pdffailimport = 
     "the PDF file fails to import: \n``";
 extractID["string",OptionsPattern[]][stringOrStringList_] :=
@@ -57,11 +71,6 @@ extractIDFromStringAsItemList[stringOrStringList_] :=
 
 
 (*act on path*)
-extractIDFromPathAsItemList//Options = {
-    "tryFileName"->True,
-    "hideDirectory"->True,
-    "mergeDuplicateID"->True
-};
 extractIDFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {fopts},
         fopts = FilterRules[{opts},Options[getIDDataFromPDFAsList]];
@@ -73,7 +82,6 @@ getIDFromStringAsList[string_String] :=
     string//StringCases[$arXivIDPattern]//DeleteDuplicates;
 getIDFromStringAsList[stringList_List] :=
     stringList//Map[getIDFromStringAsList]//Flatten//DeleteDuplicates;
-
 
 
 getIDDataFromPDFFirstPageAsList[file_] :=
@@ -94,10 +102,6 @@ getIDDataFromPDFFirstPageAsList[file_] :=
     ];
 
 
-getIDDataFromPDFAsList//Options = {
-    "tryFileName"->True,
-    "hideDirectory"->True
-};
 getIDDataFromPDFAsList[OptionsPattern[]][file_] :=
     Module[ {idData,idNumber,idList},
         If[ OptionValue["tryFileName"],

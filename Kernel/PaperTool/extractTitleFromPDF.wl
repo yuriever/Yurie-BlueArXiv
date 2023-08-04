@@ -4,11 +4,11 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`paper`extractTitleFromPDF`"];
+BeginPackage["Yurie`PaperTool`extractTitleFromPDF`"];
 
 
-Needs["Yurie`arxiv`common`"];
-Needs["Yurie`paper`"];
+Needs["Yurie`BlueArXiv`common`"];
+Needs["Yurie`PaperTool`"];
 
 
 extractTitleFromPDF;
@@ -27,35 +27,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*extractTitleFromPDF*)
-
-
-extractTitleFromPDF::pdffailimport = 
-    "the PDF file fails to import: \n``";
-extractTitleFromPDF//Options = {
-    "hideDirectory"->True,
-    "clickToCopy"->True,
-    "titleExtractMethod"->"sortYAndFontSize",
-    "YResolution"->25
-};
-extractTitleFromPDF[opts:OptionsPattern[]][pathOrPathList_] :=
-    Module[ {fopts},
-        fopts = FilterRules[{opts},Options[extractTitleFromPathAsItemList]];
-        pathOrPathList//extractTitleFromPathAsItemList[fopts]//ifAddButtonTo[OptionValue["clickToCopy"],"title"]//Dataset
-    ];
-
-
-extractTitleFromPathAsItemList//Options = {
-    "hideDirectory"->True,
-    "titleExtractMethod"->"sortYAndFontSize",
-    "YResolution"->25
-};
-
-extractTitleFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
-    Module[ {fopts},
-        fopts = FilterRules[{opts},Options[getTitleFromPDFAsItemList]];
-        pathOrPathList//getPDFFromPathAsList//getTitleFromPDFAsItemList[fopts]//DeleteDuplicates//Query[SortBy[#file&]]
-    ];
+(*Option*)
 
 
 getTitleFromPDFAsItemList//Options = {
@@ -63,10 +35,36 @@ getTitleFromPDFAsItemList//Options = {
     "titleExtractMethod"->"sortYAndFontSize",
     "YResolution"->25
 };
+
+extractTitleFromPathAsItemList//Options = 
+	Options@getTitleFromPDFAsItemList;
+
+extractTitleFromPDF//Options = {
+    "clickToCopy"->True,
+    Splice@Options@extractTitleFromPathAsItemList
+};
+
+
+(* ::Subsection:: *)
+(*extractTitleFromPDF*)
+
+
+extractTitleFromPDF::pdffailimport = 
+    "the PDF file fails to import: \n``";
+extractTitleFromPDF[opts:OptionsPattern[]][pathOrPathList_] :=
+    Module[ {fopts},
+        fopts = FilterRules[{opts},Options[extractTitleFromPathAsItemList]];
+        pathOrPathList//extractTitleFromPathAsItemList[fopts]//ifAddButtonTo[OptionValue["clickToCopy"],"title"]//Dataset
+    ];
+
+
+extractTitleFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
+    pathOrPathList//getPDFFromPathAsList//getTitleFromPDFAsItemList[opts]//DeleteDuplicates//Query[SortBy[#file&]];
+
+
 getTitleFromPDFAsItemList[opts:OptionsPattern[]][file_] :=
-    Module[ {title,fopts,itemList},
-        fopts = FilterRules[{opts},Options[recognizeTitleFromPDFBy]];
-        title = file//recognizeTitleFromPDFBy[OptionValue["titleExtractMethod"],fopts]//regulateTitle;
+    Module[ {title,itemList},
+        title = file//recognizeTitleFromPDFBy[OptionValue["titleExtractMethod"],OptionValue["YResolution"]]//regulateTitle;
         itemList = {<|"title"->title,"file"->file|>};
         If[ OptionValue["hideDirectory"],
             itemList//Query[All,<|#,"file"->hideDirectory[#file]|>&],
@@ -77,14 +75,11 @@ getTitleFromPDFAsItemList[opts:OptionsPattern[]][fileList_List] :=
     fileList//Map[getTitleFromPDFAsItemList[opts]]//Flatten;
 
 
-recognizeTitleFromPDFBy//Options = {
-    "YResolution"->25
-};
 (*search grouped texts with larger Y coordinate and fontsize.*)
-recognizeTitleFromPDFBy["sortYAndFontSize",opts:OptionsPattern[]][file_] :=
+recognizeTitleFromPDFBy["sortYAndFontSize",yresolution_][file_] :=
     Module[ {textData,counter,resultTextData,searchFirstNTexts},
         textData = 
-            file//importFirstPageAsTextList//regulateTextList[opts];
+            file//importFirstPageAsTextList//regulateTextList[yresolution];
         searchFirstNTexts[data_List,n_] :=
             Intersection[
                 data//Query[ReverseSortBy[#Y&]]//Query[1;;n],
@@ -101,10 +96,10 @@ recognizeTitleFromPDFBy["sortYAndFontSize",opts:OptionsPattern[]][file_] :=
         (*if there are multiple texts, select one with longest #string.*)
         resultTextData//Query[MaximalBy[StringLength[#string]&]]//Query[1,#string&]
     ];
-recognizeTitleFromPDFBy["sumYAndFontSize",opts:OptionsPattern[]][file_] :=
+recognizeTitleFromPDFBy["sumYAndFontSize",yresolution_][file_] :=
     Module[ {textData,maxY,maxFontSize,resultTextData},
         textData = 
-            file//importFirstPageAsTextList//regulateTextList[opts];
+            file//importFirstPageAsTextList//regulateTextList[yresolution];
         maxY = 
             textData//Query[All,#Y&]//Max;
         maxFontSize = 
@@ -116,21 +111,18 @@ recognizeTitleFromPDFBy["sumYAndFontSize",opts:OptionsPattern[]][file_] :=
     ];
 
 
-regulateTextList//Options = {
-    "YResolution"->25
-};
-regulateTextList[OptionsPattern[]][text_Text] :=
+regulateTextList[yresolution_][text_Text] :=
     text/.Text[Style[string_String,_,styleOptions___Rule],coords_List,offset_List]:>
         KeyMap[ToString]@<|
             "string"->string,
             FilterRules[{styleOptions},{FontSize}],
             "X"->coords[[1]],
-            "Y"->Round[coords[[2]],OptionValue["YResolution"]],
+            "Y"->Round[coords[[2]],yresolution],
             "offset"->offset
         |>;
-regulateTextList[opts:OptionsPattern[]][textList_List] :=
+regulateTextList[yresolution_][textList_List] :=
     Module[ {textData},
-        textData = regulateTextList[opts]/@textList;
+        textData = regulateTextList[yresolution]/@textList;
         GatherBy[textData,#Y&]//Map[SortBy[#X&]]//Map[mergeByKey[{"string"->StringJoin,"X"->Min},First]]
     ];
 

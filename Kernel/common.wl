@@ -4,7 +4,7 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`arxiv`common`"];
+BeginPackage["Yurie`BlueArXiv`common`"];
 
 
 (* ::Section:: *)

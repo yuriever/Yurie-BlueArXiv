@@ -4,12 +4,12 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`arxiv`generateBibTeXByID`"];
+BeginPackage["Yurie`BlueArXiv`generateBibTeXByID`"];
 
 
-Needs["Yurie`arxiv`common`"];
-Needs["Yurie`arxiv`"];
-Needs["Yurie`arxiv`extractID`"];
+Needs["Yurie`BlueArXiv`common`"];
+Needs["Yurie`BlueArXiv`"];
+Needs["Yurie`BlueArXiv`extractID`"];
 
 
 generateBibTeXByID;
@@ -27,15 +27,22 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*generateBibTeXByID*)
+(*Option*)
 
 
 generateBibTeXByID//Options = {
-    "tryFileName"->True,
-    "hideDirectory"->True,
-    "mergeDuplicateID"->True,
-    "clickToCopy"->True
+    "clickToCopy"->True,
+    Splice@Options@generateBibTeXByIDFromPathAsItemList
 };
+
+generateBibTeXByIDFromPathAsItemList//Options = 
+	Options@extractIDFromPathAsItemList;
+
+
+(* ::Subsection:: *)
+(*generateBibTeXByID*)
+
+
 generateBibTeXByID["string",targetFolder_?DirectoryQ,bibName_String,OptionsPattern[]][arg_] :=
     generateBibTeXByIDFromStringAsItemList[targetFolder,bibName][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"key","ID","BibTeX"]//
     	Dataset[#,HiddenItems->{"BibTeX"->True}]&
@@ -58,15 +65,9 @@ generateBibTeXByIDFromStringAsItemList[targetFolder_,bibName_][stringOrStringLis
     ];
 
 
-generateBibTeXByIDFromPathAsItemList//Options = {
-    "tryFileName"->True,
-    "hideDirectory"->True,
-    "mergeDuplicateID"->True
-};
 generateBibTeXByIDFromPathAsItemList[targetFolder_,bibName_String,opts:OptionsPattern[]][pathOrPathList_] :=
-    Module[ {idDataList,idList,fopts,itemList},
-        fopts = FilterRules[{opts},Options[extractIDFromPathAsItemList]];
-        idDataList = pathOrPathList//extractIDFromPathAsItemList[fopts];
+    Module[ {idDataList,idList,itemList},
+        idDataList = pathOrPathList//extractIDFromPathAsItemList[opts];
         idList = idDataList//Query[All,#ID&];
         itemList = JoinAcross[
             getBibTeXItemFromIDListAsList[idList],
