@@ -1,8 +1,8 @@
 {
     "extractID" -> {
         {
-        	"string",
-        	"path"
+            "string",
+            "path"
         },
         {
             "clickToCopy",
@@ -13,21 +13,20 @@
     },
     "searchByID" -> {
         {
-        	"string",
-        	"path"
+            "string",
+            "path"
         },
         {
             "clickToCopy",
             "mergeDuplicateID",
             "tryFileName",
-            "hideDirectory",
-            "fileNameRegulate"
+            "hideDirectory"
         }
     },
     "downloadByID" -> {
         {
-        	"string",
-        	"path"
+            "string",
+            "path"
         },
         8,
         {
@@ -35,8 +34,37 @@
             "hideFileObject",
             "mergeDuplicateID",
             "tryFileName",
+            "hideDirectory"
+        }
+    },
+    "generateBibTeXByID" -> {
+        {
+            "string",
+            "path"
+        },
+        8,
+        0,
+        {
+            "clickToCopy"
+        }
+    },
+    "extractCiteKey" -> {
+        {
+            "string",
+            "path"
+        },
+        {
+            "clickToCopy",
+            "rawCiteKey",
+            "hideDirectory"
+        }
+    },
+    "extractTitleFromPDF" -> {
+        {
+            "clickToCopy",
             "hideDirectory",
-            "fileNameRegulate"
+            "titleExtractMethod",
+            "YResolution"
         }
     }
 }
