@@ -98,10 +98,10 @@ Cell[TextData[{
     "a850b4b8-8eb3-41a0-8908-4e175c5a3344"], 
    DynamicModuleBox[{$CellContext`nbobj$$ = NotebookObject[
     "43c03bfb-4edd-4fc3-9c0d-d4648a585f4f", 
-     "3f95561a-c696-44c8-94a5-0877e2ed13bb"], $CellContext`cellobj$$ = 
+     "d86cfda4-9626-4a9c-8705-a764cf6b55e0"], $CellContext`cellobj$$ = 
     CellObject[
     "20a25eb2-1b7e-4d2a-952e-f627981ba47e", 
-     "83946bf6-3c0c-40a0-85d1-0bffaf0f3402"]}, 
+     "5a8ddb39-c603-461c-aff0-64e121217e40"]}, 
     TemplateBox[{
       GraphicsBox[{{
          Thickness[0.06], 
@@ -223,7 +223,7 @@ Cell[BoxData[
 
 Cell[BoxData[
  RowBox[{"arXivInterface", "[", "]"}]], "Input",
- CellLabel->"In[143]:=",
+ CellLabel->"In[150]:=",
  CellID->1560009319,ExpressionUUID->"3b4b11ba-d929-4d81-bae3-9d1056e41998"],
 
 Cell[BoxData[
@@ -287,7 +287,7 @@ Cell[BoxData[
   Setting[#, {0}]& ]], "Input",
  GeneratedCell->True,
  CellAutoOverwrite->True,
- CellID->536080101,ExpressionUUID->"659dc69d-9cb1-4cff-a3fb-3675692dde4e"]
+ CellID->478841440,ExpressionUUID->"d67fd033-efa6-42c7-bd70-0330661773d6"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -538,8 +538,8 @@ Cell[6894, 209, 442, 12, 90, "PrimaryExamplesSection",ExpressionUUID->"74bbe7ae-
  CellID->825308864],
 Cell[7339, 223, 163, 3, 33, "Input",ExpressionUUID->"3b4b11ba-d929-4d81-bae3-9d1056e41998",
  CellID->1560009319],
-Cell[7505, 228, 2804, 61, 496, "Input",ExpressionUUID->"659dc69d-9cb1-4cff-a3fb-3675692dde4e",
- CellID->536080101]
+Cell[7505, 228, 2804, 61, 496, "Input",ExpressionUUID->"d67fd033-efa6-42c7-bd70-0330661773d6",
+ CellID->478841440]
 }, Open  ]],
 Cell[CellGroupData[{
 Cell[10346, 294, 487, 13, 72, "ExtendedExamplesSection",ExpressionUUID->"04c30d21-4540-46d0-9997-787fec967d64",
