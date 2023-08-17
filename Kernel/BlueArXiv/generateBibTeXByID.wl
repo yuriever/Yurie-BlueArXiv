@@ -36,7 +36,7 @@ generateBibTeXByID//Options = {
 };
 
 generateBibTeXByIDFromPathAsItemList//Options = 
-	Options@extractIDFromPathAsItemList;
+    Options@extractIDFromPathAsItemList;
 
 
 (* ::Subsection:: *)

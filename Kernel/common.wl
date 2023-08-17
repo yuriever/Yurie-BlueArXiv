@@ -18,8 +18,11 @@ BeginPackage["Yurie`BlueArXiv`common`"];
 $arXivIDPattern::usage = 
     "string pattern of valid arXiv ID.";
 
-$arXivPDFNameFormat::usage = 
-    "formattor of file names, set by arXivPDFNameFormat.";
+$arXivPDFNameFormatter::usage = 
+    "formatter of file names, set by arXivPDFNameFormat.";
+
+$arXivPDFNameRegulator::usage = 
+    "regulator of file names, set by arXivPDFNameFormat.";
 
 $citeKeyPattern::usage = 
     "string pattern of cite key.";
@@ -28,9 +31,6 @@ $citeKeyPattern::usage =
 (* ::Subsection:: *)
 (*Common functions*)
 
-
-fileNameRegulate::usage =
-    "regulate the file name with characters like \"/\" and \"\n\".";
 
 getFileByExtension::usage = 
     "get files in path or list of paths by specifying the extension.";
@@ -66,37 +66,32 @@ Begin["`Private`"];
 $arXivIDPattern =
     RegularExpression["(\\d{4}\\.\\d{4,5})|((astro-ph|cond-mat|gr-qc|hep-ex|hep-lat|hep-ph|hep-th|math-ph|nlin|nucl-ex|nucl-th|physics|quant-ph|math|cs)/\\d{7})"];
 
-$arXivPDFNameFormat =
+$arXivPDFNameFormatter =
     (*set the default format of PDF names.*)
     (*arXivPDFNameFormat["ID"<>" "<>"title"<>", "<>"firstAuthor"]*)
     (
-        Query["ID"][#]<>" "<>
-        Query["Title"][#]<>", "<>
-        RemoveDiacritics[Query["Author",1,"Name"][#]]
+        Lookup[#,"ID"]<>" "<>
+        Lookup[#,"Title",""]<>", "<>
+        Lookup[#,"Author","",Part[#,1,"Name"]&]
     )&;
+
+(*set the default regulator of PDF names.*)
+$arXivPDFNameRegulator[string_String] :=
+    RemoveDiacritics@StringReplace[
+        string,
+        {    
+            ":"->" -",     
+            "/"->"_",
+            "\n"|"\r"->" ",
+            "\[CloseCurlyQuote]"->"'"
+        }
+    ];
+$arXivPDFNameRegulator[arg_Missing] :=
+    arg;
 
 $citeKeyPattern = 
     (*no whitespace tolerance.*)
     RegularExpression["(\\\\cite{)(\\S*?)(})"];
-
-
-(* ::Subsection:: *)
-(*fileNameRegulate*)
-
-
-fileNameRegulate//Attributes = 
-    {Listable};
-fileNameRegulate[string_String] :=
-    StringReplace[
-        string,
-        {
-            "/"->"::",
-            "\n"->" ",
-            "\[CloseCurlyQuote]"->"'"
-        }
-    ];
-fileNameRegulate[arg_Missing] :=
-    arg;
 
 
 (* ::Subsection:: *)
@@ -154,12 +149,12 @@ addButtonTo[key_,restKeys__][list_] :=
 `addButtonTo`hyperlink[_] :=
     Missing["Failed"];
 
-`addButtonTo`copyToClipboard[value_String] :=
+`addButtonTo`copyToClipboard[value_] :=
     Interpretation[{},
         Button[value,CopyToClipboard@value,Appearance->"Frameless",FrameMargins->Small],
         value
     ];
-`addButtonTo`copyToClipboard[_] :=
+`addButtonTo`copyToClipboard[_Missing] :=
     Missing["Failed"];
 
 

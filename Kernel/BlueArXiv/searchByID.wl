@@ -31,7 +31,7 @@ Begin["`Private`"];
 (*Option*)
 
 
-getItemDataFromIDAsList//Options = {
+(*getItemDataFromIDAsList//Options = {
     "fileNameRegulate"->True
 };
 
@@ -41,7 +41,10 @@ searchByIDFromStringAsItemList//Options =
 searchByIDFromPathAsItemList//Options = {
     Splice@Options@extractIDFromPathAsItemList,
     Splice@Options@getItemDataFromIDAsList
-};
+};*)
+
+searchByIDFromPathAsItemList//Options = 
+    Options@extractIDFromPathAsItemList;
 
 searchByIDAsItemList//Options = 
 	Options@searchByIDFromPathAsItemList;
@@ -69,12 +72,9 @@ searchByID[opts:OptionsPattern[]][arg_] :=
 
 
 searchByIDAsItemList["string",opts:OptionsPattern[]][stringOrStringList_] :=
-    Module[ {fopts},
-        fopts = FilterRules[{opts},Options[searchByIDFromStringAsItemList]];
-        searchByIDFromStringAsItemList[fopts][stringOrStringList]
-    ];
+	searchByIDFromStringAsItemList[opts][stringOrStringList];
 searchByIDAsItemList["path",opts:OptionsPattern[]][pathOrPathList_] :=
-    searchByIDFromPathAsItemList[opts][pathOrPathList];
+	searchByIDFromPathAsItemList[opts][pathOrPathList];
 
 
 searchByIDFromStringAsItemList[opts:OptionsPattern[]][stringOrStringList_] :=
@@ -95,14 +95,14 @@ searchByIDFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
     ];
 
 
-getItemDataFromIDAsList[OptionsPattern[]][idList_] :=
+getItemDataFromIDAsList[opts:OptionsPattern[]][idList_] :=
     Module[ {itemList,idValidList,itemNameList,urlList,itemData},
         idValidList = 
             DeleteDuplicates@DeleteCases[idList,"notFound"];
         itemList = 
             idValidList//getItemFromValidIDListAsList;
         itemNameList = 
-            itemList//Query[All,$arXivPDFNameFormat,FailureAction->"Replace"]//ifFileNameRegulate[OptionValue["fileNameRegulate"]];
+            itemList//Query[All,$arXivPDFNameFormatter,FailureAction->"Replace"]//Map[$arXivPDFNameRegulator];(*//ifFileNameRegulate[OptionValue["fileNameRegulate"]];*)
         urlList = 
             getURLFromItem/@itemList;
         itemData = 
@@ -150,10 +150,10 @@ getURLFromItem[item_Association] :=
 			Query[All,"Href",FailureAction->"Replace"]//First//StringJoin[#,".pdf"]&;
 
 
-ifFileNameRegulate[True] :=
+(*ifFileNameRegulate[True] :=
     fileNameRegulate;
 ifFileNameRegulate[False] :=
-    Identity;
+    Identity;*)
 
 
 (* ::Subsection:: *)

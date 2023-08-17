@@ -38,7 +38,7 @@ downloadByIDAsItemList//Options = {
 
 downloadByID//Options = {
     "clickToCopy"->True,
-	Splice@Options@downloadByIDAsItemList
+    Splice@Options@downloadByIDAsItemList
 };
 
 
@@ -70,12 +70,14 @@ downloadPDFFromURLAsFileObject[_,_,Missing[_]] :=
     Missing["Failed"];
 downloadPDFFromURLAsFileObject[targetFolder_,url_,item_String] :=
     URLDownload[url,FileNameJoin@{targetFolder,item<>".pdf"}];
+downloadPDFFromURLAsFileObject[targetFolder_,url_,item_] :=
+    URLDownload[url,FileNameJoin@{targetFolder,ToString[item]<>".pdf"}];
 
 
-ifHideFileObject[True][idDataList_]:=
-	idDataList//KeyDrop["fileObject"];
-ifHideFileObject[False][idDataList_]:=
-	idDataList;
+ifHideFileObject[True][idDataList_] :=
+    idDataList//KeyDrop["fileObject"];
+ifHideFileObject[False][idDataList_] :=
+    idDataList;
 
 
 (* ::Subsection:: *)

@@ -45,10 +45,10 @@ arXivInterface[] :=
             Panel@Column@{
                 "Function:",
                 Row@{
-                    PopupMenu[Dynamic[fun],{"extract","search","download","generate BibTeX"},Appearance->"DialogBox",ImageSize->Small],
-                    " from ",
-                    PopupMenu[Dynamic[tag],{"string","path"},Appearance->"DialogBox",ImageSize->Small]
-                },
+                        PopupMenu[Dynamic[fun],{"extract","search","download","generate BibTeX"},Appearance->"DialogBox",ImageSize->Small],
+                        " from ",
+                        PopupMenu[Dynamic[tag],{"string","path"},Appearance->"DialogBox",ImageSize->Small]
+                    },
                 "",
                 Sequence@@targetUnit,
                 "",
@@ -71,25 +71,25 @@ arXivInterface[] :=
 
 targetUnit =
     Hold[
-    	"Downloads path:",
-    	InputField[
-    		Dynamic[target],
-    		String,
-    		FieldHint->"Enter the downloads path.",
-    		FieldSize->{First@CurrentValue[WindowSize]/20,1}
-		]
-	];
+        "Downloads path:",
+        InputField[
+            Dynamic[target],
+            String,
+            FieldHint->"Enter the downloads path.",
+            FieldSize->{First@CurrentValue[WindowSize]/16.885,1}
+        ]
+    ];
 
 inputUnit =
     Hold[
-    	"Input string/path:",
-    	InputField[
-    		Dynamic[string],
-    		String,
-    		FieldHint->"Enter a string or a PDF file/folder path.",
-    		FieldSize->{First@CurrentValue[WindowSize]/20,Last@CurrentValue[WindowSize]/80}
-		]
-	];
+        "Input string/path:",
+        InputField[
+            Dynamic[string],
+            String,
+            FieldHint->"Enter a string or a PDF file/folder path.",
+            FieldSize->{First@CurrentValue[WindowSize]/16.885,Last@CurrentValue[WindowSize]/80}
+        ]
+    ];
 
 
 

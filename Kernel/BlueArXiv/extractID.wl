@@ -43,7 +43,7 @@ extractIDFromPathAsItemList//Options = {
 
 extractID//Options = {
     "clickToCopy"->True,
-	Splice@Options@extractIDFromPathAsItemList
+    Splice@Options@extractIDFromPathAsItemList
 };
 
 
