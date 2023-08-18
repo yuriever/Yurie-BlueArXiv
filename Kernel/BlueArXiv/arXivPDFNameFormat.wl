@@ -43,7 +43,6 @@ arXivPDFNameFormat[format_,regulator_Symbol] :=
         $arXivPDFNameRegulator//Unprotect;
         $arXivPDFNameRegulator//ClearAll;
         $arXivPDFNameRegulator[arg_] :=
-            (*ToString@*)
             regulator@arg;
         $arXivPDFNameRegulator[arg_Missing] :=
             arg;

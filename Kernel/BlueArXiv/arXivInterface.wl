@@ -33,64 +33,66 @@ Begin["`Private`"];
 (*downloadByID*)
 
 
+arXivInterface[targetDir_?DirectoryQ] :=
+    kernel[targetDir];
+
 arXivInterface[] :=
-    CellPrint@ExpressionCell[
-        Interpretation[
-            {    
-                fun = "download",
-                tag = "string",
-                string = "",
-                target = FileNameJoin@{$HomeDirectory,"Downloads"}
+    kernel[FileNameJoin@{$HomeDirectory,"Downloads"}];
+
+
+kernel[targetDir_] :=
+    Interpretation[
+        {    
+            fun = "download",
+            tag = "string",
+            string = "",
+            target = targetDir,
+            width = First@CurrentValue[EvaluationNotebook[],"WindowSize"],
+            height = Last@CurrentValue[EvaluationNotebook[],"WindowSize"]
+        },
+        Deploy@Panel@Column@{
+            "Function:",
+            Row@{
+                PopupMenu[Dynamic[fun],{"extract","search","download","generate BibTeX"},ImageSize->Small],
+                " from ",
+                PopupMenu[Dynamic[tag],{"string","path"},ImageSize->Small]
             },
-            Panel@Column@{
-                "Function:",
-                Row@{
-                        PopupMenu[Dynamic[fun],{"extract","search","download","generate BibTeX"},Appearance->"DialogBox",ImageSize->Small],
-                        " from ",
-                        PopupMenu[Dynamic[tag],{"string","path"},Appearance->"DialogBox",ImageSize->Small]
-                    },
-                "",
-                Sequence@@targetUnit,
-                "",
-                Sequence@@inputUnit
-            },
-            Switch[fun,
-                "extract",
-                    extractID[tag][string],
-                "search",
-                    searchByID[tag][string],
-                "download",
-                    downloadByID[tag,target][string],
-                "generate BibTeX",
-                    generateBibTeXByID[tag,target,"refs-"<>ToString@RandomInteger[{100,1000}]<>".bib"][string]
-            ]
-        ],
-        "Input"
+            "",
+            "Downloads path:",
+            Sequence@@targetUnit,
+            "",
+            "Input string/path:",
+            Sequence@@inputUnit
+        },
+        Switch[fun,
+            "extract",
+                extractID[tag][string],
+            "search",
+                searchByID[tag][string],
+            "download",
+                downloadByID[tag,target][string],
+            "generate BibTeX",
+                generateBibTeXByID[tag,target,"refs-"<>ToString@RandomInteger[{1000,10000}]<>".bib"][string]
+        ]
     ];
 
 
 targetUnit =
-    Hold[
-        "Downloads path:",
-        InputField[
-            Dynamic[target],
-            String,
-            FieldHint->"Enter the downloads path.",
-            FieldSize->{First@CurrentValue[WindowSize]/16.885,1}
-        ]
+    Hold@InputField[
+        Dynamic[target],
+        String,
+        FieldHint->"Enter the downloads path.",
+        FieldSize->{Dynamic[width]/17.,1}
     ];
+
 
 inputUnit =
-    Hold[
-        "Input string/path:",
-        InputField[
-            Dynamic[string],
-            String,
-            FieldHint->"Enter a string or a PDF file/folder path.",
-            FieldSize->{First@CurrentValue[WindowSize]/16.885,Last@CurrentValue[WindowSize]/80}
-        ]
+    Hold@InputField[
+        Dynamic[string],
+        String,
+        FieldHint->"Enter a string or a PDF file/folder path.",
+        FieldSize->{Dynamic[width]/17.,{Dynamic[height]/100.,Infinity}}
     ];
-
 
 
 (* ::Subsection:: *)
