@@ -1,4 +1,7 @@
 {
+	"arXivInterface" -> {
+		8
+	},
     "extractID" -> {
         {
             "string",

@@ -116,10 +116,7 @@ getFileByExtension[extension_][pathList_List] :=
 
 
 getFileNameByExtension[extension_][pathOrPathList_] :=
-    StringReplace[
-        getFileByExtension[extension][pathOrPathList],
-        __~~"/"~~Longest[fileName__]~~"."~~extension~~EndOfString:>fileName
-    ];
+	getFileByExtension[extension][pathOrPathList]//Map[FileNameTake]//Map[FileBaseName];
 
 
 (* ::Subsection:: *)
