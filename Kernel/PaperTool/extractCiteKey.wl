@@ -28,7 +28,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Option*)
+(*Options and messages*)
 
 
 getCiteKeyFromTeXAsList//Options = {
@@ -36,7 +36,7 @@ getCiteKeyFromTeXAsList//Options = {
 };
 
 extractCiteKeyFromTeXAsItemList//Options = 
-	Options@getCiteKeyFromTeXAsList;
+    Options@getCiteKeyFromTeXAsList;
 
 extractCiteKey//Options = {
     "clickToCopy"->True,
@@ -45,14 +45,17 @@ extractCiteKey//Options = {
 };
 
 
+extractCiteKey::texfailimport = 
+    "the TeX file fails to import: \n``";
+
+
 (* ::Subsection:: *)
 (*extractCiteKey*)
 
 
-extractCiteKey::texfailimport = 
-    "the TeX file fails to import: \n``";
-extractCiteKey["string",OptionsPattern[]][stringOrStringList_] :=
+extractCiteKey["string",opts:OptionsPattern[]][stringOrStringList_] :=
     stringOrStringList//extractCiteKeyFromStringAsItemList//ifAddButtonTo[OptionValue["clickToCopy"]];
+
 extractCiteKey["path",opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {fopts,itemList},
         fopts = FilterRules[{opts},Options[extractCiteKeyFromTeXAsItemList]];
@@ -87,6 +90,7 @@ getCiteKeyFromTeXAsList[OptionsPattern[]][file_] :=
             itemList
         ]
     ];
+
 getCiteKeyFromTeXAsList[opts:OptionsPattern[]][fileList_List] :=
     fileList//Map[getCiteKeyFromTeXAsList[opts]]//Flatten;
 

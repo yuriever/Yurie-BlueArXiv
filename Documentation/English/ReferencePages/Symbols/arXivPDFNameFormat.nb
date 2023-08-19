@@ -237,10 +237,10 @@ Cell[TextData[{
     "d792ba6f-f07b-4410-b93d-94c906633b91"], 
    DynamicModuleBox[{$CellContext`nbobj$$ = NotebookObject[
     "47a5cbca-ed08-4b30-9573-9296bcfd5fc7", 
-     "cc246040-83d6-4cf7-b392-143efa65ec90"], $CellContext`cellobj$$ = 
+     "8c87deba-ee78-4cc4-bd93-382e1c781a3a"], $CellContext`cellobj$$ = 
     CellObject[
     "12e10be5-10aa-4ad6-941c-84663365bbd4", 
-     "864fb4e8-5f39-49ee-9848-78c131e68677"]}, 
+     "827512a2-11d1-4731-9860-530dc4f009ea"]}, 
     TemplateBox[{
       GraphicsBox[{{
          Thickness[0.06], 
@@ -544,7 +544,7 @@ Cell["Yurie/BlueArXiv", "Categorization",
  CellLabel->"Paclet Name",
  CellID->860996198,ExpressionUUID->"347b0788-1607-45ac-9ab5-b41042ff6136"],
 
-Cell["Yurie/BlueArXiv`", "Categorization",
+Cell["Yurie`BlueArXiv`", "Categorization",
  CellLabel->"Context",
  CellID->1018286300,ExpressionUUID->"e237846b-c604-44d7-848c-490a2263e105"],
 
@@ -586,7 +586,7 @@ Cell[BoxData[""], "Template",
 }, Open  ]]
 },
 WindowSize->{840, 1022},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
 Visible->True,
 TaggingRules-><|"Paclet" -> "Yurie/BlueArXiv"|>,
 CellContext->"Global`",

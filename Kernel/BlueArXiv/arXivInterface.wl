@@ -33,20 +33,17 @@ Begin["`Private`"];
 (*downloadByID*)
 
 
-arXivInterface[targetDir_?DirectoryQ] :=
-    kernel[targetDir];
-
-arXivInterface[] :=
-    kernel[FileNameJoin@{$HomeDirectory,"Downloads"}];
+arXivInterface[HoldPattern[targetFolder:(_?DirectoryQ):$defaultDownloadDir]] :=
+    kernel[targetFolder];
 
 
-kernel[targetDir_] :=
+kernel[targetFolder_] :=
     Interpretation[
         {    
             fun = "download",
             tag = "string",
             string = "",
-            target = targetDir,
+            target = targetFolder,
             width = First@CurrentValue[EvaluationNotebook[],"WindowSize"],
             height = Last@CurrentValue[EvaluationNotebook[],"WindowSize"]
         },
@@ -72,7 +69,7 @@ kernel[targetDir_] :=
             "download",
                 downloadByID[tag,target][string],
             "generate BibTeX",
-                generateBibTeXByID[tag,target,"refs-"<>ToString@RandomInteger[{1000,10000}]<>".bib"][string]
+                generateBibTeXByID[tag,target][string]
         ]
     ];
 

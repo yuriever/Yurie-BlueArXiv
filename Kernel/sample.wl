@@ -18,8 +18,6 @@ sampleFileClear::usage =
 
 sampleString::usage = 
     "sample strings.";
-    
-(*samplePaperData;*)
 
 
 (* ::Section:: *)
@@ -31,6 +29,14 @@ sampleString::usage =
 
 
 Begin["`Private`"];
+
+
+(* ::Subsection:: *)
+(*Options and Messages*)
+
+
+sampleFilePrepare::connectionfailed = 
+    "The network connection fails.";
 
 
 (* ::Subsection:: *)
@@ -90,8 +96,6 @@ sampleString :=
         |>;
 
 
-sampleFilePrepare::connectionfailed = 
-    "The network connection fails.";
 sampleFilePrepare[] :=
     Module[ {dir},
         dir = sampleFileDirectory["pdf"];
@@ -116,7 +120,7 @@ sampleFileClear[] :=
         ];
         DeleteFile@FileNames[All,sampleFileDirectory["pdf"]];
     ];
-    
+
 
 (* ::Subsection:: *)
 (*End*)

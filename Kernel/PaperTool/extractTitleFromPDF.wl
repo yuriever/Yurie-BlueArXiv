@@ -27,7 +27,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Option*)
+(*Options and messages*)
 
 
 getTitleFromPDFAsItemList//Options = {
@@ -37,7 +37,7 @@ getTitleFromPDFAsItemList//Options = {
 };
 
 extractTitleFromPathAsItemList//Options = 
-	Options@getTitleFromPDFAsItemList;
+    Options@getTitleFromPDFAsItemList;
 
 extractTitleFromPDF//Options = {
     "clickToCopy"->True,
@@ -45,12 +45,14 @@ extractTitleFromPDF//Options = {
 };
 
 
+extractTitleFromPDF::pdffailimport = 
+    "the PDF file fails to import: \n``";
+
+
 (* ::Subsection:: *)
 (*extractTitleFromPDF*)
 
 
-extractTitleFromPDF::pdffailimport = 
-    "the PDF file fails to import: \n``";
 extractTitleFromPDF[opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {fopts},
         fopts = FilterRules[{opts},Options[extractTitleFromPathAsItemList]];
@@ -71,6 +73,7 @@ getTitleFromPDFAsItemList[opts:OptionsPattern[]][file_] :=
             itemList
         ]
     ];
+
 getTitleFromPDFAsItemList[opts:OptionsPattern[]][fileList_List] :=
     fileList//Map[getTitleFromPDFAsItemList[opts]]//Flatten;
 
@@ -96,6 +99,7 @@ recognizeTitleFromPDFBy["sortYAndFontSize",yresolution_][file_] :=
         (*if there are multiple texts, select one with longest #string.*)
         resultTextData//Query[MaximalBy[StringLength[#string]&]]//Query[1,#string&]
     ];
+
 recognizeTitleFromPDFBy["sumYAndFontSize",yresolution_][file_] :=
     Module[ {textData,maxY,maxFontSize,resultTextData},
         textData = 
@@ -120,6 +124,7 @@ regulateTextList[yresolution_][text_Text] :=
             "Y"->Round[coords[[2]],yresolution],
             "offset"->offset
         |>;
+
 regulateTextList[yresolution_][textList_List] :=
     Module[ {textData},
         textData = regulateTextList[yresolution]/@textList;
@@ -149,22 +154,17 @@ importFirstPageAsTextList[file_] :=
 
 regulateTitle//Attributes = 
     {Listable};
+
 regulateTitle[""] = 
     "";
+
 regulateTitle[arg_Missing] :=
     arg;
+
 regulateTitle[string_String] :=
-    string//StringSplit//toLowerCase//capitalize//StringReplace[regulateTitleRuleList]//StringRiffle;
-regulateTitleRuleList =
-    {
-        ":"->"/",
-        "\n"->" ",
-        "\[CloseCurlyQuote]"->"'"
-    };
+    string//StringSplit//Map[toLowerCase/*capitalize/*regulateFileName]//StringRiffle;
 
 
-toLowerCase//Attributes = 
-    {Listable};
 toLowerCase[string_] :=
     If[ Not@LowerCaseQ[string],
         ToLowerCase[string],
@@ -172,8 +172,6 @@ toLowerCase[string_] :=
     ];
 
 
-capitalize//Attributes = 
-    {Listable};
 capitalize[string_String] :=
     (*ignore the stop words.*)
     If[ DeleteStopwords[#]==#&[string],

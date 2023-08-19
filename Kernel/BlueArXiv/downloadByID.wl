@@ -28,7 +28,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Option*)
+(*Options and messages*)
 
 
 downloadByIDAsItemList//Options = {
@@ -46,14 +46,15 @@ downloadByID//Options = {
 (*downloadByID*)
 
 
-downloadByID[tag:"string"|"path",targetFolder_?DirectoryQ,opts:OptionsPattern[]][arg_] :=
+downloadByID[
+    tag:"string"|"path":"string",
+    HoldPattern[targetFolder:(_?DirectoryQ):$defaultDownloadDir],
+    opts:OptionsPattern[]
+][arg_] :=
     Module[ {fopts},
         fopts = FilterRules[{opts},Options[downloadByIDAsItemList]];
         downloadByIDAsItemList[tag,targetFolder,fopts][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"ID","item","URL"]//Dataset
     ];
-
-downloadByID[targetFolder_?DirectoryQ,opts:OptionsPattern[]][arg_] :=
-    downloadByID["string",targetFolder,opts][arg];
 
 
 downloadByIDAsItemList[tag_,targetFolder_,opts:OptionsPattern[]][arg_] :=
@@ -68,14 +69,17 @@ downloadByIDAsItemList[tag_,targetFolder_,opts:OptionsPattern[]][arg_] :=
 
 downloadPDFFromURLAsFileObject[_,_,Missing[_]] :=
     Missing["Failed"];
+
 downloadPDFFromURLAsFileObject[targetFolder_,url_,item_String] :=
     URLDownload[url,FileNameJoin@{targetFolder,item<>".pdf"}];
+
 downloadPDFFromURLAsFileObject[targetFolder_,url_,item_] :=
     URLDownload[url,FileNameJoin@{targetFolder,ToString[item]<>".pdf"}];
 
 
 ifHideFileObject[True][idDataList_] :=
     idDataList//KeyDrop["fileObject"];
+
 ifHideFileObject[False][idDataList_] :=
     idDataList;
 
