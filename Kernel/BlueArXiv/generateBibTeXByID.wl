@@ -27,7 +27,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Option*)
+(*Options and messages*)
 
 
 generateBibTeXByID//Options = {
@@ -43,17 +43,32 @@ generateBibTeXByIDFromPathAsItemList//Options =
 (*generateBibTeXByID*)
 
 
-generateBibTeXByID["string",targetFolder_?DirectoryQ,bibName_String,OptionsPattern[]][arg_] :=
+generateBibTeXByID[
+    "string",
+    HoldPattern[targetFolder:(_?DirectoryQ):$defaultDownloadDir],
+    HoldPattern[bibName_String:$defaultBibName],
+    opts:OptionsPattern[]
+][arg_] :=
     generateBibTeXByIDFromStringAsItemList[targetFolder,bibName][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"key","ID","BibTeX"]//
     	Dataset[#,HiddenItems->{"BibTeX"->True}]&
-generateBibTeXByID["path",targetFolder_?DirectoryQ,bibName_String,opts:OptionsPattern[]][arg_] :=
+
+generateBibTeXByID[
+    "path",
+    HoldPattern[targetFolder:(_?DirectoryQ):$defaultDownloadDir],
+    HoldPattern[bibName_String:$defaultBibName],
+    opts:OptionsPattern[]
+][arg_] :=
     Module[ {fopts},
         fopts = FilterRules[{opts},Options[generateBibTeXByIDFromPathAsItemList]];
         generateBibTeXByIDFromPathAsItemList[targetFolder,bibName,fopts][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"key","ID","BibTeX"]//
 	    	Dataset[#,HiddenItems->{"BibTeX"->True}]&
     ];
 
-generateBibTeXByID[targetFolder_?DirectoryQ,bibName_String,opts:OptionsPattern[]][arg_] :=
+generateBibTeXByID[
+    HoldPattern[targetFolder:(_?DirectoryQ):$defaultDownloadDir],
+    HoldPattern[bibName_String:$defaultBibName],
+    opts:OptionsPattern[]
+][arg_] :=
     generateBibTeXByID["string",targetFolder,bibName,opts][arg];
 
 
@@ -87,7 +102,8 @@ getBibTeXItemFromIDListAsList[idList_] :=
 
 
 getBibTeXKeyFromItem[bibtex_String] :=
-    First@StringCases[bibtex,StartOfString~~Shortest[__]~~"{"~~Shortest[key__]~~",\n"~~__:>key];    
+    First@StringCases[bibtex,StartOfString~~Shortest[__]~~"{"~~Shortest[key__]~~",\n"~~__:>key]; 
+       
 getBibTeXKeyFromItem[_] :=
     Missing["Failed"];
 

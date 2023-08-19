@@ -28,7 +28,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Option*)
+(*Options and messages*)
 
 
 (*getItemDataFromIDAsList//Options = {
@@ -36,7 +36,7 @@ Begin["`Private`"];
 };
 
 searchByIDFromStringAsItemList//Options = 
-	Options@getItemDataFromIDAsList;
+    Options@getItemDataFromIDAsList;
 
 searchByIDFromPathAsItemList//Options = {
     Splice@Options@extractIDFromPathAsItemList,
@@ -47,7 +47,7 @@ searchByIDFromPathAsItemList//Options =
     Options@extractIDFromPathAsItemList;
 
 searchByIDAsItemList//Options = 
-	Options@searchByIDFromPathAsItemList;
+    Options@searchByIDFromPathAsItemList;
 
 searchByID//Options = {
     "clickToCopy"->True,
@@ -55,26 +55,26 @@ searchByID//Options = {
 };
 
 
+searchByID::connectionfailed =
+    "connection failed.";
+
+
 (* ::Subsection:: *)
 (*searchByID*)
 
 
-searchByID::connectionfailed =
-    "connection failed.";
-searchByID[tag:"string"|"path",opts:OptionsPattern[]][arg_] :=
+searchByID[tag:"string"|"path":"string",opts:OptionsPattern[]][arg_] :=
     Module[ {fopts},
         fopts = FilterRules[{opts},Options[searchByIDAsItemList]];
         searchByIDAsItemList[tag,fopts][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"ID","item","URL"]//Dataset
     ];
 
-searchByID[opts:OptionsPattern[]][arg_] :=
-    searchByID["string",opts][arg];
-
 
 searchByIDAsItemList["string",opts:OptionsPattern[]][stringOrStringList_] :=
-	searchByIDFromStringAsItemList[opts][stringOrStringList];
+    searchByIDFromStringAsItemList[opts][stringOrStringList];
+
 searchByIDAsItemList["path",opts:OptionsPattern[]][pathOrPathList_] :=
-	searchByIDFromPathAsItemList[opts][pathOrPathList];
+    searchByIDFromPathAsItemList[opts][pathOrPathList];
 
 
 searchByIDFromStringAsItemList[opts:OptionsPattern[]][stringOrStringList_] :=
@@ -102,7 +102,8 @@ getItemDataFromIDAsList[opts:OptionsPattern[]][idList_] :=
         itemList = 
             idValidList//getItemFromValidIDListAsList;
         itemNameList = 
-            itemList//Query[All,$arXivPDFNameFormatter,FailureAction->"Replace"]//Map[$arXivPDFNameRegulator];(*//ifFileNameRegulate[OptionValue["fileNameRegulate"]];*)
+            itemList//Query[All,$arXivPDFNameFormatter,FailureAction->"Replace"]//
+            	Map[Switch[#,_Missing,#,_,$arXivPDFNameRegulator]&];
         urlList = 
             getURLFromItem/@itemList;
         itemData = 
@@ -142,8 +143,10 @@ getItemFromValidIDListAsList[idValidList_] :=
 
 getURLFromItem::usage = 
     "get the download URL from \"Link\".";
+
 getURLFromItem[item_Association]/;MissingQ[item["ID"]] :=
     Missing["Failed"];
+
 getURLFromItem[item_Association] :=
     item["Link"]//KeyUnion//
     	Query[Select[#Type==="application/pdf"&],FailureAction->"Replace"]//
@@ -152,6 +155,7 @@ getURLFromItem[item_Association] :=
 
 (*ifFileNameRegulate[True] :=
     fileNameRegulate;
+
 ifFileNameRegulate[False] :=
     Identity;*)
 

@@ -28,7 +28,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Option*)
+(*Options and messages*)
 
 
 getIDDataFromPDFAsList//Options = {
@@ -47,14 +47,17 @@ extractID//Options = {
 };
 
 
+extractID::pdffailimport = 
+    "the PDF file fails to import: \n``";
+
+
 (* ::Subsection:: *)
 (*extractID*)
 
 
-extractID::pdffailimport = 
-    "the PDF file fails to import: \n``";
-extractID["string",OptionsPattern[]][stringOrStringList_] :=
+extractID["string",opts:OptionsPattern[]][stringOrStringList_] :=
     stringOrStringList//extractIDFromStringAsItemList//ifAddButtonTo[OptionValue["clickToCopy"]];
+
 extractID["path",opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {fopts},
         fopts = FilterRules[{opts},Options[extractIDFromPathAsItemList]];
@@ -80,6 +83,7 @@ extractIDFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
 
 getIDFromStringAsList[string_String] :=
     string//StringCases[$arXivIDPattern]//DeleteDuplicates;
+
 getIDFromStringAsList[stringList_List] :=
     stringList//Map[getIDFromStringAsList]//Flatten//DeleteDuplicates;
 
@@ -142,6 +146,7 @@ getPDFFromPathAsList[pathOrPathList_] :=
 
 ifGatherAndSortByID[True][list_] :=
     GatherBy[list,#ID&]//Map[Merge[Flatten@*Join]]//Query[All,<|#,"ID"->First@#ID|>&]//Query[SortBy[#ID&]];
+
 ifGatherAndSortByID[False][list_] :=
     list//Query[SortBy[#ID&]];
 

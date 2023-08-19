@@ -126,10 +126,10 @@ Cell[TextData[{
     "bcc3e068-0113-4ead-9b41-3b2aa5bbf6a3"], 
    DynamicModuleBox[{$CellContext`nbobj$$ = NotebookObject[
     "568f74e0-e8aa-49a8-8c20-6c8801acc146", 
-     "cd6ca81a-1d95-4aaa-82b5-4dbc025b1286"], $CellContext`cellobj$$ = 
+     "c9e35364-3f31-4890-878b-2123f7b1c47e"], $CellContext`cellobj$$ = 
     CellObject[
     "9363a61f-dc96-454d-8095-ad0a8dbcbd3b", 
-     "6af48997-45c5-4b28-8fb7-33b2415772ce"]}, 
+     "045a3ddc-beb4-499f-837d-562b1386f891"]}, 
     TemplateBox[{
       GraphicsBox[{{
          Thickness[0.06], 
@@ -947,7 +947,7 @@ Cell["Yurie/BlueArXiv", "Categorization",
  CellLabel->"Paclet Name",
  CellID->161815808,ExpressionUUID->"3365af57-9d0a-4570-b2af-eb798c0165bc"],
 
-Cell["Yurie/BlueArXiv`", "Categorization",
+Cell["Yurie`PaperTool`", "Categorization",
  CellLabel->"Context",
  CellID->923987954,ExpressionUUID->"0125b757-5f76-446a-ae31-7f8ed445589c"],
 

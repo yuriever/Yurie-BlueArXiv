@@ -31,22 +31,24 @@ Begin["`Private`"];
 
 arXivPDFNameFormat//Attributes = 
     {HoldAll};
+
 arXivPDFNameFormat[format_] :=
     (
         $arXivPDFNameFormatter = 
-            Hold[format]/.keywordToFunction/.{Hold[expr_]:>Hold[(expr)&]}//ReleaseHold;
+            formatter[format];
     );
+
 arXivPDFNameFormat[format_,regulator_Symbol] :=
     (
         $arXivPDFNameFormatter = 
-            Hold[format]/.keywordToFunction/.{Hold[expr_]:>Hold[(expr)&]}//ReleaseHold;
-        $arXivPDFNameRegulator//Unprotect;
-        $arXivPDFNameRegulator//ClearAll;
-        $arXivPDFNameRegulator[arg_] :=
-            regulator@arg;
-        $arXivPDFNameRegulator[arg_Missing] :=
-            arg;
+            formatter[format];
+        $arXivPDFNameRegulator = 
+            regulator;
     );
+
+
+formatter[format_] :=
+    Hold[format]/.keywordToFunction/.{Hold[expr_]:>Hold[(expr)&]}//ReleaseHold;
 
 
 keywordToFunction = {

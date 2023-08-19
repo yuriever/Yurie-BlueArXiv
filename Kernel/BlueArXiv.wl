@@ -19,8 +19,8 @@ Get["Yurie`BlueArXiv`common`"];
 (*Usage*)
 
 
-arXivIDQ::usage =
-    "check whether the string is a syntactically valid arXiv ID.";
+(*arXivIDQ::usage =
+    "check whether the string is a syntactically valid arXiv ID.";*)
 
 arXivPDFNameFormat::usage = 
     "set the format of arXiv PDF names.";
@@ -53,9 +53,9 @@ Begin["`Private`"];
 (*arXivIDQ*)
 
 
-arXivIDQ[string_String] :=
+(*arXivIDQ[string_String] :=
     StringMatchQ[string,$arXivIDPattern];
-arXivIDQ[_] = False;
+arXivIDQ[_] = False;*)
 
 
 (* ::Subsection:: *)
