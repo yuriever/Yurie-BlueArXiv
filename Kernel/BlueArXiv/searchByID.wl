@@ -103,7 +103,7 @@ getItemDataFromIDAsList[opts:OptionsPattern[]][idList_] :=
             idValidList//getItemFromValidIDListAsList;
         itemNameList = 
             itemList//Query[All,$arXivPDFNameFormatter,FailureAction->"Replace"]//
-            	Map[Switch[#,_Missing,#,_,$arXivPDFNameRegulator]&];
+            	Map[Switch[#,_Missing,#,_,$arXivPDFNameRegulator[#]]&];
         urlList = 
             getURLFromItem/@itemList;
         itemData = 

@@ -48,16 +48,18 @@ $thisPaclet :=
         PacletObject["Yurie/BlueArXiv"];
 
 
+$thisSampleDir :=
+    $thisSampleDir = 
+        $thisPaclet["AssetLocation","SampleData"];
+
+
 sampleFileDirectory :=
     sampleFileDirectory =
-        Module[ {sampleDataDir},
-            sampleDataDir = $thisPaclet["AssetLocation","SampleData"];
-            <|
-                "self"->sampleDataDir,
-                "pdf"->FileNameJoin@{sampleDataDir,"pdf"},
-                "tex"->FileNameJoin@{sampleDataDir,"tex"}
-            |>
-        ];
+        <|
+            "self"->$thisSampleDir,
+            "pdf"->FileNameJoin@{$thisSampleDir,"pdf"},
+            "tex"->FileNameJoin@{$thisSampleDir,"tex"}
+        |>;
 
 
 samplePaperData = {
