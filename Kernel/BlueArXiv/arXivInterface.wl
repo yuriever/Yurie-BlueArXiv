@@ -7,7 +7,7 @@
 BeginPackage["Yurie`BlueArXiv`arXivInterface`"];
 
 
-Needs["Yurie`BlueArXiv`common`"];
+Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`BlueArXiv`"];
 Needs["Yurie`BlueArXiv`extractID`"];
 Needs["Yurie`BlueArXiv`searchByID`"];

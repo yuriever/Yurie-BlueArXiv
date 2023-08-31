@@ -4,7 +4,7 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`BlueArXiv`sample`"];
+BeginPackage["Yurie`BlueArXiv`Sample`"];
 
 
 sampleFileDirectory::usage = 
@@ -50,7 +50,7 @@ $thisPaclet :=
 
 $thisSampleDir :=
     $thisSampleDir = 
-        $thisPaclet["AssetLocation","SampleData"];
+        $thisPaclet["AssetLocation","Sample"];
 
 
 sampleFileDirectory :=

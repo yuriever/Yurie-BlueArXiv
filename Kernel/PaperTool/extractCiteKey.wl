@@ -7,7 +7,7 @@
 BeginPackage["Yurie`PaperTool`extractCiteKey`"];
 
 
-Needs["Yurie`BlueArXiv`common`"];
+Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`PaperTool`"];
 
 
