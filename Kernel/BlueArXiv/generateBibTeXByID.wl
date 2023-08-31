@@ -7,7 +7,7 @@
 BeginPackage["Yurie`BlueArXiv`generateBibTeXByID`"];
 
 
-Needs["Yurie`BlueArXiv`common`"];
+Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`BlueArXiv`"];
 Needs["Yurie`BlueArXiv`extractID`"];
 

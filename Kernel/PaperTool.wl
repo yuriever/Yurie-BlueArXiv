@@ -12,7 +12,7 @@ ClearAll["`*"];
 (*ClearAll["`*`*"];*)
 
 
-Get["Yurie`BlueArXiv`common`"];
+Get["Yurie`BlueArXiv`Common`"];
 
 
 (* ::Section:: *)

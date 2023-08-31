@@ -60,7 +60,7 @@ are treated as side effects.\
 Cell[TextData[{
  "The first execution of the examples in the documentation will take some \
 time. This is due to the download of the sample papers, see the context ",
- StyleBox["Yurie`BlueArXiv`sample`", "InlineCode"],
+ StyleBox["Yurie`BlueArXiv`Sample`", "InlineCode"],
  "."
 }], "GuideText",
  CellID->1343842720,ExpressionUUID->"ecc88b6d-f1ab-47cf-9c74-b5830b898f03"]

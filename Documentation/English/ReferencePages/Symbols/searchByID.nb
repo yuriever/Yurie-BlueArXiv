@@ -273,7 +273,7 @@ Needs[\[Ellipsis]].", "MoreInfoText"], BaseStyle -> "IFrameBox"]],
 
 Cell[BoxData[{
  RowBox[{"Needs", "[", "\"\<Yurie`BlueArXiv`\>\"", "]"}], "\n", 
- RowBox[{"Needs", "[", "\"\<Yurie`BlueArXiv`sample`\>\"", 
+ RowBox[{"Needs", "[", "\"\<Yurie`BlueArXiv`Sample`\>\"", 
   "]"}]}], "ExampleInitialization",
  CellID->328065661,ExpressionUUID->"51e3a6bd-9f87-4c05-a3b7-076840bf32fd"]
 }, Open  ]],
