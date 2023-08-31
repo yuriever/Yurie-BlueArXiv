@@ -22,9 +22,13 @@ Install from this repository:
 
 1. download the built paclet `build/*.paclet`;
 
-2. `PacletInstall@File["the/path/of/*.paclet"];`
+2. install the paclet:
 
-Load the packages:
+    ``` 
+    PacletInstall@File["the/path/of/paclet"];
+    ```
+
+Load the package(s):
 
 ```
 Needs["Yurie`BlueArXiv`"];
