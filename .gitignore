@@ -8,10 +8,10 @@
 .metadata
 .settings
 
-# notebooks
+# notebook directory
 Notebook
 
-# developing dictionary
+# developer directory
 Workbench
 
 # sample data
