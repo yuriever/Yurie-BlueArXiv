@@ -36,13 +36,10 @@ Begin["`Private`"];
 arXivPDFNameFormat//Attributes = 
     {HoldAll};
 
-arXivPDFNameFormat[format_] :=
-    (
-        $arXivPDFNameFormatter = 
-            formatter[format];
-    );
-
-arXivPDFNameFormat[format_,regulator_Symbol] :=
+arXivPDFNameFormat[
+    HoldPattern[format_:"ID"<>" "<>"title"<>", "<>"firstAuthor"],
+    HoldPattern[regulator_Symbol:regulateFileName]
+] :=
     (
         $arXivPDFNameFormatter = 
             formatter[format];
@@ -50,6 +47,9 @@ arXivPDFNameFormat[format_,regulator_Symbol] :=
             regulator;
     );
 
+
+formatter//Attributes = 
+    {HoldAll};
 
 formatter[format_] :=
     Hold[format]/.keywordToFunction/.{Hold[expr_]:>Hold[(expr)&]}//ReleaseHold;
