@@ -11,6 +11,10 @@ Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`BlueArXiv`"];
 
 
+(* ::Section:: *)
+(*Public*)
+
+
 arXivPDFNameFormat;
 
 
@@ -51,6 +55,7 @@ formatter[format_] :=
     Hold[format]/.keywordToFunction/.{Hold[expr_]:>Hold[(expr)&]}//ReleaseHold;
 
 
+(* ::Code::Initialization::"Tags"-><|"UnscopedObjectError" -> <|Enabled -> False|>|>:: *)
 keywordToFunction = {
     (*no default value for "ID", so as to return a failure if ID does not exist.*)
     "ID":>Lookup[#,"ID"],

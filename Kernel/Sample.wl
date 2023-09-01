@@ -7,6 +7,10 @@
 BeginPackage["Yurie`BlueArXiv`Sample`"];
 
 
+(* ::Section:: *)
+(*Public*)
+
+
 sampleFileDirectory::usage = 
     "directory of the sample files.";
 
@@ -24,7 +28,7 @@ sampleString::usage =
 (*Private*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Begin*)
 
 
@@ -32,7 +36,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Options and Messages*)
+(*Messages*)
 
 
 sampleFilePrepare::connectionfailed = 
@@ -40,26 +44,23 @@ sampleFilePrepare::connectionfailed =
 
 
 (* ::Subsection:: *)
-(*sampleData*)
+(*Functions*)
 
 
-$thisPaclet :=
-    $thisPaclet = 
-        PacletObject["Yurie/BlueArXiv"];
+$thisPaclet = 
+    PacletObject["Yurie/BlueArXiv"];
 
 
-$thisSampleDir :=
-    $thisSampleDir = 
-        $thisPaclet["AssetLocation","Sample"];
+$thisSampleDir = 
+    $thisPaclet["AssetLocation","Sample"];
 
 
-sampleFileDirectory :=
-    sampleFileDirectory =
-        <|
-            "self"->$thisSampleDir,
-            "pdf"->FileNameJoin@{$thisSampleDir,"pdf"},
-            "tex"->FileNameJoin@{$thisSampleDir,"tex"}
-        |>;
+sampleFileDirectory =
+    <|
+        "self"->$thisSampleDir,
+        "pdf"->FileNameJoin@{$thisSampleDir,"pdf"},
+        "tex"->FileNameJoin@{$thisSampleDir,"tex"}
+    |>;
 
 
 samplePaperData = {
@@ -90,12 +91,11 @@ samplePaperData = {
 };
 
 
-sampleString :=
-    sampleString =
-        <|
-            "ID"->StringRiffle[Query[All,#ID&][samplePaperData],","],
-            "citeKey"->"\\cite{"<>StringRiffle[Query[All,#citeKey&][samplePaperData],","]<>"}"
-        |>;
+sampleString =
+    <|
+        "ID"->StringRiffle[Query[All,#ID&][samplePaperData],","],
+        "citeKey"->"\\cite{"<>StringRiffle[Query[All,#citeKey&][samplePaperData],","]<>"}"
+    |>;
 
 
 sampleFilePrepare[] :=
@@ -124,7 +124,7 @@ sampleFileClear[] :=
     ];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*End*)
 
 

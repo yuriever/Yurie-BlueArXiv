@@ -15,6 +15,10 @@ Needs["Yurie`BlueArXiv`downloadByID`"];
 Needs["Yurie`BlueArXiv`generateBibTeXByID`"];
 
 
+(* ::Section:: *)
+(*Public*)
+
+
 arXivInterface;
 
 
@@ -30,7 +34,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*downloadByID*)
+(*arXivInterface*)
 
 
 arXivInterface[HoldPattern[targetFolder:(_?DirectoryQ):$defaultDownloadDir]] :=
@@ -92,7 +96,7 @@ inputUnit =
     ];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*End*)
 
 

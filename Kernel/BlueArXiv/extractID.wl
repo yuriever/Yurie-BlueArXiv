@@ -11,6 +11,10 @@ Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`BlueArXiv`"];
 
 
+(* ::Section:: *)
+(*Public*)
+
+
 extractID;
 extractIDFromStringAsItemList;
 extractIDFromPathAsItemList;
@@ -28,7 +32,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Options and messages*)
+(*Options*)
 
 
 getIDDataFromPDFAsList//Options = {
@@ -45,6 +49,10 @@ extractID//Options = {
     "clickToCopy"->True,
     Splice@Options@extractIDFromPathAsItemList
 };
+
+
+(* ::Subsection:: *)
+(*Messages*)
 
 
 extractID::pdffailimport = 

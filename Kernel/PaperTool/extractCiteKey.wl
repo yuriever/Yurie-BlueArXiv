@@ -11,6 +11,10 @@ Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`PaperTool`"];
 
 
+(* ::Section:: *)
+(*Public*)
+
+
 extractCiteKey;
 extractCiteKeyFromStringAsItemList;
 extractCiteKeyFromTeXAsItemList;
@@ -28,7 +32,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Options and messages*)
+(*Options*)
 
 
 getCiteKeyFromTeXAsList//Options = {
@@ -43,6 +47,10 @@ extractCiteKey//Options = {
     "rawCiteKey"->False,
     Splice@Options@extractCiteKeyFromTeXAsItemList
 };
+
+
+(* ::Subsection:: *)
+(*Messages*)
 
 
 extractCiteKey::texfailimport = 

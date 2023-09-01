@@ -12,6 +12,10 @@ Needs["Yurie`BlueArXiv`"];
 Needs["Yurie`BlueArXiv`extractID`"];
 
 
+(* ::Section:: *)
+(*Public*)
+
+
 generateBibTeXByID;
 
 
@@ -27,7 +31,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Options and messages*)
+(*Options*)
 
 
 generateBibTeXByID//Options = {
