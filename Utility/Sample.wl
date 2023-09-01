@@ -7,6 +7,9 @@
 BeginPackage["Yurie`BlueArXiv`Sample`"];
 
 
+Needs["Yurie`BlueArXiv`Info`"];
+
+
 (* ::Section:: *)
 (*Public*)
 
@@ -47,22 +50,6 @@ sampleFilePrepare::connectionfailed =
 (*Functions*)
 
 
-$thisPaclet = 
-    PacletObject["Yurie/BlueArXiv"];
-
-
-$thisSampleDir = 
-    $thisPaclet["AssetLocation","Sample"];
-
-
-sampleFileDirectory =
-    <|
-        "self"->$thisSampleDir,
-        "pdf"->FileNameJoin@{$thisSampleDir,"pdf"},
-        "tex"->FileNameJoin@{$thisSampleDir,"tex"}
-    |>;
-
-
 samplePaperData = {
     <|
         "name"->"oldID-9802150.pdf",
@@ -91,12 +78,23 @@ samplePaperData = {
 };
 
 
+sampleFileDirectory =
+    <|
+        "self"->$thisSampleDir,
+        "pdf"->FileNameJoin@{$thisSampleDir,"pdf"},
+        "tex"->FileNameJoin@{$thisSampleDir,"tex"}
+    |>;
+
+
 sampleString =
     <|
         "ID"->StringRiffle[Query[All,#ID&][samplePaperData],","],
         "citeKey"->"\\cite{"<>StringRiffle[Query[All,#citeKey&][samplePaperData],","]<>"}"
     |>;
 
+
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 
 sampleFilePrepare[] :=
     Module[ {dir},
@@ -109,10 +107,16 @@ sampleFilePrepare[] :=
                     FileNameJoin@{dir,samplePaperData//Query[4,#name&]},
                     "This is an example file."
                 ];
-                samplePaperData//Query[1;;3,URLDownload[#URL,FileNameJoin@{dir,#name}]&]
+                samplePaperData//Query[1;;3,URLDownload[#URL,FileNameJoin@{dir,#name}]&];
+                Print["The sample files have been created."]
         ];
     ];
 
+(* :!CodeAnalysis::EndBlock:: *)
+
+
+(* :!CodeAnalysis::BeginBlock:: *)
+(* :!CodeAnalysis::Disable::SuspiciousSessionSymbol:: *)
 
 sampleFileClear[] :=
     Module[ {dir},
@@ -121,7 +125,10 @@ sampleFileClear[] :=
             DeleteDirectory[dir,DeleteContents->True]
         ];
         DeleteFile@FileNames[All,sampleFileDirectory["pdf"]];
+        Print["The sample files have been removed."]
     ];
+
+(* :!CodeAnalysis::EndBlock:: *)
 
 
 (* ::Subsection::Closed:: *)
