@@ -7,8 +7,7 @@
 BeginPackage["Yurie`BlueArXiv`"];
 
 
-Unprotect["`*"];
-ClearAll["`*"];
+(*ClearAll["`*"];*)
 (*ClearAll["`*`*"];*)
 
 
@@ -16,11 +15,8 @@ Get["Yurie`BlueArXiv`Common`"];
 
 
 (* ::Section:: *)
-(*Usage*)
+(*Public*)
 
-
-(*arXivIDQ::usage =
-    "check whether the string is a syntactically valid arXiv ID.";*)
 
 arXivPDFNameFormat::usage = 
     "set the format of arXiv PDF names.";
@@ -50,16 +46,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*arXivIDQ*)
-
-
-(*arXivIDQ[string_String] :=
-    StringMatchQ[string,$arXivIDPattern];
-arXivIDQ[_] = False;*)
-
-
-(* ::Subsection:: *)
-(*functions*)
+(*Subpackages *)
 
 
 Get["Yurie`BlueArXiv`arXivPDFNameFormat`"];
@@ -79,9 +66,6 @@ End[];
 
 (* ::Section:: *)
 (*End*)
-
-
-Protect["`*"];
 
 
 EndPackage[];

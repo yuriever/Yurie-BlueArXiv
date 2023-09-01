@@ -12,6 +12,10 @@ Needs["Yurie`BlueArXiv`"];
 Needs["Yurie`BlueArXiv`searchByID`"];
 
 
+(* ::Section:: *)
+(*Public*)
+
+
 downloadByID;
 downloadByIDAsItemList;
 
@@ -28,7 +32,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Options and messages*)
+(*Options*)
 
 
 downloadByIDAsItemList//Options = {

@@ -11,6 +11,10 @@ Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`PaperTool`"];
 
 
+(* ::Section:: *)
+(*Public*)
+
+
 extractTitleFromPDF;
 extractTitleFromPathAsItemList;
 
@@ -27,7 +31,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Options and messages*)
+(*Options*)
 
 
 getTitleFromPDFAsItemList//Options = {
@@ -43,6 +47,10 @@ extractTitleFromPDF//Options = {
     "clickToCopy"->True,
     Splice@Options@extractTitleFromPathAsItemList
 };
+
+
+(* ::Subsection:: *)
+(*Messages*)
 
 
 extractTitleFromPDF::pdffailimport = 

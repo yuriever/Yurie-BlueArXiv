@@ -12,6 +12,10 @@ Needs["Yurie`BlueArXiv`"];
 Needs["Yurie`BlueArXiv`extractID`"];
 
 
+(* ::Section:: *)
+(*Public*)
+
+
 searchByID;
 searchByIDAsItemList;
 
@@ -28,7 +32,7 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Options and messages*)
+(*Options*)
 
 
 (*getItemDataFromIDAsList//Options = {
@@ -53,6 +57,10 @@ searchByID//Options = {
     "clickToCopy"->True,
     Splice@Options@searchByIDAsItemList
 };
+
+
+(* ::Subsection:: *)
+(*Messages*)
 
 
 searchByID::connectionfailed =

@@ -7,12 +7,15 @@
 BeginPackage["Yurie`BlueArXiv`Common`"];
 
 
+ClearAll["`*"];
+
+
 (* ::Section:: *)
-(*Usage*)
+(*Public*)
 
 
-(* ::Subsection:: *)
-(*Common symbols*)
+(* ::Subsection::Closed:: *)
+(*Symbols*)
 
 
 $arXivIDPattern::usage = 
@@ -32,8 +35,8 @@ $citeKeyPattern::usage =
     "string pattern of cite key.";    
 
 
-(* ::Subsection:: *)
-(*Common functions*)
+(* ::Subsection::Closed:: *)
+(*Utilities*)
 
 
 regulateFileName::usage = 
@@ -59,15 +62,15 @@ mergeByKey::usage =
 (*Private*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Begin*)
 
 
 Begin["`Private`"];
 
 
-(* ::Subsection:: *)
-(*Common symbols*)
+(* ::Subsection::Closed:: *)
+(*Symbols*)
 
 
 $arXivIDPattern =
@@ -102,7 +105,11 @@ $citeKeyPattern =
     RegularExpression["(\\\\cite{)(\\S*?)(})"];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
+(*Utilities*)
+
+
+(* ::Subsubsection::Closed:: *)
 (*regulateFileName*)
 
 
@@ -118,7 +125,7 @@ regulateFileName[string_String] :=
     ];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*getFileByExtension|getFileNameByExtension*)
 
 
@@ -144,7 +151,7 @@ getFileNameByExtension[extension_][pathOrPathList_] :=
     getFileByExtension[extension][pathOrPathList]//Map[FileNameTake]//Map[FileBaseName];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*addButtonTo*)
 
 
@@ -187,7 +194,7 @@ addButtonTo[key_,restKeys__][list_] :=
     Missing["Failed"];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection::Closed:: *)
 (*mergeByKey*)
 
 
@@ -240,7 +247,7 @@ mergeByKey[data:{__?AssociationQ},ruleList:{___Rule},default:_:Identity] :=
     ];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*End*)
 
 
