@@ -11,9 +11,6 @@ BeginPackage["Yurie`PaperTool`"];
 (*ClearAll["`*`*"];*)
 
 
-Get["Yurie`BlueArXiv`Common`"];
-
-
 (* ::Section:: *)
 (*Public*)
 
@@ -40,6 +37,10 @@ Begin["`Private`"];
 (*Subpackages*)
 
 
+Needs["Yurie`BlueArXiv`Common`"];
+
+
+Get["Yurie`BlueArXiv`Default`"];
 Get["Yurie`PaperTool`extractTitleFromPDF`"];
 Get["Yurie`PaperTool`extractCiteKey`"];
 

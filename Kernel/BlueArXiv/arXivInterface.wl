@@ -7,12 +7,7 @@
 BeginPackage["Yurie`BlueArXiv`arXivInterface`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`BlueArXiv`"];
-Needs["Yurie`BlueArXiv`extractID`"];
-Needs["Yurie`BlueArXiv`searchByID`"];
-Needs["Yurie`BlueArXiv`downloadByID`"];
-Needs["Yurie`BlueArXiv`generateBibTeXByID`"];
 
 
 (* ::Section:: *)
@@ -31,6 +26,14 @@ arXivInterface;
 
 
 Begin["`Private`"];
+
+
+Needs["Yurie`BlueArXiv`Common`"];
+Needs["Yurie`BlueArXiv`Default`"];
+Needs["Yurie`BlueArXiv`extractID`"];
+Needs["Yurie`BlueArXiv`searchByID`"];
+Needs["Yurie`BlueArXiv`downloadByID`"];
+Needs["Yurie`BlueArXiv`generateBibTeXByID`"];
 
 
 (* ::Subsection:: *)

@@ -7,9 +7,7 @@
 BeginPackage["Yurie`BlueArXiv`searchByID`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`BlueArXiv`"];
-Needs["Yurie`BlueArXiv`extractID`"];
 
 
 (* ::Section:: *)
@@ -31,21 +29,14 @@ searchByIDAsItemList;
 Begin["`Private`"];
 
 
+Needs["Yurie`BlueArXiv`Common`"];
+Needs["Yurie`BlueArXiv`Default`"];
+Needs["Yurie`BlueArXiv`extractID`"];
+
+
 (* ::Subsection:: *)
 (*Options*)
 
-
-(*getItemDataFromIDAsList//Options = {
-    "fileNameRegulate"->True
-};
-
-searchByIDFromStringAsItemList//Options = 
-    Options@getItemDataFromIDAsList;
-
-searchByIDFromPathAsItemList//Options = {
-    Splice@Options@extractIDFromPathAsItemList,
-    Splice@Options@getItemDataFromIDAsList
-};*)
 
 searchByIDFromPathAsItemList//Options = 
     Options@extractIDFromPathAsItemList;

@@ -7,9 +7,7 @@
 BeginPackage["Yurie`BlueArXiv`downloadByID`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`BlueArXiv`"];
-Needs["Yurie`BlueArXiv`searchByID`"];
 
 
 (* ::Section:: *)
@@ -29,6 +27,11 @@ downloadByIDAsItemList;
 
 
 Begin["`Private`"];
+
+
+Needs["Yurie`BlueArXiv`Common`"];
+Needs["Yurie`BlueArXiv`Default`"];
+Needs["Yurie`BlueArXiv`searchByID`"];
 
 
 (* ::Subsection:: *)
