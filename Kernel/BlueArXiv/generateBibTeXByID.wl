@@ -7,9 +7,7 @@
 BeginPackage["Yurie`BlueArXiv`generateBibTeXByID`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`BlueArXiv`"];
-Needs["Yurie`BlueArXiv`extractID`"];
 
 
 (* ::Section:: *)
@@ -28,6 +26,11 @@ generateBibTeXByID;
 
 
 Begin["`Private`"];
+
+
+Needs["Yurie`BlueArXiv`Common`"];
+Needs["Yurie`BlueArXiv`Default`"];
+Needs["Yurie`BlueArXiv`extractID`"];
 
 
 (* ::Subsection:: *)

@@ -7,7 +7,6 @@
 BeginPackage["Yurie`PaperTool`extractTitleFromPDF`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`PaperTool`"];
 
 
@@ -28,6 +27,10 @@ extractTitleFromPathAsItemList;
 
 
 Begin["`Private`"];
+
+
+Needs["Yurie`BlueArXiv`Common`"];
+Needs["Yurie`BlueArXiv`Default`"];
 
 
 (* ::Subsection:: *)

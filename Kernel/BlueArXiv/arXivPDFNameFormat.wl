@@ -7,7 +7,6 @@
 BeginPackage["Yurie`BlueArXiv`arXivPDFNameFormat`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`BlueArXiv`"];
 
 
@@ -27,6 +26,10 @@ arXivPDFNameFormat;
 
 
 Begin["`Private`"];
+
+
+Needs["Yurie`BlueArXiv`Common`"];
+Needs["Yurie`BlueArXiv`Default`"];
 
 
 (* ::Subsection:: *)

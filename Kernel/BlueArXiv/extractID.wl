@@ -7,7 +7,6 @@
 BeginPackage["Yurie`BlueArXiv`extractID`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`BlueArXiv`"];
 
 
@@ -29,6 +28,10 @@ extractIDFromPathAsItemList;
 
 
 Begin["`Private`"];
+
+
+Needs["Yurie`BlueArXiv`Common`"];
+Needs["Yurie`BlueArXiv`Default`"];
 
 
 (* ::Subsection:: *)

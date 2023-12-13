@@ -7,7 +7,6 @@
 BeginPackage["Yurie`PaperTool`extractCiteKey`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
 Needs["Yurie`PaperTool`"];
 
 
@@ -29,6 +28,10 @@ extractCiteKeyFromTeXAsItemList;
 
 
 Begin["`Private`"];
+
+
+Needs["Yurie`BlueArXiv`Common`"];
+Needs["Yurie`BlueArXiv`Default`"];
 
 
 (* ::Subsection:: *)

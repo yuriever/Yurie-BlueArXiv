@@ -7,35 +7,22 @@
 BeginPackage["Yurie`BlueArXiv`Common`"];
 
 
-ClearAll["`*"];
-
-
 (* ::Section:: *)
 (*Public*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Symbols*)
 
 
 $arXivIDPattern::usage = 
     "string pattern of valid arXiv ID.";
 
-$arXivPDFNameFormatter::usage = 
-    "formatter of file names, set by arXivPDFNameFormat.";
-$arXivPDFNameRegulator::usage = 
-    "regulator of file names, set by arXivPDFNameFormat.";
-
-$defaultDownloadDir::usage = 
-    "default download directory";
-$defaultBibName::usage = 
-    "default BibTeX file name.";
-
 $citeKeyPattern::usage = 
     "string pattern of cite key.";    
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Utilities*)
 
 
@@ -62,14 +49,14 @@ mergeByKey::usage =
 (*Private*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Begin*)
 
 
 Begin["`Private`"];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Symbols*)
 
 
@@ -77,39 +64,16 @@ $arXivIDPattern =
     RegularExpression["(\\d{4}\\.\\d{4,5})|((astro-ph|cond-mat|gr-qc|hep-ex|hep-lat|hep-ph|hep-th|math-ph|nlin|nucl-ex|nucl-th|physics|quant-ph|math|cs)/\\d{7})"];
 
 
-$arXivPDFNameFormatter =
-    (*set the default format of PDF names.*)
-    (*arXivPDFNameFormat["ID"<>" "<>"title"<>", "<>"firstAuthor"]*)
-    (
-        Lookup[#,"ID"]<>" "<>
-        Lookup[#,"Title",""]<>", "<>
-        Lookup[#,"Author","",Part[#,1,"Name"]&]
-    )&;
-
-
-(*set the default regulator of PDF names.*)
-$arXivPDFNameRegulator =
-    regulateFileName;
-
-
-$defaultDownloadDir :=
-    FileNameJoin@{$HomeDirectory,"Downloads"};
-
-
-$defaultBibName :=
-    "refs-"<>CreateUUID[]<>".bib";
-
-
 $citeKeyPattern = 
     (*no whitespace tolerance.*)
     RegularExpression["(\\\\cite{)(\\S*?)(})"];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Utilities*)
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*regulateFileName*)
 
 
@@ -125,7 +89,7 @@ regulateFileName[string_String] :=
     ];
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*getFileByExtension|getFileNameByExtension*)
 
 
@@ -151,7 +115,7 @@ getFileNameByExtension[extension_][pathOrPathList_] :=
     getFileByExtension[extension][pathOrPathList]//Map[FileNameTake]//Map[FileBaseName];
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*addButtonTo*)
 
 
@@ -194,7 +158,7 @@ addButtonTo[key_,restKeys__][list_] :=
     Missing["Failed"];
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*mergeByKey*)
 
 
@@ -247,7 +211,7 @@ mergeByKey[data:{__?AssociationQ},ruleList:{___Rule},default:_:Identity] :=
     ];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*End*)
 
 

@@ -11,9 +11,6 @@ BeginPackage["Yurie`BlueArXiv`"];
 (*ClearAll["`*`*"];*)
 
 
-Get["Yurie`BlueArXiv`Common`"];
-
-
 (* ::Section:: *)
 (*Public*)
 
@@ -49,6 +46,10 @@ Begin["`Private`"];
 (*Subpackages *)
 
 
+Needs["Yurie`BlueArXiv`Common`"];
+
+
+Get["Yurie`BlueArXiv`Default`"];
 Get["Yurie`BlueArXiv`arXivPDFNameFormat`"];
 Get["Yurie`BlueArXiv`extractID`"];
 Get["Yurie`BlueArXiv`searchByID`"];
