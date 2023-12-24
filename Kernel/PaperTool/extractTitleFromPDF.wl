@@ -139,7 +139,7 @@ regulateTextList[yresolution_][text_Text] :=
 regulateTextList[yresolution_][textList_List] :=
     Module[ {textData},
         textData = regulateTextList[yresolution]/@textList;
-        GatherBy[textData,#Y&]//Map[SortBy[#X&]]//Map[mergeByKey[{"string"->StringJoin,"X"->Min},First]]
+        GatherBy[textData,#Y&]//Map[SortBy[#X&]]//Map[mergeAssociationByKey[{"string"->StringJoin,"X"->Min},First]]
     ];
 
 

@@ -39,10 +39,8 @@ ifAddButtonTo::usage =
 addButtonTo::usage = 
     "add click-to-copy button to list of associations.";
 
-mergeByKey::usage =
-    "ResourceFunction[\"MergeByKey\"]: merge a list of associations using different merge functions according to keys. The default merging function is Identity.\n"<>
-    "mergeByKey[{assoc1,assoc2,...},{key1->f1,key2->f2,...},f]\n"<>
-    "mergeByKey[{assoc1,assoc2,...},{...,{keyi1,keyi2,...}->fi,...},...]";
+mergeAssociationByKey::usage =
+    "ResourceFunction[\"MergeByKey\"]: merge a list of associations using different merge functions according to keys. The default merging function is Identity.";
 
 
 (* ::Section:: *)
@@ -159,16 +157,16 @@ addButtonTo[key_,restKeys__][list_] :=
 
 
 (* ::Subsubsection:: *)
-(*mergeByKey*)
+(*mergeAssociationByKey*)
 
 
-mergeByKey[ruleList:{___Rule},default:_:Identity][data:{___?AssociationQ}] :=
-    mergeByKey[data,ruleList,default];
+mergeAssociationByKey[ruleList:{___Rule},default:_:Identity][data:{___?AssociationQ}] :=
+    mergeAssociationByKey[data,ruleList,default];
 
-mergeByKey[{<||>...},{___Rule},Repeated[_,{0,1}]] :=
+mergeAssociationByKey[{<||>...},{___Rule},Repeated[_,{0,1}]] :=
     <||>;
 
-mergeByKey[data:{__?AssociationQ},ruleList:{___Rule},default:_:Identity] :=
+mergeAssociationByKey[data:{__?AssociationQ},ruleList:{___Rule},default:_:Identity] :=
     Module[ {missingToken,assoc,keys,queryRules,mergeRules},
         (*missingToken: unique symbol that is used for identifying where the undefined keys were after transposing the association *)
         mergeRules = 
