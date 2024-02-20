@@ -56,7 +56,7 @@ extractCiteKey//Options = {
 (*Messages*)
 
 
-extractCiteKey::texfailimport = 
+extractCiteKey::texfailimport =
     "the TeX file fails to import: \n``";
 
 

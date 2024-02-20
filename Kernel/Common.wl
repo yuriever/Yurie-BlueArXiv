@@ -15,10 +15,10 @@ BeginPackage["Yurie`BlueArXiv`Common`"];
 (*Symbols*)
 
 
-$arXivIDPattern::usage = 
+$arXivIDPattern::usage =
     "string pattern of valid arXiv ID.";
 
-$citeKeyPattern::usage = 
+$citeKeyPattern::usage =
     "string pattern of cite key.";    
 
 
@@ -26,17 +26,17 @@ $citeKeyPattern::usage =
 (*Utilities*)
 
 
-regulateFileName::usage = 
+regulateFileName::usage =
     "regulate special characters in file name.";
     
-getFileByExtension::usage = 
+getFileByExtension::usage =
     "get files in path or list of paths by specifying the extension.";
 getFileNameByExtension::usage =
     "get file names in path or list of paths by specifying the extension.";
 
-ifAddButtonTo::usage = 
+ifAddButtonTo::usage =
     "whether to add click-to-copy button to list of associations.";
-addButtonTo::usage = 
+addButtonTo::usage =
     "add click-to-copy button to list of associations.";
 
 mergeAssociationByKey::usage =

@@ -137,10 +137,10 @@ getItemFromValidIDListAsList[idValidList_] :=
             (*if the connection fails, return list of empty associations.*)
             Table[<||>,Length@idValidList]&
         ]
-    ];    
+    ];
 
 
-getURLFromItem::usage = 
+getURLFromItem::usage =
     "get the download URL from \"Link\".";
 
 getURLFromItem[item_Association]/;MissingQ[item["ID"]] :=
@@ -150,13 +150,6 @@ getURLFromItem[item_Association] :=
     item["Link"]//KeyUnion//
     	Query[Select[#Type==="application/pdf"&],FailureAction->"Replace"]//
 			Query[All,"Href",FailureAction->"Replace"]//First//StringJoin[#,".pdf"]&;
-
-
-(*ifFileNameRegulate[True] :=
-    fileNameRegulate;
-
-ifFileNameRegulate[False] :=
-    Identity;*)
 
 
 (* ::Subsection:: *)

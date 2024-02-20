@@ -15,19 +15,19 @@ BeginPackage["Yurie`BlueArXiv`"];
 (*Public*)
 
 
-arXivPDFNameFormat::usage = 
+arXivPDFNameFormat::usage =
     "set the format of arXiv PDF names.";
 
-arXivInterface::usage = 
+arXivInterface::usage =
     "show the interface.";
 
 extractID::usage =
     "extract arXiv IDs from string or PDF file/folder path.";
-searchByID::usage = 
+searchByID::usage =
     "search by arXiv IDs extracted from string or PDF file/folder path.";
-downloadByID::usage = 
+downloadByID::usage =
     "download by arXiv IDs extracted from string or PDF file/folder path.";
-generateBibTeXByID::usage = 
+generateBibTeXByID::usage =
     "generate BibTeX entries on INSPIRE by arXiv IDs extracted from string or PDF file/folder path.";
 
 

@@ -14,16 +14,16 @@ Needs["Yurie`BlueArXiv`Info`"];
 (*Public*)
 
 
-sampleFileDirectory::usage = 
+sampleFileDirectory::usage =
     "directory of the sample files.";
 
-sampleFilePrepare::usage = 
+sampleFilePrepare::usage =
     "create and download the sample files.";
 
-sampleFileClear::usage = 
+sampleFileClear::usage =
     "clear the sample files.";
 
-sampleString::usage = 
+sampleString::usage =
     "sample strings.";
 
 
@@ -42,7 +42,7 @@ Begin["`Private`"];
 (*Messages*)
 
 
-sampleFilePrepare::connectionfailed = 
+sampleFilePrepare::connectionfailed =
     "The network connection fails.";
 
 
