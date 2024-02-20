@@ -56,7 +56,7 @@ extractTitleFromPDF//Options = {
 (*Messages*)
 
 
-extractTitleFromPDF::pdffailimport = 
+extractTitleFromPDF::pdffailimport =
     "the PDF file fails to import: \n``";
 
 
@@ -166,7 +166,7 @@ importFirstPageAsTextList[file_] :=
 regulateTitle//Attributes = 
     {Listable};
 
-regulateTitle[""] = 
+regulateTitle[""] =
     "";
 
 regulateTitle[arg_Missing] :=

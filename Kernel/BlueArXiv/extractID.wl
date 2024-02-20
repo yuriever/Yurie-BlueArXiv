@@ -58,7 +58,7 @@ extractID//Options = {
 (*Messages*)
 
 
-extractID::pdffailimport = 
+extractID::pdffailimport =
     "the PDF file fails to import: \n``";
 
 

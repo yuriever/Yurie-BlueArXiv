@@ -15,10 +15,10 @@ BeginPackage["Yurie`PaperTool`"];
 (*Public*)
 
 
-extractTitleFromPDF::usage = 
+extractTitleFromPDF::usage =
     "extract title from PDF file/folder path.";
 
-extractCiteKey::usage = 
+extractCiteKey::usage =
     "extract cite keys from string or TeX file/folder path.";
 
 

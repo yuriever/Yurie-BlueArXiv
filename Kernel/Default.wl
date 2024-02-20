@@ -18,14 +18,14 @@ ClearAll["`*"];
 (*Default values*)
 
 
-$arXivPDFNameFormatter::usage = 
+$arXivPDFNameFormatter::usage =
     "formatter of file names, set by arXivPDFNameFormat.";
-$arXivPDFNameRegulator::usage = 
+$arXivPDFNameRegulator::usage =
     "regulator of file names, set by arXivPDFNameFormat.";
 
-$defaultDownloadDir::usage = 
+$defaultDownloadDir::usage =
     "default download directory";
-$defaultBibName::usage = 
+$defaultBibName::usage =
     "default BibTeX file name.";
 
 
