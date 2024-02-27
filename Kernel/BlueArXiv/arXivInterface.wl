@@ -9,12 +9,17 @@ BeginPackage["Yurie`BlueArXiv`arXivInterface`"];
 
 Needs["Yurie`BlueArXiv`"];
 
+Needs["Yurie`BlueArXiv`Common`"];
+
+Needs["Yurie`BlueArXiv`Default`"];
+
 
 (* ::Section:: *)
 (*Public*)
 
 
-arXivInterface;
+arXivInterface::usage =
+    "show the interface.";
 
 
 (* ::Section:: *)
@@ -28,16 +33,8 @@ arXivInterface;
 Begin["`Private`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
-Needs["Yurie`BlueArXiv`Default`"];
-Needs["Yurie`BlueArXiv`extractID`"];
-Needs["Yurie`BlueArXiv`searchByID`"];
-Needs["Yurie`BlueArXiv`downloadByID`"];
-Needs["Yurie`BlueArXiv`generateBibTeXByID`"];
-
-
 (* ::Subsection:: *)
-(*arXivInterface*)
+(*Main*)
 
 
 arXivInterface[HoldPattern[targetFolder:(_?DirectoryQ):$defaultDownloadDir]] :=
@@ -46,7 +43,7 @@ arXivInterface[HoldPattern[targetFolder:(_?DirectoryQ):$defaultDownloadDir]] :=
 
 kernel[targetFolder_] :=
     Interpretation[
-        {    
+        {
             fun = "download",
             tag = "string",
             string = "",
@@ -79,6 +76,10 @@ kernel[targetFolder_] :=
                 generateBibTeXByID[tag,target][string]
         ]
     ];
+
+
+(* ::Subsection:: *)
+(*Helper*)
 
 
 targetUnit =

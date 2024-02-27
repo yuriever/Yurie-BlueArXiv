@@ -9,12 +9,21 @@ BeginPackage["Yurie`BlueArXiv`searchByID`"];
 
 Needs["Yurie`BlueArXiv`"];
 
+Needs["Yurie`BlueArXiv`Common`"];
+
+Needs["Yurie`BlueArXiv`Default`"];
+
+Needs["Yurie`BlueArXiv`extractID`"];
+
 
 (* ::Section:: *)
 (*Public*)
 
 
-searchByID;
+searchByID::usage =
+    "search by arXiv IDs extracted from string or PDF file/folder path.";
+
+
 searchByIDAsItemList;
 
 
@@ -29,19 +38,14 @@ searchByIDAsItemList;
 Begin["`Private`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
-Needs["Yurie`BlueArXiv`Default`"];
-Needs["Yurie`BlueArXiv`extractID`"];
-
-
 (* ::Subsection:: *)
-(*Options*)
+(*Option*)
 
 
-searchByIDFromPathAsItemList//Options = 
+searchByIDFromPathAsItemList//Options =
     Options@extractIDFromPathAsItemList;
 
-searchByIDAsItemList//Options = 
+searchByIDAsItemList//Options =
     Options@searchByIDFromPathAsItemList;
 
 searchByID//Options = {
@@ -51,7 +55,7 @@ searchByID//Options = {
 
 
 (* ::Subsection:: *)
-(*Messages*)
+(*Message*)
 
 
 searchByID::connectionfailed =
@@ -59,14 +63,18 @@ searchByID::connectionfailed =
 
 
 (* ::Subsection:: *)
-(*searchByID*)
+(*Main*)
 
 
 searchByID[tag:"string"|"path":"string",opts:OptionsPattern[]][arg_] :=
     Module[ {fopts},
-        fopts = FilterRules[{opts},Options[searchByIDAsItemList]];
-        searchByIDAsItemList[tag,fopts][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"ID","item","URL"]//Dataset
+        fopts = FilterRules[{opts,Options[searchByID]},Options[searchByIDAsItemList]];
+        searchByIDAsItemList[tag,fopts][arg]//ifAddButton[OptionValue["clickToCopy"],"ID","item","URL"]//Dataset
     ];
+
+
+(* ::Subsection:: *)
+(*Helper*)
 
 
 searchByIDAsItemList["string",opts:OptionsPattern[]][stringOrStringList_] :=
@@ -82,8 +90,8 @@ searchByIDFromStringAsItemList[opts:OptionsPattern[]][stringOrStringList_] :=
 
 searchByIDFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {idDataList,idList,fopts},
-        fopts[1] = FilterRules[{opts},Options[extractIDFromPathAsItemList]];
-        fopts[2] = FilterRules[{opts},Options[getItemDataFromIDAsList]];
+        fopts[1] = FilterRules[{opts,Options[searchByIDFromPathAsItemList]},Options[extractIDFromPathAsItemList]];
+        fopts[2] = FilterRules[{opts,Options[searchByIDFromPathAsItemList]},Options[getItemDataFromIDAsList]];
         idDataList = pathOrPathList//extractIDFromPathAsItemList[fopts[1]];
         idList = idDataList//Query[All,#ID&];
         JoinAcross[
@@ -96,16 +104,16 @@ searchByIDFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
 
 getItemDataFromIDAsList[opts:OptionsPattern[]][idList_] :=
     Module[ {itemList,idValidList,itemNameList,urlList,itemData},
-        idValidList = 
+        idValidList =
             DeleteDuplicates@DeleteCases[idList,"notFound"];
-        itemList = 
+        itemList =
             idValidList//getItemFromValidIDListAsList;
-        itemNameList = 
+        itemNameList =
             itemList//Query[All,$arXivPDFNameFormatter,FailureAction->"Replace"]//
             	Map[Switch[#,_Missing,#,_,$arXivPDFNameRegulator[#]]&];
-        urlList = 
+        urlList =
             getURLFromItem/@itemList;
-        itemData = 
+        itemData =
             MapThread[
                 <|"ID"->#1,"item"->#2,"URL"->#3|>&,
                 {idValidList,itemNameList,urlList}

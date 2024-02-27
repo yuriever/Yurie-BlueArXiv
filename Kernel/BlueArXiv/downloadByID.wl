@@ -9,12 +9,21 @@ BeginPackage["Yurie`BlueArXiv`downloadByID`"];
 
 Needs["Yurie`BlueArXiv`"];
 
+Needs["Yurie`BlueArXiv`Common`"];
+
+Needs["Yurie`BlueArXiv`Default`"];
+
+Needs["Yurie`BlueArXiv`searchByID`"];
+
 
 (* ::Section:: *)
 (*Public*)
 
 
-downloadByID;
+downloadByID::usage =
+    "download by arXiv IDs extracted from string or PDF file/folder path.";
+
+
 downloadByIDAsItemList;
 
 
@@ -29,13 +38,8 @@ downloadByIDAsItemList;
 Begin["`Private`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
-Needs["Yurie`BlueArXiv`Default`"];
-Needs["Yurie`BlueArXiv`searchByID`"];
-
-
 (* ::Subsection:: *)
-(*Options*)
+(*Option*)
 
 
 downloadByIDAsItemList//Options = {
@@ -50,7 +54,7 @@ downloadByID//Options = {
 
 
 (* ::Subsection:: *)
-(*downloadByID*)
+(*Main*)
 
 
 downloadByID[
@@ -59,14 +63,18 @@ downloadByID[
     opts:OptionsPattern[]
 ][arg_] :=
     Module[ {fopts},
-        fopts = FilterRules[{opts},Options[downloadByIDAsItemList]];
-        downloadByIDAsItemList[tag,targetFolder,fopts][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"ID","item","URL"]//Dataset
+        fopts = FilterRules[{opts,Options[downloadByID]},Options[downloadByIDAsItemList]];
+        downloadByIDAsItemList[tag,targetFolder,fopts][arg]//ifAddButton[OptionValue["clickToCopy"],"ID","item","URL"]//Dataset
     ];
+
+
+(* ::Subsection:: *)
+(*Helper*)
 
 
 downloadByIDAsItemList[tag_,targetFolder_,opts:OptionsPattern[]][arg_] :=
     Module[ {idDataList,fopts},
-        fopts = FilterRules[{opts},Options[searchByIDAsItemList]];
+        fopts = FilterRules[{opts,Options[downloadByIDAsItemList]},Options[searchByIDAsItemList]];
         idDataList = searchByIDAsItemList[tag,fopts][arg];
         (*download to the target path and return file objects*)
         idDataList//Query[All,<|#,"fileObject"->downloadPDFFromURLAsFileObject[targetFolder,#URL,#item]|>&]//

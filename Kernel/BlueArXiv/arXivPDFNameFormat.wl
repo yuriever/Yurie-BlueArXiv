@@ -9,12 +9,17 @@ BeginPackage["Yurie`BlueArXiv`arXivPDFNameFormat`"];
 
 Needs["Yurie`BlueArXiv`"];
 
+Needs["Yurie`BlueArXiv`Common`"];
+
+Needs["Yurie`BlueArXiv`Default`"];
+
 
 (* ::Section:: *)
 (*Public*)
 
 
-arXivPDFNameFormat;
+arXivPDFNameFormat::usage =
+    "set the format of arXiv PDF names.";
 
 
 (* ::Section:: *)
@@ -28,15 +33,11 @@ arXivPDFNameFormat;
 Begin["`Private`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
-Needs["Yurie`BlueArXiv`Default`"];
-
-
 (* ::Subsection:: *)
-(*arXivPDFNameFormat*)
+(*Main*)
 
 
-arXivPDFNameFormat//Attributes = 
+arXivPDFNameFormat//Attributes =
     {HoldAll};
 
 arXivPDFNameFormat[
@@ -44,14 +45,18 @@ arXivPDFNameFormat[
     HoldPattern[regulator_Symbol:regulateFileName]
 ] :=
     (
-        $arXivPDFNameFormatter = 
+        $arXivPDFNameFormatter =
             formatter[format];
-        $arXivPDFNameRegulator = 
+        $arXivPDFNameRegulator =
             regulator;
     );
 
 
-formatter//Attributes = 
+(* ::Subsection:: *)
+(*Helper*)
+
+
+formatter//Attributes =
     {HoldAll};
 
 formatter[format_] :=

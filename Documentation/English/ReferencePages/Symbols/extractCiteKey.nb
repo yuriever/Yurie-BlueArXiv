@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     53281,       1194]
-NotebookOptionsPosition[     45818,       1034]
-NotebookOutlinePosition[     46637,       1062]
-CellTagsIndexPosition[     46557,       1057]
+NotebookDataLength[     53220,       1194]
+NotebookOptionsPosition[     45752,       1034]
+NotebookOutlinePosition[     46577,       1062]
+CellTagsIndexPosition[     46497,       1057]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -153,10 +153,10 @@ Cell[TextData[{
     "8b7f443e-576e-421d-bf20-7be73e1bfa5e"], 
    DynamicModuleBox[{$CellContext`nbobj$$ = NotebookObject[
     "4d062975-8459-43f2-a360-6aee5bcaf69a", 
-     "3e1a9b30-0235-4da6-bbf5-f93d24ae957a"], $CellContext`cellobj$$ = 
+     "35db21fb-c2ee-41ab-aa43-6f9e4d225b4e"], $CellContext`cellobj$$ = 
     CellObject[
     "919e47f1-c4fc-4f80-a6e4-318154922bfc", 
-     "1bfbae88-0c30-4686-a2ee-c3e773e0b122"]}, 
+     "c8c1728f-85ae-4ecb-bb67-b3650613586f"]}, 
     TemplateBox[{
       GraphicsBox[{{
          Thickness[0.06], 
@@ -282,7 +282,7 @@ Cell[BoxData[
   RowBox[{"SetOptions", "[", 
    RowBox[{"extractCiteKey", ",", 
     RowBox[{"\"\<clickToCopy\>\"", "->", "False"}]}], "]"}], ";"}]], "Input",
- CellLabel->"In[14]:=",
+ CellLabel->"In[22]:=",
  CellID->2076035694,ExpressionUUID->"bc5f3939-2d04-439e-9aaa-29575bf274b9"],
 
 Cell[CellGroupData[{
@@ -303,15 +303,17 @@ Cell[BoxData[
  RowBox[{
   RowBox[{"sampleString", "[", "\"\<citeKey\>\"", "]"}], "//", 
   RowBox[{"extractCiteKey", "[", "]"}]}]], "Input",
- CellLabel->"In[15]:=",
+ CellLabel->"In[24]:=",
  CellID->480966140,ExpressionUUID->"b236dba6-1c61-464d-8ae3-8f76d5fe9e0f"],
 
 Cell[BoxData[
  RowBox[{"{", 
-  RowBox[{"\<\"ATLAS:2012yve\"\>", ",", "\<\"vaswani2017attention\"\>", 
-   ",", "\<\"Witten:1998qj\"\>"}], "}"}]], "Output",
- CellLabel->"Out[15]=",
- CellID->1765660966,ExpressionUUID->"57bf2beb-9120-4260-90c2-efa09965200b"]
+  RowBox[{"\<\"ATLAS:2012yve\"\>", 
+   ",", "\<\"dieudonn\[EAcute]1969treatise\"\>", 
+   ",", "\<\"vaswani2017attention\"\>", ",", "\<\"Witten:1998qj\"\>"}], 
+  "}"}]], "Output",
+ CellLabel->"Out[24]=",
+ CellID->274577018,ExpressionUUID->"e7cb9ee9-bc90-4a11-a37c-79d4376ed539"]
 }, Open  ]],
 
 Cell[TextData[{
@@ -335,7 +337,7 @@ Cell[BoxData[
  RowBox[{
   RowBox[{"sampleFileDirectory", "[", "\"\<tex\>\"", "]"}], "//", 
   RowBox[{"extractCiteKey", "[", "\"\<path\>\"", "]"}]}]], "Input",
- CellLabel->"In[16]:=",
+ CellLabel->"In[25]:=",
  CellID->467163710,ExpressionUUID->"32240bc4-c7c1-47a8-a90b-8d0b3249a98a"],
 
 Cell[BoxData[
@@ -343,11 +345,10 @@ Cell[BoxData[
   TagBox[
    DynamicModuleBox[{TypeSystem`NestedGrid`PackagePrivate`$state$$ = <|
     "InitialData" -> {<|
-       "citeKey" -> "ATLAS:2012yve", "file" -> "bibtex-example"|>, <|
-       "citeKey" -> "dieudonn\[EAcute]1969treatise", "file" -> 
-        "bibtex-example2"|>, <|
-       "citeKey" -> "vaswani2017attention", "file" -> "bibtex-example"|>, <|
-       "citeKey" -> "Witten:1998qj", "file" -> "bibtex-example"|>}, 
+       "citeKey" -> "ATLAS:2012yve", "file" -> "citeKey1"|>, <|
+       "citeKey" -> "dieudonn\[EAcute]1969treatise", "file" -> "citeKey2"|>, <|
+       "citeKey" -> "vaswani2017attention", "file" -> "citeKey1"|>, <|
+       "citeKey" -> "Witten:1998qj", "file" -> "citeKey1"|>}, 
      "AllowEmbedding" -> True, "InitialShape" -> 
      TypeSystem`PackageScope`HeaderShape[<|{All, "citeKey"} -> 
         1, {All, "file"} -> 1|>, 
@@ -358,13 +359,13 @@ Cell[BoxData[
           TypeSystem`PackageScope`RowShape[<|
            "citeKey" -> 
             TypeSystem`PackageScope`AtomShape[235.20000000000002`], "file" -> 
-            TypeSystem`PackageScope`AtomShape[157.5]|>], 
+            TypeSystem`PackageScope`AtomShape[84.]|>], 
           DirectedInfinity[1], 2, {All}]], 4, 
         DirectedInfinity[1], {}]], "InitialType" -> TypeSystem`Vector[
        TypeSystem`Struct[{"citeKey", "file"}, {
          TypeSystem`Atom[String], 
          TypeSystem`Atom[
-          TypeSystem`Enumeration["bibtex-example", "bibtex-example2"]]}], 4], 
+          TypeSystem`Enumeration["citeKey1", "citeKey2"]]}], 4], 
      "Meta" -> <||>, "RowTarget" -> 20, "ColumnTarget" -> 10, "Shape" -> 
      TypeSystem`PackageScope`HeaderShape[<|{All, "citeKey"} -> 
         1, {All, "file"} -> 1|>, 
@@ -375,16 +376,16 @@ Cell[BoxData[
           TypeSystem`PackageScope`RowShape[<|
            "citeKey" -> 
             TypeSystem`PackageScope`AtomShape[235.20000000000002`], "file" -> 
-            TypeSystem`PackageScope`AtomShape[157.5]|>], 
+            TypeSystem`PackageScope`AtomShape[84.]|>], 
           DirectedInfinity[1], 2, {All}]], 4, 
         DirectedInfinity[1], {}]], "Type" -> TypeSystem`Vector[
        TypeSystem`Struct[{"citeKey", "file"}, {
          TypeSystem`Atom[String], 
          TypeSystem`Atom[
-          TypeSystem`Enumeration["bibtex-example", "bibtex-example2"]]}], 4], 
-     "Path" -> {}, "DisplayedRowCount" -> 4, "DisplayedColumnCount" -> 2, 
-     "DataRowCount" -> 4, "DataColumnCount" -> 2, "SortPaths" -> {}, 
-     "SortDirections" -> {}, "HiddenItemsMap" -> Null, "UpdateType" -> 1|>, 
+          TypeSystem`Enumeration["citeKey1", "citeKey2"]]}], 4], "Path" -> {},
+      "DisplayedRowCount" -> 4, "DisplayedColumnCount" -> 2, "DataRowCount" -> 
+     4, "DataColumnCount" -> 2, "SortPaths" -> {}, "SortDirections" -> {}, 
+     "HiddenItemsMap" -> Null, "UpdateType" -> 1|>, 
     TypeSystem`NestedGrid`PackagePrivate`$outputID$$, 
     TypeSystem`NestedGrid`PackagePrivate`$path$$ = {}, 
     TypeSystem`NestedGrid`PackagePrivate`$vPos$$ = 1, 
@@ -468,12 +469,12 @@ Cell[BoxData[
              ItemSize -> {Full, Automatic}], 
             Item[
              Pane[
-              Annotation["bibtex-example", 
+              Annotation["citeKey1", 
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{1, 
                  Key["file"]}, "Item", False], "Mouse"], 
-              ImageSize -> {{157.5, Full}, Automatic}, 
+              ImageSize -> {{84., Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}]}, {
             Item[
@@ -488,12 +489,12 @@ Cell[BoxData[
              ItemSize -> {Full, Automatic}], 
             Item[
              Pane[
-              Annotation["bibtex-example2", 
+              Annotation["citeKey2", 
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{2, 
                  Key["file"]}, "Item", False], "Mouse"], 
-              ImageSize -> {{157.5, Full}, Automatic}, 
+              ImageSize -> {{84., Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}]}, {
             Item[
@@ -508,12 +509,12 @@ Cell[BoxData[
              ItemSize -> {Full, Automatic}], 
             Item[
              Pane[
-              Annotation["bibtex-example", 
+              Annotation["citeKey1", 
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
                  Key["file"]}, "Item", False], "Mouse"], 
-              ImageSize -> {{157.5, Full}, Automatic}, 
+              ImageSize -> {{84., Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}]}, {
             Item[
@@ -528,12 +529,12 @@ Cell[BoxData[
              ItemSize -> {Full, Automatic}], 
             Item[
              Pane[
-              Annotation["bibtex-example", 
+              Annotation["citeKey1", 
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{4, 
                  Key["file"]}, "Item", False], "Mouse"], 
-              ImageSize -> {{157.5, Full}, Automatic}, 
+              ImageSize -> {{84., Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}]}}, 
           BaseStyle -> {
@@ -680,8 +681,7 @@ lastPathIsLeafHeader, TypeSystem`NestedGrid`PackagePrivate`headerHidden$ = And[
                     TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                     TypeSystem`NestedGrid`PackagePrivate`lastPath$, 
                     "Descending"]], MenuEvaluator -> Automatic], Nothing], 
-                    If[
-                    TypeSystem`NestedGrid`PackagePrivate`sortDirection$ =!= 
+                    If[TypeSystem`NestedGrid`PackagePrivate`sortDirection$ =!= 
                     None, 
                     MenuItem["Unsort", 
                     KernelExecute[
@@ -825,13 +825,13 @@ lastPathIsLeafHeader, TypeSystem`NestedGrid`PackagePrivate`headerHidden$ = And[
         Hold[
           TypeSystem`NestedGrid`PackagePrivate`localHold[
           TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]], StandardForm],
-      ImageSizeCache->{416., {93.193115234375, 99.806884765625}},
+      ImageSizeCache->{342., {93.193115234375, 99.806884765625}},
       TrackedSymbols:>{
        TypeSystem`NestedGrid`PackagePrivate`$state$$, 
         TypeSystem`NestedGrid`PackagePrivate`$grid$$}], 
      TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$ = 
      MouseAnnotation[],
-     ImageSizeCache->{416., {93.193115234375, 99.806884765625}}],
+     ImageSizeCache->{342., {93.193115234375, 99.806884765625}}],
     BaseStyle->{LineBreakWithin -> False},
     DynamicModuleValues:>{},
     Initialization:>(TypeSystem`NestedGrid`PackagePrivate`$outputID$$ = 
@@ -843,8 +843,8 @@ lastPathIsLeafHeader, TypeSystem`NestedGrid`PackagePrivate`headerHidden$ = And[
   Editable->False,
   SelectWithContents->True,
   Selectable->False]], "Output",
- CellLabel->"Out[16]=",
- CellID->278744862,ExpressionUUID->"7b315ef4-d4c1-4e86-9542-13a21a2d48c8"]
+ CellLabel->"Out[25]=",
+ CellID->972240507,ExpressionUUID->"819229de-12ab-4b56-b22a-0b811a0190da"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
@@ -1032,13 +1032,13 @@ Cell[BoxData[""], "Template",
 }, Closed]]
 }, Open  ]]
 },
-WindowSize->{840, 497},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowSize->{840, 1022},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
 Visible->True,
 TaggingRules-><|"Paclet" -> "Yurie/BlueArXiv"|>,
 CellContext->"Global`",
 TrackCellChangeTimes->False,
-FrontEndVersion->"13.3 for Mac OS X ARM (64-bit) (June 3, 2023)",
+FrontEndVersion->"14.0 for Mac OS X ARM (64-bit) (December 12, 2023)",
 StyleDefinitions->FrontEnd`FileName[{"Wolfram"}, "FunctionPageStylesExt.nb", 
   CharacterEncoding -> "UTF-8"],
 ExpressionUUID->"4d062975-8459-43f2-a360-6aee5bcaf69a"
@@ -1049,14 +1049,14 @@ ExpressionUUID->"4d062975-8459-43f2-a360-6aee5bcaf69a"
 (*CellTagsOutline
 CellTagsIndex->{
  "ExtendedExamples"->{
-  Cell[39746, 853, 488, 13, 72, "ExtendedExamplesSection",ExpressionUUID->"411d9de9-8bf8-428e-928f-0890d044fc8f",
+  Cell[39680, 853, 488, 13, 72, "ExtendedExamplesSection",ExpressionUUID->"411d9de9-8bf8-428e-928f-0890d044fc8f",
    CellTags->"ExtendedExamples",
    CellID->1798474470]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"ExtendedExamples", 46362, 1050}
+ {"ExtendedExamples", 46302, 1050}
  }
 *)
 (*NotebookFileOutline
@@ -1118,81 +1118,81 @@ Cell[10169, 296, 139, 1, 30, "ExampleText",ExpressionUUID->"900d6651-aed8-4560-9
 Cell[CellGroupData[{
 Cell[10333, 301, 238, 5, 33, "Input",ExpressionUUID->"b236dba6-1c61-464d-8ae3-8f76d5fe9e0f",
  CellID->480966140],
-Cell[10574, 308, 254, 5, 32, "Output",ExpressionUUID->"57bf2beb-9120-4260-90c2-efa09965200b",
- CellID->1765660966]
+Cell[10574, 308, 306, 7, 57, "Output",ExpressionUUID->"e7cb9ee9-bc90-4a11-a37c-79d4376ed539",
+ CellID->274577018]
 }, Open  ]],
-Cell[10843, 316, 431, 13, 30, "ExampleText",ExpressionUUID->"8067bca8-37d6-4416-a8b5-ee07d0ab6063",
+Cell[10895, 318, 431, 13, 30, "ExampleText",ExpressionUUID->"8067bca8-37d6-4416-a8b5-ee07d0ab6063",
  CellID->436371809],
 Cell[CellGroupData[{
-Cell[11299, 333, 257, 5, 33, "Input",ExpressionUUID->"32240bc4-c7c1-47a8-a90b-8d0b3249a98a",
+Cell[11351, 335, 257, 5, 33, "Input",ExpressionUUID->"32240bc4-c7c1-47a8-a90b-8d0b3249a98a",
  CellID->467163710],
-Cell[11559, 340, 28126, 506, 208, "Output",ExpressionUUID->"7b315ef4-d4c1-4e86-9542-13a21a2d48c8",
- CellID->278744862]
+Cell[11611, 342, 28008, 504, 208, "Output",ExpressionUUID->"819229de-12ab-4b56-b22a-0b811a0190da",
+ CellID->972240507]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[39746, 853, 488, 13, 72, "ExtendedExamplesSection",ExpressionUUID->"411d9de9-8bf8-428e-928f-0890d044fc8f",
+Cell[39680, 853, 488, 13, 72, "ExtendedExamplesSection",ExpressionUUID->"411d9de9-8bf8-428e-928f-0890d044fc8f",
  CellTags->"ExtendedExamples",
  CellID->1798474470],
-Cell[40237, 868, 242, 5, 43, "ExampleSection",ExpressionUUID->"aa2eecc9-f9eb-4d1c-86e5-4c5b86cc1c49",
+Cell[40171, 868, 242, 5, 43, "ExampleSection",ExpressionUUID->"aa2eecc9-f9eb-4d1c-86e5-4c5b86cc1c49",
  CellID->1128085765],
-Cell[40482, 875, 265, 5, 27, "ExampleSection",ExpressionUUID->"5f376823-755e-4978-ba52-a8b507d4f034",
+Cell[40416, 875, 265, 5, 27, "ExampleSection",ExpressionUUID->"5f376823-755e-4978-ba52-a8b507d4f034",
  CellID->1751816639],
 Cell[CellGroupData[{
-Cell[40772, 884, 244, 5, 27, "ExampleSection",ExpressionUUID->"0064df45-3e05-4f91-8ea3-383a9ea5187c",
+Cell[40706, 884, 244, 5, 27, "ExampleSection",ExpressionUUID->"0064df45-3e05-4f91-8ea3-383a9ea5187c",
  CellID->2016387997],
-Cell[41019, 891, 258, 5, 32, "ExampleSubsection",ExpressionUUID->"ee7d978c-4ea8-4b22-9c2f-0adf085e3ab4",
+Cell[40953, 891, 258, 5, 32, "ExampleSubsection",ExpressionUUID->"ee7d978c-4ea8-4b22-9c2f-0adf085e3ab4",
  CellID->2141115919],
-Cell[41280, 898, 259, 5, 26, "ExampleSubsection",ExpressionUUID->"b87914f0-0832-48dc-bac7-e097f37f8135",
+Cell[41214, 898, 259, 5, 26, "ExampleSubsection",ExpressionUUID->"b87914f0-0832-48dc-bac7-e097f37f8135",
  CellID->351777854],
-Cell[41542, 905, 256, 5, 26, "ExampleSubsection",ExpressionUUID->"75431095-cac5-433a-bc0c-8bf85b7ce0d6",
+Cell[41476, 905, 256, 5, 26, "ExampleSubsection",ExpressionUUID->"75431095-cac5-433a-bc0c-8bf85b7ce0d6",
  CellID->307911987]
 }, Open  ]],
-Cell[41813, 913, 249, 5, 43, "ExampleSection",ExpressionUUID->"292d6a5b-93a3-466c-8742-fb9c41f384ac",
+Cell[41747, 913, 249, 5, 43, "ExampleSection",ExpressionUUID->"292d6a5b-93a3-466c-8742-fb9c41f384ac",
  CellID->1252076458],
-Cell[42065, 920, 258, 5, 27, "ExampleSection",ExpressionUUID->"a1feede8-f88e-4495-a8b4-0d4cd56fb68b",
+Cell[41999, 920, 258, 5, 27, "ExampleSection",ExpressionUUID->"a1feede8-f88e-4495-a8b4-0d4cd56fb68b",
  CellID->456772653],
-Cell[42326, 927, 252, 5, 27, "ExampleSection",ExpressionUUID->"e7a1b627-9639-4121-be0c-a85f29f747c0",
+Cell[42260, 927, 252, 5, 27, "ExampleSection",ExpressionUUID->"e7a1b627-9639-4121-be0c-a85f29f747c0",
  CellID->1871424593],
-Cell[42581, 934, 256, 5, 27, "ExampleSection",ExpressionUUID->"24d73b4f-fb16-4593-bdf4-d96d76dd8465",
+Cell[42515, 934, 256, 5, 27, "ExampleSection",ExpressionUUID->"24d73b4f-fb16-4593-bdf4-d96d76dd8465",
  CellID->987640589],
-Cell[42840, 941, 250, 5, 27, "ExampleSection",ExpressionUUID->"79f4948e-6d2d-4f2a-bd2d-eb48e804e33c",
+Cell[42774, 941, 250, 5, 27, "ExampleSection",ExpressionUUID->"79f4948e-6d2d-4f2a-bd2d-eb48e804e33c",
  CellID->1374271660]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[43127, 951, 111, 1, 90, "MetadataSection",ExpressionUUID->"d857ec99-341e-4937-a1fa-6bc7c8d0e9b5",
+Cell[43061, 951, 111, 1, 90, "MetadataSection",ExpressionUUID->"d857ec99-341e-4937-a1fa-6bc7c8d0e9b5",
  CellID->1197166135],
-Cell[43241, 954, 476, 12, 33, "History",ExpressionUUID->"53a592fc-7737-425a-b7df-f7ee3743b635",
+Cell[43175, 954, 476, 12, 33, "History",ExpressionUUID->"53a592fc-7737-425a-b7df-f7ee3743b635",
  CellID->996942202],
 Cell[CellGroupData[{
-Cell[43742, 970, 484, 13, 27, "CategorizationSection",ExpressionUUID->"5acf8bee-331d-467c-9750-0584c2a3469b",
+Cell[43676, 970, 484, 13, 27, "CategorizationSection",ExpressionUUID->"5acf8bee-331d-467c-9750-0584c2a3469b",
  CellID->940175120],
-Cell[44229, 985, 134, 2, 45, "Categorization",ExpressionUUID->"78e984ee-e481-4703-bcdf-47cbdc2b8710",
+Cell[44163, 985, 134, 2, 45, "Categorization",ExpressionUUID->"78e984ee-e481-4703-bcdf-47cbdc2b8710",
  CellID->338567214],
-Cell[44366, 989, 144, 2, 45, "Categorization",ExpressionUUID->"e69fe072-3b1f-4a9d-a153-96b0d24c17eb",
+Cell[44300, 989, 144, 2, 45, "Categorization",ExpressionUUID->"e69fe072-3b1f-4a9d-a153-96b0d24c17eb",
  CellID->1788659886],
-Cell[44513, 993, 141, 2, 45, "Categorization",ExpressionUUID->"d0971de0-4948-45f9-88cd-015161906d91",
+Cell[44447, 993, 141, 2, 45, "Categorization",ExpressionUUID->"d0971de0-4948-45f9-88cd-015161906d91",
  CellID->1530613296],
-Cell[44657, 997, 154, 2, 45, "Categorization",ExpressionUUID->"6945a5ab-bc9b-44d0-a035-310ff9cd2acf",
+Cell[44591, 997, 154, 2, 45, "Categorization",ExpressionUUID->"6945a5ab-bc9b-44d0-a035-310ff9cd2acf",
  CellID->984323615]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[44848, 1004, 110, 1, 39, "KeywordsSection",ExpressionUUID->"8c16ce53-ec06-4b06-8f15-fd0417ae7aaa",
+Cell[44782, 1004, 110, 1, 39, "KeywordsSection",ExpressionUUID->"8c16ce53-ec06-4b06-8f15-fd0417ae7aaa",
  CellID->786096453],
-Cell[44961, 1007, 99, 1, 70, "Keywords",ExpressionUUID->"b92e1df4-9231-4c55-9850-945148120020",
+Cell[44895, 1007, 99, 1, 70, "Keywords",ExpressionUUID->"b92e1df4-9231-4c55-9850-945148120020",
  CellID->603689227]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[45097, 1013, 120, 1, 26, "TemplatesSection",ExpressionUUID->"3781bd95-a34b-46bc-bff0-08a283d8a1d4",
+Cell[45031, 1013, 120, 1, 26, "TemplatesSection",ExpressionUUID->"3781bd95-a34b-46bc-bff0-08a283d8a1d4",
  CellID->1492089761],
-Cell[45220, 1016, 149, 2, 70, "Template",ExpressionUUID->"293e879b-bec6-44b9-b88b-849d8127b78c",
+Cell[45154, 1016, 149, 2, 70, "Template",ExpressionUUID->"293e879b-bec6-44b9-b88b-849d8127b78c",
  CellID->1386067108],
-Cell[45372, 1020, 138, 2, 70, "Template",ExpressionUUID->"ba4db074-363d-4648-951c-c06115dd3c4d",
+Cell[45306, 1020, 138, 2, 70, "Template",ExpressionUUID->"ba4db074-363d-4648-951c-c06115dd3c4d",
  CellID->1874765147],
-Cell[45513, 1024, 136, 2, 70, "Template",ExpressionUUID->"58dbf8c5-1ff3-49b7-b290-c5be362a8fb0",
+Cell[45447, 1024, 136, 2, 70, "Template",ExpressionUUID->"58dbf8c5-1ff3-49b7-b290-c5be362a8fb0",
  CellID->1297756845],
-Cell[45652, 1028, 138, 2, 70, "Template",ExpressionUUID->"07ab87f0-3e35-4f14-a0ba-553e09ea6d93",
+Cell[45586, 1028, 138, 2, 70, "Template",ExpressionUUID->"07ab87f0-3e35-4f14-a0ba-553e09ea6d93",
  CellID->1555374983]
 }, Closed]]
 }, Open  ]]

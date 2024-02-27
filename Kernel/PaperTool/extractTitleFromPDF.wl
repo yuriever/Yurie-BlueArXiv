@@ -9,12 +9,17 @@ BeginPackage["Yurie`PaperTool`extractTitleFromPDF`"];
 
 Needs["Yurie`PaperTool`"];
 
+Needs["Yurie`BlueArXiv`Common`"];
+
 
 (* ::Section:: *)
 (*Public*)
 
 
-extractTitleFromPDF;
+extractTitleFromPDF::usage =
+    "extract title from PDF file/folder path.";
+
+
 extractTitleFromPathAsItemList;
 
 
@@ -22,19 +27,15 @@ extractTitleFromPathAsItemList;
 (*Private*)
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Begin*)
 
 
 Begin["`Private`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
-Needs["Yurie`BlueArXiv`Default`"];
-
-
-(* ::Subsection:: *)
-(*Options*)
+(* ::Subsection::Closed:: *)
+(*Option*)
 
 
 getTitleFromPDFAsItemList//Options = {
@@ -43,7 +44,7 @@ getTitleFromPDFAsItemList//Options = {
     "YResolution"->25
 };
 
-extractTitleFromPathAsItemList//Options = 
+extractTitleFromPathAsItemList//Options =
     Options@getTitleFromPDFAsItemList;
 
 extractTitleFromPDF//Options = {
@@ -52,23 +53,27 @@ extractTitleFromPDF//Options = {
 };
 
 
-(* ::Subsection:: *)
-(*Messages*)
+(* ::Subsection::Closed:: *)
+(*Message*)
 
 
 extractTitleFromPDF::pdffailimport =
     "the PDF file fails to import: \n``";
 
 
-(* ::Subsection:: *)
-(*extractTitleFromPDF*)
+(* ::Subsection::Closed:: *)
+(*Main*)
 
 
 extractTitleFromPDF[opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {fopts},
-        fopts = FilterRules[{opts},Options[extractTitleFromPathAsItemList]];
-        pathOrPathList//extractTitleFromPathAsItemList[fopts]//ifAddButtonTo[OptionValue["clickToCopy"],"title"]//Dataset
+        fopts = FilterRules[{opts,Options[extractTitleFromPDF]},Options[extractTitleFromPathAsItemList]];
+        pathOrPathList//extractTitleFromPathAsItemList[fopts]//ifAddButton[OptionValue["clickToCopy"],"title"]//Dataset
     ];
+
+
+(* ::Subsection:: *)
+(*Helper*)
 
 
 extractTitleFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
@@ -92,7 +97,7 @@ getTitleFromPDFAsItemList[opts:OptionsPattern[]][fileList_List] :=
 (*search grouped texts with larger Y coordinate and fontsize.*)
 recognizeTitleFromPDFBy["sortYAndFontSize",yresolution_][file_] :=
     Module[ {textData,counter,resultTextData,searchFirstNTexts},
-        textData = 
+        textData =
             file//importFirstPageAsTextList//regulateTextList[yresolution];
         searchFirstNTexts[data_List,n_] :=
             Intersection[
@@ -113,13 +118,13 @@ recognizeTitleFromPDFBy["sortYAndFontSize",yresolution_][file_] :=
 
 recognizeTitleFromPDFBy["sumYAndFontSize",yresolution_][file_] :=
     Module[ {textData,maxY,maxFontSize,resultTextData},
-        textData = 
+        textData =
             file//importFirstPageAsTextList//regulateTextList[yresolution];
-        maxY = 
+        maxY =
             textData//Query[All,#Y&]//Max;
-        maxFontSize = 
+        maxFontSize =
             textData//Query[All,#FontSize&]//Max;
-        resultTextData = 
+        resultTextData =
             textData//Query[All,<|#,"weight"->(#Y/maxY+#FontSize/maxFontSize)|>&]//Query[MaximalBy[#weight&]];
         (*if there are multiple texts, select one with longest #string.*)
         resultTextData//Query[MaximalBy[StringLength[#string]&]]//Query[1,#string&]
@@ -139,7 +144,7 @@ regulateTextList[yresolution_][text_Text] :=
 regulateTextList[yresolution_][textList_List] :=
     Module[ {textData},
         textData = regulateTextList[yresolution]/@textList;
-        GatherBy[textData,#Y&]//Map[SortBy[#X&]]//Map[mergeAssociationByKey[{"string"->StringJoin,"X"->Min},First]]
+        GatherBy[textData,#Y&]//Map[SortBy[#X&]]//Map[mergeByKey[{"string"->StringJoin,"X"->Min},First]]
     ];
 
 
@@ -148,7 +153,7 @@ hideDirectory[file_] :=
 
 
 getPDFFromPathAsList[pathOrPathList_] :=
-    getFileByExtension["pdf"][pathOrPathList];
+    getFilePathByExtension["pdf"][pathOrPathList];
 
 
 importFirstPageAsTextList[file_] :=
@@ -163,7 +168,7 @@ importFirstPageAsTextList[file_] :=
     ];
 
 
-regulateTitle//Attributes = 
+regulateTitle//Attributes =
     {Listable};
 
 regulateTitle[""] =
@@ -192,7 +197,72 @@ capitalize[string_String] :=
     ];
 
 
-(* ::Subsection:: *)
+(* ::Subsubsection:: *)
+(*mergeByKey*)
+
+
+mergeByKey[ruleList:{___Rule},default:_:Identity][assocList:{___Association}] :=
+    mergeByKeyKernel[assocList,ruleList,default];
+
+mergeByKey[assocList:{___Association},ruleList:{___Rule},default:_:Identity] :=
+    mergeByKeyKernel[assocList,ruleList,default];
+
+
+mergeByKeyKernel[{<||>...},_,_] :=
+    <||>;
+
+mergeByKeyKernel[assocList_,{},Identity] :=
+    (*in this case queryRuleList=={}, and Query[{}][...] will unexpectedly return an empty association.*)
+    getTransposedAssocListAndKeyList[assocList,{}]//First;
+
+mergeByKeyKernel[assocList_,ruleList_,default_] :=
+    Module[ {keyList,dataMerged,queryRuleList},
+        {dataMerged,keyList} =
+            getTransposedAssocListAndKeyList[assocList,ruleList];
+        queryRuleList =
+            prepareQueryRuleList[ruleList,keyList,default];
+        Query[queryRuleList]@dataMerged
+    ];
+
+
+getTransposedAssocListAndKeyList[assocList_,ruleList_] :=
+    Module[ {keyList,keyListList,dataPadded,dataMerged,missing},
+        keyListList =
+            Keys[assocList];
+        (*pad the list of associations by the placeholder missing if necessary.*)
+        If[ SameQ@@keyListList,
+            keyList =
+                First@keyListList;
+            dataMerged =
+                AssociationThread[
+                    keyList,
+                    Transpose@Values[assocList]
+                ],
+            (*Else*)
+            dataPadded =
+                KeyUnion[assocList,missing&];
+            keyList =
+                Keys@First@dataPadded;
+            dataMerged =
+                AssociationThread[
+                    keyList,
+                    DeleteCases[Transpose@Values[dataPadded],missing,{2}]
+                ];
+        ];
+        {dataMerged,Key/@keyList}
+    ];
+
+
+prepareQueryRuleList[ruleList_,keyList_,default_] :=
+    DeleteCases[
+        Thread[
+            keyList->Lookup[ruleList,keyList,default]
+        ],
+        _->Identity
+    ];
+
+
+(* ::Subsection::Closed:: *)
 (*End*)
 
 

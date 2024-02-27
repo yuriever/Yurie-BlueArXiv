@@ -9,13 +9,21 @@ BeginPackage["Yurie`BlueArXiv`extractID`"];
 
 Needs["Yurie`BlueArXiv`"];
 
+Needs["Yurie`BlueArXiv`Common`"];
+
+Needs["Yurie`BlueArXiv`Default`"];
+
 
 (* ::Section:: *)
 (*Public*)
 
 
-extractID;
+extractID::usage =
+    "extract arXiv IDs from string or PDF file/folder path.";
+
+
 extractIDFromStringAsItemList;
+
 extractIDFromPathAsItemList;
 
 
@@ -30,12 +38,8 @@ extractIDFromPathAsItemList;
 Begin["`Private`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
-Needs["Yurie`BlueArXiv`Default`"];
-
-
 (* ::Subsection:: *)
-(*Options*)
+(*Option*)
 
 
 getIDDataFromPDFAsList//Options = {
@@ -55,7 +59,7 @@ extractID//Options = {
 
 
 (* ::Subsection:: *)
-(*Messages*)
+(*Message*)
 
 
 extractID::pdffailimport =
@@ -63,20 +67,24 @@ extractID::pdffailimport =
 
 
 (* ::Subsection:: *)
-(*extractID*)
+(*Main*)
 
 
 extractID["string",opts:OptionsPattern[]][stringOrStringList_] :=
-    stringOrStringList//extractIDFromStringAsItemList//ifAddButtonTo[OptionValue["clickToCopy"]];
+    stringOrStringList//extractIDFromStringAsItemList//ifAddButton[OptionValue["clickToCopy"]];
 
 extractID["path",opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {fopts},
-        fopts = FilterRules[{opts},Options[extractIDFromPathAsItemList]];
-        pathOrPathList//extractIDFromPathAsItemList[fopts]//ifAddButtonTo[OptionValue["clickToCopy"],"ID"]//Dataset
+        fopts = FilterRules[{opts,Options[extractID]},Options[extractIDFromPathAsItemList]];
+        pathOrPathList//extractIDFromPathAsItemList[fopts]//ifAddButton[OptionValue["clickToCopy"],"ID"]//Dataset
     ];
 
 extractID[opts:OptionsPattern[]][stringOrStringList_] :=
     extractID["string",opts][stringOrStringList];
+
+
+(* ::Subsection:: *)
+(*Helper*)
 
 
 (*act on string*)
@@ -87,7 +95,7 @@ extractIDFromStringAsItemList[stringOrStringList_] :=
 (*act on path*)
 extractIDFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {fopts},
-        fopts = FilterRules[{opts},Options[getIDDataFromPDFAsList]];
+        fopts = FilterRules[{opts,Options[extractIDFromPathAsItemList]},Options[getIDDataFromPDFAsList]];
         pathOrPathList//getPDFFromPathAsList//getIDDataFromPDFAsList[fopts]//ifGatherAndSortByID[OptionValue["mergeDuplicateID"]]
     ];
 
@@ -112,7 +120,7 @@ getIDDataFromPDFFirstPageAsList[file_] :=
                 MapThread[
                     <|"ID"->#1,"file"->#2,"IDLocation"->#3|>&,
                     {idList,ConstantArray[{file},idNumber],ConstantArray[{"extraInFirstPage"},idNumber]}
-                ]                
+                ]
         ]
     ];
 
@@ -123,7 +131,7 @@ getIDDataFromPDFAsList[OptionsPattern[]][file_] :=
             (*True*)
             idList = getIDFromStringAsList[file];
             idNumber = Length@idList;
-            idData = 
+            idData =
                 Switch[ idNumber,
                     0,
                         getIDDataFromPDFFirstPageAsList[file],
@@ -152,7 +160,7 @@ hideDirectory[file_] :=
 
 
 getPDFFromPathAsList[pathOrPathList_] :=
-    getFileByExtension["pdf"][pathOrPathList];
+    getFilePathByExtension["pdf"][pathOrPathList];
 
 
 ifGatherAndSortByID[True][list_] :=

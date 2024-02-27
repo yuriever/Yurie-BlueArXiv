@@ -11,13 +11,15 @@ BeginPackage["Yurie`BlueArXiv`Info`"];
 (*Public*)
 
 
-(* ::Subsection:: *)
-(*Symbols*)
-
-
 $thisPacletDir;
-$thisSampleDir;
+
+$thisKernelDir;
+
+$thisSourceDir;
+
 $thisTestDir;
+
+$thisTestSourceDir;
 
 
 (* ::Section:: *)
@@ -32,20 +34,26 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Symbols*)
+(*Main*)
 
 
-$thisPaclet = 
+$thisPaclet =
     PacletObject["Yurie/BlueArXiv"];
-    
-$thisPacletDir = 
+
+$thisPacletDir =
     $thisPaclet["Location"];
 
-$thisSampleDir = 
-    $thisPaclet["AssetLocation","Sample"];
+$thisKernelDir =
+    FileNameJoin@{$thisPacletDir,"Kernel"};
 
-$thisTestDir = 
+$thisSourceDir =
+    $thisPaclet["AssetLocation","Source"];
+
+$thisTestDir =
     $thisPaclet["AssetLocation","Test"];
+
+$thisTestSourceDir =
+    $thisPaclet["AssetLocation","TestSource"];
 
 
 (* ::Subsection::Closed:: *)

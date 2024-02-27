@@ -8,19 +8,25 @@ PacletObject[
     "SourceControlURL" -> "https://github.com/yuriever/Yurie-BlueArXiv",
     "License" -> "MIT",
     "PublisherID" -> "Yurie",
-    "Version" -> "1.1.13",
+    "Version" -> "1.2.0",
     "WolframVersion" -> "13+",
     "PrimaryContext" -> "Yurie`BlueArXiv`",
     "Extensions" -> {
       {
         "Kernel",
         "Root" -> "Kernel",
-        "Context" -> {"Yurie`BlueArXiv`", "Yurie`PaperTool`"}
+        "Context" -> {
+          "Yurie`BlueArXiv`",
+          "Yurie`PaperTool`"
+        }
       },
       {
         "Kernel",
         "Root" -> "Utility",
-        "Context" -> {"Yurie`BlueArXiv`"}
+        "Context" -> {
+          "Yurie`BlueArXiv`Info`",
+          "Yurie`BlueArXiv`Sample`"
+        }
       },
       {
         "Documentation",
@@ -34,7 +40,9 @@ PacletObject[
         "Assets" -> {
           {"License", "LICENSE"},
           {"ReadMe", "README.md"},
-          {"Sample", "Sample"}
+          {"Source", "Source"},
+          {"Test", "Test"},
+          {"TestSource", "TestSource"}
         }
       }
     }

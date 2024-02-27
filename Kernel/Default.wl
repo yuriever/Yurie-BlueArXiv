@@ -7,24 +7,27 @@
 BeginPackage["Yurie`BlueArXiv`Default`"];
 
 
+(*clear the states when loading.*)
+
 ClearAll["`*"];
+
+
+Needs["Yurie`BlueArXiv`Common`"];
 
 
 (* ::Section:: *)
 (*Public*)
 
 
-(* ::Subsection:: *)
-(*Default values*)
-
-
 $arXivPDFNameFormatter::usage =
     "formatter of file names, set by arXivPDFNameFormat.";
+
 $arXivPDFNameRegulator::usage =
     "regulator of file names, set by arXivPDFNameFormat.";
 
 $defaultDownloadDir::usage =
     "default download directory";
+
 $defaultBibName::usage =
     "default BibTeX file name.";
 
@@ -40,16 +43,14 @@ $defaultBibName::usage =
 Begin["`Private`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
-
-
 (* ::Subsection:: *)
-(*Default values*)
+(*Main*)
 
+
+(*the default format of PDF names.*)
+(*arXivPDFNameFormat["ID"<>" "<>"title"<>", "<>"firstAuthor"]*)
 
 $arXivPDFNameFormatter =
-    (*set the default format of PDF names.*)
-    (*arXivPDFNameFormat["ID"<>" "<>"title"<>", "<>"firstAuthor"]*)
     (
         Lookup[#,"ID"]<>" "<>
         Lookup[#,"Title",""]<>", "<>
@@ -57,7 +58,8 @@ $arXivPDFNameFormatter =
     )&;
 
 
-(*set the default regulator of PDF names.*)
+(*the default regulator of PDF names.*)
+
 $arXivPDFNameRegulator =
     regulateFileName;
 
