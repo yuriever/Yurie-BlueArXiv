@@ -9,13 +9,19 @@ BeginPackage["Yurie`PaperTool`extractCiteKey`"];
 
 Needs["Yurie`PaperTool`"];
 
+Needs["Yurie`BlueArXiv`Common`"];
+
 
 (* ::Section:: *)
 (*Public*)
 
 
-extractCiteKey;
+extractCiteKey::usage =
+    "extract cite keys from string or TeX file/folder path.";
+
+
 extractCiteKeyFromStringAsItemList;
+
 extractCiteKeyFromTeXAsItemList;
 
 
@@ -30,19 +36,15 @@ extractCiteKeyFromTeXAsItemList;
 Begin["`Private`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
-Needs["Yurie`BlueArXiv`Default`"];
-
-
 (* ::Subsection:: *)
-(*Options*)
+(*Option*)
 
 
 getCiteKeyFromTeXAsList//Options = {
     "hideDirectory"->True
 };
 
-extractCiteKeyFromTeXAsItemList//Options = 
+extractCiteKeyFromTeXAsItemList//Options =
     Options@getCiteKeyFromTeXAsList;
 
 extractCiteKey//Options = {
@@ -53,7 +55,7 @@ extractCiteKey//Options = {
 
 
 (* ::Subsection:: *)
-(*Messages*)
+(*Message*)
 
 
 extractCiteKey::texfailimport =
@@ -61,24 +63,29 @@ extractCiteKey::texfailimport =
 
 
 (* ::Subsection:: *)
-(*extractCiteKey*)
+(*Main*)
 
 
 extractCiteKey["string",opts:OptionsPattern[]][stringOrStringList_] :=
-    stringOrStringList//extractCiteKeyFromStringAsItemList//ifAddButtonTo[OptionValue["clickToCopy"]];
+    stringOrStringList//extractCiteKeyFromStringAsItemList//ifAddButton[OptionValue["clickToCopy"]];
 
 extractCiteKey["path",opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {fopts,itemList},
-        fopts = FilterRules[{opts},Options[extractCiteKeyFromTeXAsItemList]];
+        fopts = FilterRules[{opts,Options[extractCiteKey]},Options[extractCiteKeyFromTeXAsItemList]];
         itemList = pathOrPathList//extractCiteKeyFromTeXAsItemList[fopts];
         If[ OptionValue["rawCiteKey"],
-            itemList//Query[All,#citeKey&]//DeleteDuplicates//ifAddButtonTo[OptionValue["clickToCopy"]],
-            itemList//ifAddButtonTo[OptionValue["clickToCopy"],"citeKey"]//Dataset
+            itemList//Query[All,#citeKey&]//DeleteDuplicates//ifAddButton[OptionValue["clickToCopy"]],
+            (*Else*)
+            itemList//ifAddButton[OptionValue["clickToCopy"],"citeKey"]//Dataset
         ]
     ];
 
 extractCiteKey[opts:OptionsPattern[]][stringOrStringList_] :=
     extractCiteKey["string",opts][stringOrStringList];
+
+
+(* ::Subsection:: *)
+(*Helper*)
 
 
 extractCiteKeyFromStringAsItemList[stringOrStringList_] :=
@@ -87,7 +94,7 @@ extractCiteKeyFromStringAsItemList[stringOrStringList_] :=
 
 extractCiteKeyFromTeXAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
     Module[ {fopts},
-        fopts = FilterRules[{opts},Options[getCiteKeyFromTeXAsList]];
+        fopts = FilterRules[{opts,Options[extractCiteKeyFromTeXAsItemList]},Options[getCiteKeyFromTeXAsList]];
         pathOrPathList//getTeXFromPathAsList//getCiteKeyFromTeXAsList[fopts]//Query[SortBy[#citeKey&]]
     ];
 
@@ -118,7 +125,7 @@ hideDirectory[file_] :=
 
 
 getTeXFromPathAsList[pathOrPathList_] :=
-    getFileByExtension["tex"][pathOrPathList];
+    getFilePathByExtension["tex"][pathOrPathList];
 
 
 importStringFromTeX[file_] :=

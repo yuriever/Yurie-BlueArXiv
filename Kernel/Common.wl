@@ -11,36 +11,27 @@ BeginPackage["Yurie`BlueArXiv`Common`"];
 (*Public*)
 
 
-(* ::Subsection:: *)
-(*Symbols*)
-
-
 $arXivIDPattern::usage =
     "string pattern of valid arXiv ID.";
 
 $citeKeyPattern::usage =
-    "string pattern of cite key.";    
-
-
-(* ::Subsection:: *)
-(*Utilities*)
+    "string pattern of cite key.";
 
 
 regulateFileName::usage =
     "regulate special characters in file name.";
-    
-getFileByExtension::usage =
-    "get files in path or list of paths by specifying the extension.";
+
+getFilePathByExtension::usage =
+    "get file paths from path or list of paths by specifying the extension.";
+
 getFileNameByExtension::usage =
-    "get file names in path or list of paths by specifying the extension.";
+    "get file names from path or list of paths by specifying the extension.";
 
-ifAddButtonTo::usage =
-    "whether to add click-to-copy button to list of associations.";
-addButtonTo::usage =
-    "add click-to-copy button to list of associations.";
+ifAddButton::usage =
+    "whether to add click-to-copy/hyperlink button to list of associations.";
 
-mergeAssociationByKey::usage =
-    "ResourceFunction[\"MergeByKey\"]: merge a list of associations using different merge functions according to keys. The default merging function is Identity.";
+addButton::usage =
+    "add click-to-copy/hyperlink button to list of associations.";
 
 
 (* ::Section:: *)
@@ -55,20 +46,20 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
-(*Symbols*)
+(*Constant*)
 
 
 $arXivIDPattern =
     RegularExpression["(\\d{4}\\.\\d{4,5})|((astro-ph|cond-mat|gr-qc|hep-ex|hep-lat|hep-ph|hep-th|math-ph|nlin|nucl-ex|nucl-th|physics|quant-ph|math|cs)/\\d{7})"];
 
 
-$citeKeyPattern = 
+$citeKeyPattern =
     (*no whitespace tolerance.*)
     RegularExpression["(\\\\cite{)(\\S*?)(})"];
 
 
 (* ::Subsection:: *)
-(*Utilities*)
+(*Main*)
 
 
 (* ::Subsubsection:: *)
@@ -78,8 +69,8 @@ $citeKeyPattern =
 regulateFileName[string_String] :=
     RemoveDiacritics@StringReplace[
         string,
-        {    
-            ":"->" -",     
+        {
+            ":"->" -",
             "/"->"_",
             "\n"|"\r"->" ",
             "\[CloseCurlyQuote]"->"'"
@@ -88,17 +79,10 @@ regulateFileName[string_String] :=
 
 
 (* ::Subsubsection:: *)
-(*getFileByExtension|getFileNameByExtension*)
+(*getFilePathByExtension*)
 
 
-getFileByExtension[extension_][path_] :=
-    `getFileByExtension`kernel[extension][path];
-
-getFileByExtension[extension_][pathList_List] :=
-    `getFileByExtension`kernel[extension]/@pathList//Flatten//DeleteDuplicates;
-
-
-`getFileByExtension`kernel[extension_][path_] :=
+getFilePathByExtension[extension_][path_] :=
     Which[
         DirectoryQ[path],
             FileNames[__~~"."~~extension~~EndOfString,path],
@@ -108,105 +92,59 @@ getFileByExtension[extension_][pathList_List] :=
             {}
     ];
 
-
-getFileNameByExtension[extension_][pathOrPathList_] :=
-    getFileByExtension[extension][pathOrPathList]//Map[FileNameTake]//Map[FileBaseName];
+getFilePathByExtension[extension_][pathList_List] :=
+    pathList//Map[getFilePathByExtension[extension]]//Flatten;
 
 
 (* ::Subsubsection:: *)
-(*addButtonTo*)
+(*getFileNameByExtension*)
 
 
-ifAddButtonTo[True][list:{___String}] :=
-    `addButtonTo`copyToClipboard/@list;
+getFileNameByExtension[extension_][pathOrPathList_] :=
+    pathOrPathList//getFilePathByExtension[extension]//Map[FileBaseName];
 
-ifAddButtonTo[True,keys__][list:{___Association}] :=
-    addButtonTo[keys][list];
 
-ifAddButtonTo[False,___][list_] :=
+(* ::Subsubsection:: *)
+(*ifAddButton*)
+
+
+ifAddButton[True][list:{___String}] :=
+    addButtonWithCopyToClipboard/@list;
+
+ifAddButton[True,keys__][list:{___Association}] :=
+    addButton[keys][list];
+
+ifAddButton[False,___][list_] :=
     list;
 
 
-addButtonTo[key_String][list_] :=
-    With[ {$$key = key},
-        list//Query[All,<|#,$$key->`addButtonTo`copyToClipboard[Slot[$$key]]|>&]
+addButton[key_String][list_] :=
+    With[ {key0 = key},
+        list//Query[All,<|#,key0->addButtonWithCopyToClipboard[Slot[key0]]|>&]
     ];
 
-addButtonTo["URL"][list_] :=
-    list//Query[All,<|#,"URL"->`addButtonTo`hyperlink[#URL]|>&];
+addButton["URL"][list_] :=
+    list//Query[All,<|#,"URL"->addButtonWithHyperlink[#URL]|>&];
 
-addButtonTo[key_,restKeys__][list_] :=
-    list//addButtonTo[key]//addButtonTo[restKeys];
+addButton[key_,restKeys__][list_] :=
+    list//addButton[key]//addButton[restKeys];
 
 
-`addButtonTo`hyperlink[value_String] :=
+addButtonWithHyperlink[value_String] :=
     Hyperlink[value,value,FrameMargins->Small];
 
-`addButtonTo`hyperlink[_] :=
+addButtonWithHyperlink[_] :=
     Missing["Failed"];
 
 
-`addButtonTo`copyToClipboard[value_] :=
+addButtonWithCopyToClipboard[value_] :=
     Interpretation[{},
         Button[value,CopyToClipboard@value,Appearance->"Frameless",FrameMargins->Small],
         value
     ];
 
-`addButtonTo`copyToClipboard[_Missing] :=
+addButtonWithCopyToClipboard[_Missing] :=
     Missing["Failed"];
-
-
-(* ::Subsubsection:: *)
-(*mergeAssociationByKey*)
-
-
-mergeAssociationByKey[ruleList:{___Rule},default:_:Identity][data:{___?AssociationQ}] :=
-    mergeAssociationByKey[data,ruleList,default];
-
-mergeAssociationByKey[{<||>...},{___Rule},Repeated[_,{0,1}]] :=
-    <||>;
-
-mergeAssociationByKey[data:{__?AssociationQ},ruleList:{___Rule},default:_:Identity] :=
-    Module[ {missingToken,assoc,keys,queryRules,mergeRules},
-        (*missingToken: unique symbol that is used for identifying where the undefined keys were after transposing the association *)
-        mergeRules = 
-            Replace[
-                Flatten@Replace[
-                    ruleList,
-                    Verbatim[Rule][list_List,fun_]:>Thread[list->fun],
-                    {1}
-                ],
-                Verbatim[Rule][Key[k_],fun_]:>Rule[k,fun],
-                {1}
-            ];
-        (*avoid KeyUnion if it's not necessary.*)
-        If[ SameQ@@Keys[data],
-            assoc = data,
-            assoc = KeyUnion[DeleteCases[data,<||>],missingToken&]
-        ];
-        keys = Keys@First@assoc;
-        (*this is essentially how GeneralUtilities`AssociationTranspose works.*)
-        assoc = 
-            AssociationThread[
-                keys,
-                If[ SameQ@@Keys[data],
-                    Transpose@Values[assoc],
-                    DeleteCases[Transpose@Values[assoc],missingToken,{2}]
-                ]
-            ];
-        keys = Key/@keys;
-        queryRules = 
-            DeleteCases[
-                Thread[
-                    keys->Lookup[mergeRules,keys,default]
-                ],
-                _->Identity
-            ];
-        If[ MatchQ[queryRules,{__Rule}],
-            Query[queryRules]@assoc,
-            assoc
-        ]
-    ];
 
 
 (* ::Subsection:: *)

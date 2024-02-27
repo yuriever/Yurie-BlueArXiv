@@ -9,12 +9,19 @@ BeginPackage["Yurie`BlueArXiv`generateBibTeXByID`"];
 
 Needs["Yurie`BlueArXiv`"];
 
+Needs["Yurie`BlueArXiv`Common`"];
+
+Needs["Yurie`BlueArXiv`Default`"];
+
+Needs["Yurie`BlueArXiv`extractID`"];
+
 
 (* ::Section:: *)
 (*Public*)
 
 
-generateBibTeXByID;
+generateBibTeXByID::usage =
+    "generate BibTeX entries on INSPIRE by arXiv IDs extracted from string or PDF file/folder path.";
 
 
 (* ::Section:: *)
@@ -28,13 +35,8 @@ generateBibTeXByID;
 Begin["`Private`"];
 
 
-Needs["Yurie`BlueArXiv`Common`"];
-Needs["Yurie`BlueArXiv`Default`"];
-Needs["Yurie`BlueArXiv`extractID`"];
-
-
 (* ::Subsection:: *)
-(*Options*)
+(*Option*)
 
 
 generateBibTeXByID//Options = {
@@ -42,12 +44,12 @@ generateBibTeXByID//Options = {
     Splice@Options@generateBibTeXByIDFromPathAsItemList
 };
 
-generateBibTeXByIDFromPathAsItemList//Options = 
+generateBibTeXByIDFromPathAsItemList//Options =
     Options@extractIDFromPathAsItemList;
 
 
 (* ::Subsection:: *)
-(*generateBibTeXByID*)
+(*Main*)
 
 
 generateBibTeXByID[
@@ -56,7 +58,7 @@ generateBibTeXByID[
     HoldPattern[bibName_String:$defaultBibName],
     opts:OptionsPattern[]
 ][arg_] :=
-    generateBibTeXByIDFromStringAsItemList[targetFolder,bibName][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"key","ID","BibTeX"]//
+    generateBibTeXByIDFromStringAsItemList[targetFolder,bibName][arg]//ifAddButton[OptionValue["clickToCopy"],"key","ID","BibTeX"]//
     	Dataset[#,HiddenItems->{"BibTeX"->True}]&
 
 generateBibTeXByID[
@@ -66,8 +68,8 @@ generateBibTeXByID[
     opts:OptionsPattern[]
 ][arg_] :=
     Module[ {fopts},
-        fopts = FilterRules[{opts},Options[generateBibTeXByIDFromPathAsItemList]];
-        generateBibTeXByIDFromPathAsItemList[targetFolder,bibName,fopts][arg]//ifAddButtonTo[OptionValue["clickToCopy"],"key","ID","BibTeX"]//
+        fopts = FilterRules[{opts,Options[generateBibTeXByID]},Options[generateBibTeXByIDFromPathAsItemList]];
+        generateBibTeXByIDFromPathAsItemList[targetFolder,bibName,fopts][arg]//ifAddButton[OptionValue["clickToCopy"],"key","ID","BibTeX"]//
 	    	Dataset[#,HiddenItems->{"BibTeX"->True}]&
     ];
 
@@ -77,6 +79,10 @@ generateBibTeXByID[
     opts:OptionsPattern[]
 ][arg_] :=
     generateBibTeXByID["string",targetFolder,bibName,opts][arg];
+
+
+(* ::Subsection:: *)
+(*Helper*)
 
 
 generateBibTeXByIDFromStringAsItemList[targetFolder_,bibName_][stringOrStringList_] :=
@@ -91,11 +97,12 @@ generateBibTeXByIDFromPathAsItemList[targetFolder_,bibName_String,opts:OptionsPa
     Module[ {idDataList,idList,itemList},
         idDataList = pathOrPathList//extractIDFromPathAsItemList[opts];
         idList = idDataList//Query[All,#ID&];
-        itemList = JoinAcross[
-            getBibTeXItemFromIDListAsList[idList],
-            idDataList,
-            "ID"
-        ];
+        itemList =
+            JoinAcross[
+                getBibTeXItemFromIDListAsList[idList],
+                idDataList,
+                "ID"
+            ];
         exportBibTeXFile[targetFolder,bibName,itemList];
         itemList
     ];
@@ -110,7 +117,7 @@ getBibTeXItemFromIDListAsList[idList_] :=
 
 getBibTeXKeyFromItem[bibtex_String] :=
     First@StringCases[bibtex,StartOfString~~Shortest[__]~~"{"~~Shortest[key__]~~",\n"~~__:>key]; 
-       
+
 getBibTeXKeyFromItem[_] :=
     Missing["Failed"];
 

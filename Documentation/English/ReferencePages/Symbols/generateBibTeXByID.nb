@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    133462,       2688]
-NotebookOptionsPosition[    125185,       2514]
-NotebookOutlinePosition[    126007,       2542]
-CellTagsIndexPosition[    125926,       2537]
+NotebookDataLength[    131920,       2651]
+NotebookOptionsPosition[    123638,       2477]
+NotebookOutlinePosition[    124465,       2505]
+CellTagsIndexPosition[    124384,       2500]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -211,10 +211,10 @@ Cell[TextData[{
     "96058c53-f48d-48e6-93fe-1729b5a17793"], 
    DynamicModuleBox[{$CellContext`nbobj$$ = NotebookObject[
     "088b70e5-1eab-4c97-9ef2-b9e9ee7edf31", 
-     "c511ecb8-d1bc-4745-836a-c4682f3487dc"], $CellContext`cellobj$$ = 
+     "9d1495ac-5512-45e4-9fd6-79c78a51bf5e"], $CellContext`cellobj$$ = 
     CellObject[
     "b6139e5c-8470-4d64-a3aa-48ad0de46cea", 
-     "acb0079c-391f-451c-bf6a-b9bd8375b45d"]}, 
+     "d87c3b85-63f8-4a31-97d8-3b97009c97fc"]}, 
     TemplateBox[{
       GraphicsBox[{{
          Thickness[0.06], 
@@ -340,7 +340,7 @@ Cell[BoxData[
   RowBox[{"SetOptions", "[", 
    RowBox[{"generateBibTeXByID", ",", 
     RowBox[{"\"\<clickToCopy\>\"", "->", "False"}]}], "]"}], ";"}]], "Input",
- CellLabel->"In[29]:=",
+ CellLabel->"In[6]:=",
  CellID->1118673372,ExpressionUUID->"b86fa774-9c09-4635-8ad6-c96abdf28ea5"],
 
 Cell["Set the target directory:", "ExampleText",
@@ -353,7 +353,7 @@ Cell[BoxData[
     RowBox[{"{", 
      RowBox[{"$HomeDirectory", ",", "\"\<Downloads\>\""}], "}"}]}]}], 
   ";"}]], "Input",
- CellLabel->"In[25]:=",
+ CellLabel->"In[7]:=",
  CellID->24945376,ExpressionUUID->"0011e985-6009-42fc-811c-4dd104cf81ac"],
 
 Cell[CellGroupData[{
@@ -378,7 +378,7 @@ Cell[BoxData[
   RowBox[{"sampleString", "[", "\"\<ID\>\"", "]"}], "//", 
   RowBox[{"generateBibTeXByID", "[", 
    RowBox[{"dir", ",", "\"\<refs-string.bib\>\""}], "]"}]}]], "Input",
- CellLabel->"In[30]:=",
+ CellLabel->"In[8]:=",
  CellID->1810872486,ExpressionUUID->"17ecbde3-5fcc-4ca4-8ad8-94a780ceea67"],
 
 Cell[BoxData[
@@ -396,8 +396,14 @@ the LHC}\",\n    eprint = \"1207.7214\",\n    archivePrefix = \"arXiv\",\n    \
 primaryClass = \"hep-ex\",\n    reportNumber = \"CERN-PH-EP-2012-218\",\n    \
 doi = \"10.1016/j.physletb.2012.08.020\",\n    journal = \"Phys. Lett. B\",\n \
    volume = \"716\",\n    pages = \"1--29\",\n    year = \"2012\"\n}"|>, <|
-       "key" -> Missing["Failed"], "ID" -> "1706.03762", 
-        "BibTeX" -> {"status" -> 404, "message" -> "PID does not exist."}|>, <|
+       "key" -> "Vaswani:2017lxt", "ID" -> "1706.03762", "BibTeX" -> 
+        "@inproceedings{Vaswani:2017lxt,\n    author = \"Vaswani, Ashish and \
+Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and \
+Gomez, Aidan N. and Kaiser, Lukasz and Polosukhin, Illia\",\n    title = \
+\"{Attention Is All You Need}\",\n    booktitle = \"{31st International \
+Conference on Neural Information Processing Systems}\",\n    eprint = \
+\"1706.03762\",\n    archivePrefix = \"arXiv\",\n    primaryClass = \
+\"cs.CL\",\n    month = \"6\",\n    year = \"2017\"\n}"|>, <|
        "key" -> "Witten:1998qj", "ID" -> "hep-th/9802150", "BibTeX" -> 
         "@article{Witten:1998qj,\n    author = \"Witten, Edward\",\n    title \
 = \"{Anti-de Sitter space and holography}\",\n    eprint = \
@@ -413,7 +419,7 @@ doi = \"10.1016/j.physletb.2012.08.020\",\n    journal = \"Phys. Lett. B\",\n \
          TypeSystem`PackageScope`Limited[
           
           TypeSystem`PackageScope`RowShape[<|
-           "key" -> TypeSystem`PackageScope`AtomShape[145.60000000000002`], 
+           "key" -> TypeSystem`PackageScope`AtomShape[168.00000000000003`], 
             "ID" -> TypeSystem`PackageScope`AtomShape[156.8], "BibTeX" -> 
             TypeSystem`PackageScope`UnknownShape[False]|>], 
           DirectedInfinity[1], 3, {All}]], 4, 
@@ -430,7 +436,7 @@ doi = \"10.1016/j.physletb.2012.08.020\",\n    journal = \"Phys. Lett. B\",\n \
          TypeSystem`PackageScope`Limited[
           
           TypeSystem`PackageScope`RowShape[<|
-           "key" -> TypeSystem`PackageScope`AtomShape[145.60000000000002`], 
+           "key" -> TypeSystem`PackageScope`AtomShape[168.00000000000003`], 
             "ID" -> TypeSystem`PackageScope`AtomShape[156.8], "BibTeX" -> 
             TypeSystem`PackageScope`UnknownShape[False]|>], 
           DirectedInfinity[1], 3, {All}]], 4, 
@@ -443,7 +449,7 @@ doi = \"10.1016/j.physletb.2012.08.020\",\n    journal = \"Phys. Lett. B\",\n \
      "HiddenItemsMap" -> {<|
        "key" -> False, "ID" -> False, "BibTeX" -> {True, True}|>, <|
        "key" -> False, "ID" -> False, "BibTeX" -> True|>, <|
-       "key" -> False, "ID" -> False, "BibTeX" -> {True, True}|>, <|
+       "key" -> False, "ID" -> False, "BibTeX" -> True|>, <|
        "key" -> False, "ID" -> False, "BibTeX" -> True|>}, "UpdateType" -> 
      1|>, TypeSystem`NestedGrid`PackagePrivate`$outputID$$, 
     TypeSystem`NestedGrid`PackagePrivate`$path$$ = {}, 
@@ -580,7 +586,7 @@ doi = \"10.1016/j.physletb.2012.08.020\",\n    journal = \"Phys. Lett. B\",\n \
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{1, 
                  Key["key"]}, "Item", False], "Mouse"], 
-              ImageSize -> {{145.60000000000002`, Full}, Automatic}, 
+              ImageSize -> {{168.00000000000003`, Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
             Item[
@@ -661,7 +667,7 @@ doi = \"10.1016/j.physletb.2012.08.020\",\n    journal = \"Phys. Lett. B\",\n \
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{2, 
                  Key["key"]}, "Item", False], "Mouse"], 
-              ImageSize -> {{145.60000000000002`, Full}, Automatic}, 
+              ImageSize -> {{168.00000000000003`, Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
             Item[
@@ -713,14 +719,12 @@ others\",\n    collaboration = \"ATLAS\", \[DescendingEllipsis]",
              ItemSize -> {Full, Automatic}]}, {
             Item[
              Pane[
-              Annotation[
-               Style["\[LongDash]", 
-                GrayLevel[0.75]], 
+              Annotation["Vaswani:2017lxt", 
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
                  Key["key"]}, "Item", False], "Mouse"], 
-              ImageSize -> {{145.60000000000002`, Full}, Automatic}, 
+              ImageSize -> {{168.00000000000003`, Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
             Item[
@@ -747,33 +751,10 @@ others\",\n    collaboration = \"ATLAS\", \[DescendingEllipsis]",
                    0.27450980392156865`, 0.5372549019607843, 
                     0.792156862745098]]], 
                  Annotation[
-                  EventHandler[
-                   MouseAppearance[
-                    Mouseover[
-                    
-                    Style[{"status" -> 404, "message" -> 
-                    "PID does not exist."}, ShowStringCharacters -> False], 
-                    Style[
-                    
-                    Style[{"status" -> 404, "message" -> 
-                    "PID does not exist."}, ShowStringCharacters -> False], 
-                    FontColor -> 
-                    RGBColor[
-                    0.27450980392156865`, 0.5372549019607843, 
-                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
-                   If[
-                    TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
-                    TypeSystem`NestedGrid`PackagePrivate`$state$$], 
-                    TypeSystem`NestedGrid`PackagePrivate`updateState[
-                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
-                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
-                    TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
-                    TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
-                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
-                    TypeSystem`NestedGrid`PackagePrivate`localHold[
-                    TypeSystem`NestedGrid`PackagePrivate`localHold[
-                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{3, 
-                    Key["BibTeX"]}, 4]]], 
+                 "@inproceedings{Vaswani:2017lxt,\n    author = \"Vaswani, \
+Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, \
+Llion and Gomez, Aidan N. and Kaiser, Lukasz and Polosukhin, Illia\",\n    \
+title = \"{Attention Is All You Need}\", \[DescendingEllipsis]", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                    TypeSystem`NestedGrid`PackagePrivate`localHold[
                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
@@ -793,7 +774,8 @@ others\",\n    collaboration = \"ATLAS\", \[DescendingEllipsis]",
               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                TypeSystem`NestedGrid`PackagePrivate`localHold[
                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
-                Key["BibTeX"]}, "Item", False], "Mouse"]]}, {
+                Key["BibTeX"]}, "Item", False], "Mouse"], 
+             ItemSize -> {Full, Automatic}]}, {
             Item[
              Pane[
               Annotation["Witten:1998qj", 
@@ -801,7 +783,7 @@ others\",\n    collaboration = \"ATLAS\", \[DescendingEllipsis]",
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{4, 
                  Key["key"]}, "Item", False], "Mouse"], 
-              ImageSize -> {{145.60000000000002`, Full}, Automatic}, 
+              ImageSize -> {{168.00000000000003`, Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
             Item[
@@ -1141,13 +1123,13 @@ lastPathIsLeafHeader, TypeSystem`NestedGrid`PackagePrivate`headerHidden$ = And[
         Hold[
           TypeSystem`NestedGrid`PackagePrivate`localHold[
           TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]], StandardForm],
-      ImageSizeCache->{346., {93.193115234375, 99.806884765625}},
+      ImageSizeCache->{369., {93.193115234375, 99.806884765625}},
       TrackedSymbols:>{
        TypeSystem`NestedGrid`PackagePrivate`$state$$, 
         TypeSystem`NestedGrid`PackagePrivate`$grid$$}], 
      TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$ = 
      MouseAnnotation[],
-     ImageSizeCache->{346., {93.193115234375, 99.806884765625}}],
+     ImageSizeCache->{369., {93.193115234375, 99.806884765625}}],
     BaseStyle->{LineBreakWithin -> False},
     DynamicModuleValues:>{},
     Initialization:>(TypeSystem`NestedGrid`PackagePrivate`$outputID$$ = 
@@ -1159,8 +1141,8 @@ lastPathIsLeafHeader, TypeSystem`NestedGrid`PackagePrivate`headerHidden$ = And[
   Editable->False,
   SelectWithContents->True,
   Selectable->False]], "Output",
- CellLabel->"Out[30]=",
- CellID->937465250,ExpressionUUID->"db14070e-3d72-4c89-9b03-30f457aad3f3"]
+ CellLabel->"Out[8]=",
+ CellID->1703661708,ExpressionUUID->"9348593e-88d9-4787-8143-c97f8ad1cd58"]
 }, Open  ]]
 }, Open  ]],
 
@@ -1192,7 +1174,7 @@ Cell[BoxData[
   RowBox[{"generateBibTeXByID", "[", 
    RowBox[{"\"\<path\>\"", ",", "dir", ",", "\"\<refs-path.bib\>\""}], 
    "]"}]}]], "Input",
- CellLabel->"In[31]:=",
+ CellLabel->"In[9]:=",
  CellID->1827655678,ExpressionUUID->"f762f5b8-3e49-412b-af49-e49ab1ec5aae"],
 
 Cell[BoxData[
@@ -1214,8 +1196,14 @@ doi = \"10.1016/j.physletb.2012.08.020\",\n    journal = \"Phys. Lett. B\",\n \
    volume = \"716\",\n    pages = \"1--29\",\n    year = \"2012\"\n}", 
         "file" -> {"newID-1207.7214"}, 
         "IDLocation" -> {"foundInFileName"}|>, <|
-       "key" -> Missing["Failed"], "ID" -> "1706.03762", 
-        "BibTeX" -> {"status" -> 404, "message" -> "PID does not exist."}, 
+       "key" -> "Vaswani:2017lxt", "ID" -> "1706.03762", "BibTeX" -> 
+        "@inproceedings{Vaswani:2017lxt,\n    author = \"Vaswani, Ashish and \
+Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and \
+Gomez, Aidan N. and Kaiser, Lukasz and Polosukhin, Illia\",\n    title = \
+\"{Attention Is All You Need}\",\n    booktitle = \"{31st International \
+Conference on Neural Information Processing Systems}\",\n    eprint = \
+\"1706.03762\",\n    archivePrefix = \"arXiv\",\n    primaryClass = \
+\"cs.CL\",\n    month = \"6\",\n    year = \"2017\"\n}", 
         "file" -> {"csID-1706.03762"}, 
         "IDLocation" -> {"foundInFileName"}|>, <|
        "key" -> "Witten:1998qj", "ID" -> "hep-th/9802150", "BibTeX" -> 
@@ -1235,7 +1223,7 @@ doi = \"10.1016/j.physletb.2012.08.020\",\n    journal = \"Phys. Lett. B\",\n \
          TypeSystem`PackageScope`Limited[
           
           TypeSystem`PackageScope`RowShape[<|
-           "key" -> TypeSystem`PackageScope`AtomShape[145.60000000000002`], 
+           "key" -> TypeSystem`PackageScope`AtomShape[168.00000000000003`], 
             "ID" -> TypeSystem`PackageScope`AtomShape[156.8], "BibTeX" -> 
             TypeSystem`PackageScope`UnknownShape[False], "file" -> 
             TypeSystem`PackageScope`UnknownShape[False], "IDLocation" -> 
@@ -1250,8 +1238,7 @@ doi = \"10.1016/j.physletb.2012.08.020\",\n    journal = \"Phys. Lett. B\",\n \
          TypeSystem`Vector[
           TypeSystem`Atom[
            TypeSystem`Enumeration["foundInFileName", "foundInFirstPage"]], 
-          1]}], 4], 
-     "Meta" -> <|HiddenItems -> {"BibTeX" -> True, {2, "BibTeX"} -> True}|>, 
+          1]}], 4], "Meta" -> <|HiddenItems -> {"BibTeX" -> True}|>, 
      "RowTarget" -> 20, "ColumnTarget" -> 10, "Shape" -> 
      TypeSystem`PackageScope`HeaderShape[<|{All, "key"} -> 1, {All, "ID"} -> 
         1, {All, "BibTeX"} -> 1, {All, "file"} -> 1, {All, "IDLocation"} -> 
@@ -1261,7 +1248,7 @@ doi = \"10.1016/j.physletb.2012.08.020\",\n    journal = \"Phys. Lett. B\",\n \
          TypeSystem`PackageScope`Limited[
           
           TypeSystem`PackageScope`RowShape[<|
-           "key" -> TypeSystem`PackageScope`AtomShape[145.60000000000002`], 
+           "key" -> TypeSystem`PackageScope`AtomShape[168.00000000000003`], 
             "ID" -> TypeSystem`PackageScope`AtomShape[156.8], "BibTeX" -> 
             TypeSystem`PackageScope`UnknownShape[False], "file" -> 
             TypeSystem`PackageScope`UnknownShape[False], "IDLocation" -> 
@@ -1284,8 +1271,8 @@ doi = \"10.1016/j.physletb.2012.08.020\",\n    journal = \"Phys. Lett. B\",\n \
         "file" -> {False}, "IDLocation" -> {False}|>, <|
        "key" -> False, "ID" -> False, "BibTeX" -> True, "file" -> {False}, 
         "IDLocation" -> {False}|>, <|
-       "key" -> False, "ID" -> False, "BibTeX" -> {True, True}, 
-        "file" -> {False}, "IDLocation" -> {False}|>, <|
+       "key" -> False, "ID" -> False, "BibTeX" -> True, "file" -> {False}, 
+        "IDLocation" -> {False}|>, <|
        "key" -> False, "ID" -> False, "BibTeX" -> True, "file" -> {False}, 
         "IDLocation" -> {False}|>}, "UpdateType" -> 1|>, 
     TypeSystem`NestedGrid`PackagePrivate`$outputID$$, 
@@ -1485,7 +1472,7 @@ doi = \"10.1016/j.physletb.2012.08.020\",\n    journal = \"Phys. Lett. B\",\n \
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{1, 
                  Key["key"]}, "Item", False], "Mouse"], 
-              ImageSize -> {{145.60000000000002`, Full}, Automatic}, 
+              ImageSize -> {{168.00000000000003`, Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
             Item[
@@ -1631,7 +1618,7 @@ doi = \"10.1016/j.physletb.2012.08.020\",\n    journal = \"Phys. Lett. B\",\n \
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{2, 
                  Key["key"]}, "Item", False], "Mouse"], 
-              ImageSize -> {{145.60000000000002`, Full}, Automatic}, 
+              ImageSize -> {{168.00000000000003`, Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
             Item[
@@ -1745,14 +1732,12 @@ others\",\n    collaboration = \"ATLAS\", \[DescendingEllipsis]",
               ImageMargins -> {{5, 3}, {4, 5}}]]}, {
             Item[
              Pane[
-              Annotation[
-               Style["\[LongDash]", 
-                GrayLevel[0.75]], 
+              Annotation["Vaswani:2017lxt", 
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
                  Key["key"]}, "Item", False], "Mouse"], 
-              ImageSize -> {{145.60000000000002`, Full}, Automatic}, 
+              ImageSize -> {{168.00000000000003`, Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
             Item[
@@ -1779,33 +1764,10 @@ others\",\n    collaboration = \"ATLAS\", \[DescendingEllipsis]",
                    0.27450980392156865`, 0.5372549019607843, 
                     0.792156862745098]]], 
                  Annotation[
-                  EventHandler[
-                   MouseAppearance[
-                    Mouseover[
-                    
-                    Style[{"status" -> 404, "message" -> 
-                    "PID does not exist."}, ShowStringCharacters -> False], 
-                    Style[
-                    
-                    Style[{"status" -> 404, "message" -> 
-                    "PID does not exist."}, ShowStringCharacters -> False], 
-                    FontColor -> 
-                    RGBColor[
-                    0.27450980392156865`, 0.5372549019607843, 
-                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
-                   If[
-                    TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
-                    TypeSystem`NestedGrid`PackagePrivate`$state$$], 
-                    TypeSystem`NestedGrid`PackagePrivate`updateState[
-                    TypeSystem`NestedGrid`PackagePrivate`$state$$, 
-                    TypeSystem`NestedGrid`PackagePrivate`$path$$, 
-                    TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
-                    TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
-                    TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
-                    TypeSystem`NestedGrid`PackagePrivate`localHold[
-                    TypeSystem`NestedGrid`PackagePrivate`localHold[
-                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{3, 
-                    Key["BibTeX"]}, 4]]], 
+                 "@inproceedings{Vaswani:2017lxt,\n    author = \"Vaswani, \
+Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, \
+Llion and Gomez, Aidan N. and Kaiser, Lukasz and Polosukhin, Illia\",\n    \
+title = \"{Attention Is All You Need}\", \[DescendingEllipsis]", 
                   TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                    TypeSystem`NestedGrid`PackagePrivate`localHold[
                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
@@ -1825,7 +1787,8 @@ others\",\n    collaboration = \"ATLAS\", \[DescendingEllipsis]",
               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                TypeSystem`NestedGrid`PackagePrivate`localHold[
                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
-                Key["BibTeX"]}, "Item", False], "Mouse"]], 
+                Key["BibTeX"]}, "Item", False], "Mouse"], 
+             ItemSize -> {Full, Automatic}], 
             Item[
              Pane[
               Annotation[
@@ -1895,7 +1858,7 @@ others\",\n    collaboration = \"ATLAS\", \[DescendingEllipsis]",
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{4, 
                  Key["key"]}, "Item", False], "Mouse"], 
-              ImageSize -> {{145.60000000000002`, Full}, Automatic}, 
+              ImageSize -> {{168.00000000000003`, Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
             Item[
@@ -2298,13 +2261,13 @@ lastPathIsLeafHeader, TypeSystem`NestedGrid`PackagePrivate`headerHidden$ = And[
         Hold[
           TypeSystem`NestedGrid`PackagePrivate`localHold[
           TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]], StandardForm],
-      ImageSizeCache->{667., {93.193115234375, 99.806884765625}},
+      ImageSizeCache->{690., {93.193115234375, 99.806884765625}},
       TrackedSymbols:>{
        TypeSystem`NestedGrid`PackagePrivate`$state$$, 
         TypeSystem`NestedGrid`PackagePrivate`$grid$$}], 
      TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$ = 
      MouseAnnotation[],
-     ImageSizeCache->{667., {93.193115234375, 99.806884765625}}],
+     ImageSizeCache->{690., {93.193115234375, 99.806884765625}}],
     BaseStyle->{LineBreakWithin -> False},
     DynamicModuleValues:>{},
     Initialization:>(TypeSystem`NestedGrid`PackagePrivate`$outputID$$ = 
@@ -2316,8 +2279,8 @@ lastPathIsLeafHeader, TypeSystem`NestedGrid`PackagePrivate`headerHidden$ = And[
   Editable->False,
   SelectWithContents->True,
   Selectable->False]], "Output",
- CellLabel->"Out[31]=",
- CellID->1291829623,ExpressionUUID->"0bd825fc-a7b1-48e5-90d8-18d7bd6064f0"]
+ CellLabel->"Out[9]=",
+ CellID->455644335,ExpressionUUID->"79d72299-b0ee-4fb5-8d0c-e3536775c444"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
@@ -2513,12 +2476,12 @@ Cell[BoxData[""], "Template",
 }, Open  ]]
 },
 WindowSize->{840, 1022},
-WindowMargins->{{0, Automatic}, {Automatic, 0}},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
 Visible->True,
 TaggingRules-><|"Paclet" -> "Yurie/BlueArXiv"|>,
 CellContext->"Global`",
 TrackCellChangeTimes->False,
-FrontEndVersion->"13.3 for Mac OS X ARM (64-bit) (June 3, 2023)",
+FrontEndVersion->"14.0 for Mac OS X ARM (64-bit) (December 12, 2023)",
 StyleDefinitions->FrontEnd`FileName[{"Wolfram"}, "FunctionPageStylesExt.nb", 
   CharacterEncoding -> "UTF-8"],
 ExpressionUUID->"088b70e5-1eab-4c97-9ef2-b9e9ee7edf31"
@@ -2529,14 +2492,14 @@ ExpressionUUID->"088b70e5-1eab-4c97-9ef2-b9e9ee7edf31"
 (*CellTagsOutline
 CellTagsIndex->{
  "ExtendedExamples"->{
-  Cell[118847, 2326, 487, 13, 72, "ExtendedExamplesSection",ExpressionUUID->"9d8fb3c1-67ab-42d2-ba12-e0d473a823c1",
+  Cell[117300, 2289, 487, 13, 72, "ExtendedExamplesSection",ExpressionUUID->"9d8fb3c1-67ab-42d2-ba12-e0d473a823c1",
    CellTags->"ExtendedExamples",
    CellID->476507896]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"ExtendedExamples", 125730, 2530}
+ {"ExtendedExamples", 124188, 2493}
  }
 *)
 (*NotebookFileOutline
@@ -2592,101 +2555,101 @@ Cell[10894, 314, 249, 4, 82, "ExampleInitialization",ExpressionUUID->"6edd3a61-1
 Cell[CellGroupData[{
 Cell[11180, 323, 443, 12, 90, "PrimaryExamplesSection",ExpressionUUID->"e09e5bc4-0c25-4b93-a8da-d4f19f52c05f",
  CellID->1875099603],
-Cell[11626, 337, 270, 6, 33, "Input",ExpressionUUID->"b86fa774-9c09-4635-8ad6-c96abdf28ea5",
+Cell[11626, 337, 269, 6, 33, "Input",ExpressionUUID->"b86fa774-9c09-4635-8ad6-c96abdf28ea5",
  CellID->1118673372],
-Cell[11899, 345, 123, 1, 30, "ExampleText",ExpressionUUID->"fafdda78-ee10-489d-8cfc-35fd69c13843",
+Cell[11898, 345, 123, 1, 30, "ExampleText",ExpressionUUID->"fafdda78-ee10-489d-8cfc-35fd69c13843",
  CellID->344491689],
-Cell[12025, 348, 285, 8, 33, "Input",ExpressionUUID->"0011e985-6009-42fc-811c-4dd104cf81ac",
+Cell[12024, 348, 284, 8, 33, "Input",ExpressionUUID->"0011e985-6009-42fc-811c-4dd104cf81ac",
  CellID->24945376],
 Cell[CellGroupData[{
-Cell[12335, 360, 243, 5, 24, "ExampleDelimiter",ExpressionUUID->"cf4cad3f-bfd5-4823-9420-c965cb4b6265",
+Cell[12333, 360, 243, 5, 24, "ExampleDelimiter",ExpressionUUID->"cf4cad3f-bfd5-4823-9420-c965cb4b6265",
  CellID->2003476037],
-Cell[12581, 367, 213, 4, 30, "ExampleText",ExpressionUUID->"2c5b2856-6e68-4858-ba2b-31d268a75c6a",
+Cell[12579, 367, 213, 4, 30, "ExampleText",ExpressionUUID->"2c5b2856-6e68-4858-ba2b-31d268a75c6a",
  CellID->446149221],
 Cell[CellGroupData[{
-Cell[12819, 375, 291, 6, 33, "Input",ExpressionUUID->"17ecbde3-5fcc-4ca4-8ad8-94a780ceea67",
+Cell[12817, 375, 290, 6, 33, "Input",ExpressionUUID->"17ecbde3-5fcc-4ca4-8ad8-94a780ceea67",
  CellID->1810872486],
-Cell[13113, 383, 43236, 779, 208, "Output",ExpressionUUID->"db14070e-3d72-4c89-9b03-30f457aad3f3",
- CellID->937465250]
+Cell[13110, 383, 42480, 761, 208, "Output",ExpressionUUID->"9348593e-88d9-4787-8143-c97f8ad1cd58",
+ CellID->1703661708]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[56398, 1168, 243, 5, 24, "ExampleDelimiter",ExpressionUUID->"5ee27be8-8bd3-42af-ba22-03814d1dfe61",
+Cell[55639, 1150, 243, 5, 24, "ExampleDelimiter",ExpressionUUID->"5ee27be8-8bd3-42af-ba22-03814d1dfe61",
  CellID->1162102804],
-Cell[56644, 1175, 363, 9, 54, "ExampleText",ExpressionUUID->"4a8f45b3-2a33-4f9b-b310-77f6c59d296d",
+Cell[55885, 1157, 363, 9, 54, "ExampleText",ExpressionUUID->"4a8f45b3-2a33-4f9b-b310-77f6c59d296d",
  CellID->455294804],
 Cell[CellGroupData[{
-Cell[57032, 1188, 322, 7, 58, "Input",ExpressionUUID->"f762f5b8-3e49-412b-af49-e49ab1ec5aae",
+Cell[56273, 1170, 321, 7, 58, "Input",ExpressionUUID->"f762f5b8-3e49-412b-af49-e49ab1ec5aae",
  CellID->1827655678],
-Cell[57357, 1197, 61429, 1122, 208, "Output",ExpressionUUID->"0bd825fc-a7b1-48e5-90d8-18d7bd6064f0",
- CellID->1291829623]
+Cell[56597, 1179, 60642, 1103, 208, "Output",ExpressionUUID->"79d72299-b0ee-4fb5-8d0c-e3536775c444",
+ CellID->455644335]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[118847, 2326, 487, 13, 72, "ExtendedExamplesSection",ExpressionUUID->"9d8fb3c1-67ab-42d2-ba12-e0d473a823c1",
+Cell[117300, 2289, 487, 13, 72, "ExtendedExamplesSection",ExpressionUUID->"9d8fb3c1-67ab-42d2-ba12-e0d473a823c1",
  CellTags->"ExtendedExamples",
  CellID->476507896],
-Cell[119337, 2341, 241, 5, 43, "ExampleSection",ExpressionUUID->"e7fbe507-095a-4739-86bd-aee9c0526286",
+Cell[117790, 2304, 241, 5, 43, "ExampleSection",ExpressionUUID->"e7fbe507-095a-4739-86bd-aee9c0526286",
  CellID->701688409],
-Cell[119581, 2348, 265, 5, 27, "ExampleSection",ExpressionUUID->"cfe23a17-4d0c-491d-b89a-d43b2b1a33b9",
+Cell[118034, 2311, 265, 5, 27, "ExampleSection",ExpressionUUID->"cfe23a17-4d0c-491d-b89a-d43b2b1a33b9",
  CellID->1444384386],
 Cell[CellGroupData[{
-Cell[119871, 2357, 244, 5, 27, "ExampleSection",ExpressionUUID->"fd8f236e-08cb-4b94-9c03-f4dc1cdab1d6",
+Cell[118324, 2320, 244, 5, 27, "ExampleSection",ExpressionUUID->"fd8f236e-08cb-4b94-9c03-f4dc1cdab1d6",
  CellID->1419706772],
-Cell[120118, 2364, 257, 5, 32, "ExampleSubsection",ExpressionUUID->"3f8c5231-0afe-4a02-a06f-99323dcd9cbd",
+Cell[118571, 2327, 257, 5, 32, "ExampleSubsection",ExpressionUUID->"3f8c5231-0afe-4a02-a06f-99323dcd9cbd",
  CellID->320915187],
-Cell[120378, 2371, 260, 5, 26, "ExampleSubsection",ExpressionUUID->"e30527f2-dbff-4d3d-867f-adafe5bd6a2e",
+Cell[118831, 2334, 260, 5, 26, "ExampleSubsection",ExpressionUUID->"e30527f2-dbff-4d3d-867f-adafe5bd6a2e",
  CellID->1290110292],
-Cell[120641, 2378, 263, 5, 26, "ExampleSubsection",ExpressionUUID->"9a709157-4e53-4687-b7ec-a370bd5bff49",
+Cell[119094, 2341, 263, 5, 26, "ExampleSubsection",ExpressionUUID->"9a709157-4e53-4687-b7ec-a370bd5bff49",
  CellID->1888777532],
-Cell[120907, 2385, 257, 5, 26, "ExampleSubsection",ExpressionUUID->"24990c4a-699a-44dc-bd3c-e619c96498c0",
+Cell[119360, 2348, 257, 5, 26, "ExampleSubsection",ExpressionUUID->"24990c4a-699a-44dc-bd3c-e619c96498c0",
  CellID->580710370]
 }, Open  ]],
-Cell[121179, 2393, 248, 5, 43, "ExampleSection",ExpressionUUID->"c1ee2f11-22b8-46f1-be01-3da009ae155c",
+Cell[119632, 2356, 248, 5, 43, "ExampleSection",ExpressionUUID->"c1ee2f11-22b8-46f1-be01-3da009ae155c",
  CellID->401730405],
-Cell[121430, 2400, 258, 5, 27, "ExampleSection",ExpressionUUID->"e83ee2c2-4465-4ea8-aede-9933fd7a0ddb",
+Cell[119883, 2363, 258, 5, 27, "ExampleSection",ExpressionUUID->"e83ee2c2-4465-4ea8-aede-9933fd7a0ddb",
  CellID->194330667],
-Cell[121691, 2407, 252, 5, 27, "ExampleSection",ExpressionUUID->"659556c2-0914-4bc5-bba8-f0d78184b2c6",
+Cell[120144, 2370, 252, 5, 27, "ExampleSection",ExpressionUUID->"659556c2-0914-4bc5-bba8-f0d78184b2c6",
  CellID->1940376829],
-Cell[121946, 2414, 256, 5, 27, "ExampleSection",ExpressionUUID->"904e2fbd-ce15-47d0-aabf-b07fb1e03b90",
+Cell[120399, 2377, 256, 5, 27, "ExampleSection",ExpressionUUID->"904e2fbd-ce15-47d0-aabf-b07fb1e03b90",
  CellID->226701661],
-Cell[122205, 2421, 249, 5, 27, "ExampleSection",ExpressionUUID->"61d4769e-6dc5-4e08-be62-f06ccb38554e",
+Cell[120658, 2384, 249, 5, 27, "ExampleSection",ExpressionUUID->"61d4769e-6dc5-4e08-be62-f06ccb38554e",
  CellID->538826649]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[122491, 2431, 110, 1, 90, "MetadataSection",ExpressionUUID->"37c2df63-5dcf-41d3-aadc-9571b7f061d8",
+Cell[120944, 2394, 110, 1, 90, "MetadataSection",ExpressionUUID->"37c2df63-5dcf-41d3-aadc-9571b7f061d8",
  CellID->120950344],
-Cell[122604, 2434, 477, 12, 33, "History",ExpressionUUID->"47351977-ecfc-4ddf-84cc-7af5b5db3436",
+Cell[121057, 2397, 477, 12, 33, "History",ExpressionUUID->"47351977-ecfc-4ddf-84cc-7af5b5db3436",
  CellID->1292901546],
 Cell[CellGroupData[{
-Cell[123106, 2450, 485, 13, 27, "CategorizationSection",ExpressionUUID->"6bc149ca-8130-4194-a93a-f6b804f9be9c",
+Cell[121559, 2413, 485, 13, 27, "CategorizationSection",ExpressionUUID->"6bc149ca-8130-4194-a93a-f6b804f9be9c",
  CellID->1556743276],
-Cell[123594, 2465, 135, 2, 45, "Categorization",ExpressionUUID->"9102b3d3-9eb4-4980-8476-7f0a1f0db506",
+Cell[122047, 2428, 135, 2, 45, "Categorization",ExpressionUUID->"9102b3d3-9eb4-4980-8476-7f0a1f0db506",
  CellID->1390968331],
-Cell[123732, 2469, 144, 2, 45, "Categorization",ExpressionUUID->"ac38c433-285a-47cb-85e0-5c4f99fd41a4",
+Cell[122185, 2432, 144, 2, 45, "Categorization",ExpressionUUID->"ac38c433-285a-47cb-85e0-5c4f99fd41a4",
  CellID->1833496622],
-Cell[123879, 2473, 141, 2, 45, "Categorization",ExpressionUUID->"ed55dc92-4c0e-4bfc-94b8-70ccfbdfd72b",
+Cell[122332, 2436, 141, 2, 45, "Categorization",ExpressionUUID->"ed55dc92-4c0e-4bfc-94b8-70ccfbdfd72b",
  CellID->1334875151],
-Cell[124023, 2477, 158, 2, 45, "Categorization",ExpressionUUID->"d93ce62b-79d0-4094-a02b-058e37a512f1",
+Cell[122476, 2440, 158, 2, 45, "Categorization",ExpressionUUID->"d93ce62b-79d0-4094-a02b-058e37a512f1",
  CellID->485002648]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[124218, 2484, 111, 1, 39, "KeywordsSection",ExpressionUUID->"83ad4e36-ed96-4fb0-8b0e-b7ed7175cc12",
+Cell[122671, 2447, 111, 1, 39, "KeywordsSection",ExpressionUUID->"83ad4e36-ed96-4fb0-8b0e-b7ed7175cc12",
  CellID->1104859022],
-Cell[124332, 2487, 98, 1, 70, "Keywords",ExpressionUUID->"9c742398-7f58-47f7-8878-ba50708c6f66",
+Cell[122785, 2450, 98, 1, 70, "Keywords",ExpressionUUID->"9c742398-7f58-47f7-8878-ba50708c6f66",
  CellID->74487145]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[124467, 2493, 120, 1, 26, "TemplatesSection",ExpressionUUID->"4ab03382-ee2f-4a32-b9e6-b140845cf4bb",
+Cell[122920, 2456, 120, 1, 26, "TemplatesSection",ExpressionUUID->"4ab03382-ee2f-4a32-b9e6-b140845cf4bb",
  CellID->2069963461],
-Cell[124590, 2496, 148, 2, 70, "Template",ExpressionUUID->"d4847dad-a9f6-4a7f-b6aa-2573f952834a",
+Cell[123043, 2459, 148, 2, 70, "Template",ExpressionUUID->"d4847dad-a9f6-4a7f-b6aa-2573f952834a",
  CellID->640807627],
-Cell[124741, 2500, 137, 2, 70, "Template",ExpressionUUID->"3c082408-42f8-4c04-8f07-55f827e1ed49",
+Cell[123194, 2463, 137, 2, 70, "Template",ExpressionUUID->"3c082408-42f8-4c04-8f07-55f827e1ed49",
  CellID->423297284],
-Cell[124881, 2504, 136, 2, 70, "Template",ExpressionUUID->"4791f981-ebc3-4431-bb0f-27be4327ff36",
+Cell[123334, 2467, 136, 2, 70, "Template",ExpressionUUID->"4791f981-ebc3-4431-bb0f-27be4327ff36",
  CellID->1891613324],
-Cell[125020, 2508, 137, 2, 70, "Template",ExpressionUUID->"79677559-265f-4ae6-b15a-b880ed1fa17a",
+Cell[123473, 2471, 137, 2, 70, "Template",ExpressionUUID->"79677559-265f-4ae6-b15a-b880ed1fa17a",
  CellID->997226280]
 }, Closed]]
 }, Open  ]]

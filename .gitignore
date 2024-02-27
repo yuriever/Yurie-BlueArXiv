@@ -8,15 +8,9 @@
 .metadata
 .settings
 
-# notebook directory
-Notebook
-
 # developer directory
 Workbench
-
-# sample data
-SampleData/pdf/**
-SampleData/tex/aux
+TestSource
 
 # build files
 build/incremental
