@@ -11,15 +11,20 @@ BeginPackage["Yurie`BlueArXiv`Info`"];
 (*Public*)
 
 
-$thisPacletDir;
+$thisPacletDir::usage =
+    "directory of paclet.";
 
-$thisKernelDir;
+$thisKernelDir::usage =
+    "directory of kernel.";
 
-$thisSourceDir;
+$thisSourceDir::usage =
+    "directory of source.";
 
-$thisTestDir;
+$thisTestDir::usage =
+    "directory of unit test.";
 
-$thisTestSourceDir;
+$thisTestSourceDir::usage =
+    "directory of source notebook for unit test.";
 
 
 (* ::Section:: *)
