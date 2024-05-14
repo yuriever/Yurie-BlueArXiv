@@ -8,7 +8,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->"init-generateBibTeXByID.nb"
+	TestID->"0-generateBibTeXByID.nb"
 ]
 
 VerificationTest[
@@ -17,7 +17,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->1
+	TestID->"1-generateBibTeXByID.nb"
 ]
 
 VerificationTest[
@@ -25,7 +25,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->2
+	TestID->"2-generateBibTeXByID.nb"
 ]
 
 VerificationTest[
@@ -33,7 +33,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->3
+	TestID->"3-generateBibTeXByID.nb"
 ]
 
 VerificationTest[
@@ -41,7 +41,7 @@ VerificationTest[
 	,
 	{Association["key" -> Missing["Failed"], "ID" -> "0000.00001"], Association["key" -> "ATLAS:2012yve", "ID" -> "1207.7214"], Association["key" -> "Vaswani:2017lxt", "ID" -> "1706.03762"], Association["key" -> "Witten:1998qj", "ID" -> "hep-th/9802150"]}
 	,
-	TestID->4
+	TestID->"4-generateBibTeXByID.nb"
 ]
 
 VerificationTest[
@@ -49,7 +49,7 @@ VerificationTest[
 	,
 	{Association["key" -> Missing["Failed"], "ID" -> "0000.00001", "file" -> {"wrongID-0000.00001"}, "IDLocation" -> {"foundInFileName"}], Association["key" -> "ATLAS:2012yve", "ID" -> "1207.7214", "file" -> {"newID-1207.7214"}, "IDLocation" -> {"foundInFileName"}], Association["key" -> "Vaswani:2017lxt", "ID" -> "1706.03762", "file" -> {"csID-1706.03762"}, "IDLocation" -> {"foundInFileName"}], Association["key" -> "Witten:1998qj", "ID" -> "hep-th/9802150", "file" -> {"oldID-9802150"}, "IDLocation" -> {"foundInFirstPage"}]}
 	,
-	TestID->5
+	TestID->"5-generateBibTeXByID.nb"
 ]
 
 VerificationTest[
@@ -58,5 +58,5 @@ VerificationTest[
 	,
 	"Global`"
 	,
-	TestID->"cleanup-generateBibTeXByID.nb"
+	TestID->"∞-generateBibTeXByID.nb"
 ]

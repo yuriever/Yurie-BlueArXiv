@@ -8,7 +8,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->"init-arXivPDFNameFormat.nb"
+	TestID->"0-arXivPDFNameFormat.nb"
 ]
 
 VerificationTest[
@@ -17,7 +17,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->1
+	TestID->"1-arXivPDFNameFormat.nb"
 ]
 
 VerificationTest[
@@ -25,7 +25,7 @@ VerificationTest[
 	,
 	{StringJoin[Lookup[#1, "ID"], " ", Lookup[#1, "Title", ""], ", ", Lookup[#1, "Author", "", #1[[1,"Name"]] & ]] & , Yurie`BlueArXiv`Common`regulateFileName}
 	,
-	TestID->2
+	TestID->"2-arXivPDFNameFormat.nb"
 ]
 
 VerificationTest[
@@ -34,7 +34,7 @@ VerificationTest[
 	,
 	{Lookup[#1, "ID"] & , f}
 	,
-	TestID->3
+	TestID->"3-arXivPDFNameFormat.nb"
 ]
 
 VerificationTest[
@@ -43,7 +43,7 @@ VerificationTest[
 	,
 	{StringJoin[Lookup[#1, "ID"], " ", Lookup[#1, "Title", ""], ", ", Lookup[#1, "Author", "", #1[[1,"Name"]] & ]] & , Yurie`BlueArXiv`Common`regulateFileName}
 	,
-	TestID->4
+	TestID->"4-arXivPDFNameFormat.nb"
 ]
 
 VerificationTest[
@@ -52,5 +52,5 @@ VerificationTest[
 	,
 	"Global`"
 	,
-	TestID->"cleanup-arXivPDFNameFormat.nb"
+	TestID->"∞-arXivPDFNameFormat.nb"
 ]

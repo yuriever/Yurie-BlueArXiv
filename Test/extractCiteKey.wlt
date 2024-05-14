@@ -8,7 +8,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->"init-extractCiteKey.nb"
+	TestID->"0-extractCiteKey.nb"
 ]
 
 VerificationTest[
@@ -17,7 +17,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->1
+	TestID->"1-extractCiteKey.nb"
 ]
 
 VerificationTest[
@@ -25,7 +25,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->2
+	TestID->"2-extractCiteKey.nb"
 ]
 
 VerificationTest[
@@ -33,7 +33,7 @@ VerificationTest[
 	,
 	{"ATLAS:2012yve", "dieudonné1969treatise", "vaswani2017attention", "Witten:1998qj"}
 	,
-	TestID->3
+	TestID->"3-extractCiteKey.nb"
 ]
 
 VerificationTest[
@@ -41,7 +41,7 @@ VerificationTest[
 	,
 	{Association["citeKey" -> "ATLAS:2012yve", "file" -> "citeKey1"], Association["citeKey" -> "dieudonné1969treatise", "file" -> "citeKey2"], Association["citeKey" -> "vaswani2017attention", "file" -> "citeKey1"], Association["citeKey" -> "Witten:1998qj", "file" -> "citeKey1"]}
 	,
-	TestID->4
+	TestID->"4-extractCiteKey.nb"
 ]
 
 VerificationTest[
@@ -50,5 +50,5 @@ VerificationTest[
 	,
 	"Global`"
 	,
-	TestID->"cleanup-extractCiteKey.nb"
+	TestID->"∞-extractCiteKey.nb"
 ]
