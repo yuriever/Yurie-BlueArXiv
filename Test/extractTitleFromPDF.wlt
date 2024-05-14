@@ -8,7 +8,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->"init-extractTitleFromPDF.nb"
+	TestID->"0-extractTitleFromPDF.nb"
 ]
 
 VerificationTest[
@@ -17,7 +17,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->1
+	TestID->"1-extractTitleFromPDF.nb"
 ]
 
 VerificationTest[
@@ -25,7 +25,7 @@ VerificationTest[
 	,
 	Null
 	,
-	TestID->2
+	TestID->"2-extractTitleFromPDF.nb"
 ]
 
 VerificationTest[
@@ -33,7 +33,7 @@ VerificationTest[
 	,
 	{Association["title" -> "Attention is all you Need", "file" -> "csID-1706.03762"], Association["title" -> "European Organisation for Nuclear Research (cern)", "file" -> "newID-1207.7214"], Association["title" -> "Anti De Sitter Space and Holography", "file" -> "oldID-9802150"], Association["title" -> "this is an Example File.", "file" -> "wrongID-0000.00001"]}
 	,
-	TestID->3
+	TestID->"3-extractTitleFromPDF.nb"
 ]
 
 VerificationTest[
@@ -42,5 +42,5 @@ VerificationTest[
 	,
 	"Global`"
 	,
-	TestID->"cleanup-extractTitleFromPDF.nb"
+	TestID->"∞-extractTitleFromPDF.nb"
 ]
