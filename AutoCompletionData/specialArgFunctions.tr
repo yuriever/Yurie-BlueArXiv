@@ -5,50 +5,57 @@
     "extractID" -> {
         {
             "string",
+            "image",
             "path"
         },
         {
-            "clickToCopy",
-            "mergeDuplicateID",
-            "tryFileName",
-            "hideDirectory"
+            "ClickToCopy",
+            "HideDirectory",
+            "MergeDuplicateID",
+            "ShowHighlightedImage",
+            "TryFileName"
         }
     },
     "searchByID" -> {
         {
             "string",
+            "image",
             "path"
         },
         {
-            "clickToCopy",
-            "mergeDuplicateID",
-            "tryFileName",
-            "hideDirectory"
+            "ClickToCopy",
+            "HideDirectory",
+            "MergeDuplicateID",
+            "ShowHighlightedImage",
+            "TryFileName"
         }
     },
     "downloadByID" -> {
         {
             "string",
+            "image",
             "path"
         },
         8,
         {
-            "clickToCopy",
-            "hideFileObject",
-            "mergeDuplicateID",
-            "tryFileName",
-            "hideDirectory"
+            "ClickToCopy",
+            "HideDirectory",
+            "HideFile",
+            "MergeDuplicateID",
+            "ShowHighlightedImage",
+            "TryFileName"
         }
     },
     "generateBibTeXByID" -> {
         {
             "string",
+            "image",
             "path"
         },
         8,
         0,
         {
-            "clickToCopy"
+            "ClickToCopy"
         }
     },
     "extractCiteKey" -> {
@@ -57,16 +64,16 @@
             "path"
         },
         {
-            "clickToCopy",
-            "rawCiteKey",
-            "hideDirectory"
+            "ClickToCopy",
+            "HideDirectory",
+            "RawCiteKey"
         }
     },
     "extractTitleFromPDF" -> {
         {
-            "clickToCopy",
-            "hideDirectory",
-            "titleExtractMethod",
+            "ClickToCopy",
+            "HideDirectory",
+            "TitleExtractMethod",
             "YResolution"
         }
     }

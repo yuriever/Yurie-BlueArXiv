@@ -21,7 +21,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	SetOptions[extractCiteKey, "clickToCopy" -> False]; 
+	SetOptions[extractCiteKey, "ClickToCopy" -> False]; 
 	,
 	Null
 	,
@@ -29,7 +29,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	extractCiteKey[][sampleString["citeKey"]]
+	extractCiteKey["string", "RawCiteKey" -> True][sampleString["CiteKey"]]
 	,
 	{"ATLAS:2012yve", "dieudonné1969treatise", "vaswani2017attention", "Witten:1998qj"}
 	,
@@ -37,11 +37,27 @@ VerificationTest[
 ]
 
 VerificationTest[
-	Normal[extractCiteKey["path"][sampleFileDirectory["tex"]]]
+	Normal[extractCiteKey["string"][sampleString["CiteKey"]]]
 	,
-	{Association["citeKey" -> "ATLAS:2012yve", "file" -> "citeKey1"], Association["citeKey" -> "dieudonné1969treatise", "file" -> "citeKey2"], Association["citeKey" -> "vaswani2017attention", "file" -> "citeKey1"], Association["citeKey" -> "Witten:1998qj", "file" -> "citeKey1"]}
+	{Association["CiteKey" -> "ATLAS:2012yve"], Association["CiteKey" -> "dieudonné1969treatise"], Association["CiteKey" -> "vaswani2017attention"], Association["CiteKey" -> "Witten:1998qj"]}
 	,
 	TestID->"4-extractCiteKey.nb"
+]
+
+VerificationTest[
+	extractCiteKey["path", "RawCiteKey" -> True][sampleFileDirectory["tex"]]
+	,
+	{"ATLAS:2012yve", "dieudonné1969treatise", "vaswani2017attention", "Witten:1998qj"}
+	,
+	TestID->"5-extractCiteKey.nb"
+]
+
+VerificationTest[
+	Normal[extractCiteKey["path"][sampleFileDirectory["tex"]]]
+	,
+	{Association["CiteKey" -> "ATLAS:2012yve", "FileName" -> {"citeKey1.tex"}], Association["CiteKey" -> "dieudonné1969treatise", "FileName" -> {"citeKey2.tex"}], Association["CiteKey" -> "vaswani2017attention", "FileName" -> {"citeKey1.tex"}], Association["CiteKey" -> "Witten:1998qj", "FileName" -> {"citeKey1.tex"}]}
+	,
+	TestID->"6-extractCiteKey.nb"
 ]
 
 VerificationTest[

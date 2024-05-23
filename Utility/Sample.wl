@@ -44,40 +44,54 @@ Begin["`Private`"];
 (*Constant*)
 
 
-samplePaperData = {
-    <|
-        "name"->"oldID-9802150.pdf",
-        "ID"->"hep-th/9802150",
-        "URL"->"https://arxiv.org/pdf/hep-th/9802150.pdf"
-    |>,
-    <|
-        "name"->"newID-1207.7214.pdf",
-        "ID"->"1207.7214",
-        "URL"->"https://arxiv.org/pdf/1207.7214.pdf"
-    |>,
-    <|
-        "name"->"csID-1706.03762.pdf",
-        "ID"->"1706.03762",
-        "URL"->"https://arxiv.org/pdf/1706.03762.pdf"
-    |>,
-    <|
-        "name"->"wrongID-0000.00001.pdf",
-        "ID"->"0000.00001",
-        "URL"->Missing["Failed"]
-    |>
-};
+formatList = {"pdf","png","tex"};
 
 
-sampleTeXData = {
-    <|
-        "name"->"citeKey1.tex",
-        "string"->"\\begin{itemize}\n\t\\item single key \\cite{vaswani2017attention};\n\t\\item multiple keys \\cite{ATLAS:2012yve,Witten:1998qj};\n\\end{itemize}"
-    |>,
-    <|
-        "name"->"citeKey2.tex",
-        "string"->"\\begin{itemize}\n\t\\item unicode key \\cite{dieudonn\[EAcute]1969treatise};\n\t\\item empty key \\cite{};\n\\end{itemize}"
-    |>
-};
+sampleData = <|
+    "pdf"->{
+        <|
+            "Name"->"oldID-9802150.pdf",
+            "ID"->"hep-th/9802150",
+            "URL"->"https://arxiv.org/pdf/hep-th/9802150.pdf"
+        |>,
+        <|
+            "Name"->"newID-1207.7214.pdf",
+            "ID"->"1207.7214",
+            "URL"->"https://arxiv.org/pdf/1207.7214.pdf"
+        |>,
+        <|
+            "Name"->"csID-1706.03762.pdf",
+            "ID"->"1706.03762",
+            "URL"->"https://arxiv.org/pdf/1706.03762.pdf"
+        |>,
+        <|
+            "Name"->"wrongID-0000.00001.pdf",
+            "ID"->"0000.00001",
+            "URL"->Missing["Failed"]
+        |>,
+        <|
+            "Name"->"noID.pdf",
+            "ID"->"",
+            "URL"->Missing["Failed"]
+        |>
+    },
+    "png"->{
+        <|
+            "Name"->"IDs.png",
+            "Content"->"hep-th/9802150  1207.7214\n\n1706.03762  0000.00001"
+        |>
+    },
+    "tex"->{
+        <|
+            "Name"->"citeKey1.tex",
+            "Content"->"\\begin{itemize}\n\t\\item single key \\cite{vaswani2017attention};\n\t\\item multiple keys \\cite{ATLAS:2012yve,Witten:1998qj};\n\\end{itemize}"
+        |>,
+        <|
+            "Name"->"citeKey2.tex",
+            "Content"->"\\begin{itemize}\n\t\\item unicode key \\cite{dieudonn\[EAcute]1969treatise};\n\t\\item empty key \\cite{};\n\\end{itemize}"
+        |>
+    }
+|>;
 
 
 (* ::Subsection:: *)
@@ -90,8 +104,8 @@ sampleTeXData = {
 
 sampleString =
     <|
-        "ID"->StringRiffle[samplePaperData[[All,"ID"]],","],
-        "citeKey"->StringRiffle[sampleTeXData[[All,"string"]],"\n"]
+        "ID"->StringRiffle[sampleData[["pdf",All,"ID"]],","],
+        "CiteKey"->StringRiffle[sampleData[["tex",All,"Content"]],"\n"]
     |>;
 
 
@@ -102,8 +116,7 @@ sampleString =
 sampleFileDirectory =
     <|
         "self"->$thisSourceDir,
-        "pdf"->FileNameJoin@{$thisSourceDir,"pdf"},
-        "tex"->FileNameJoin@{$thisSourceDir,"tex"}
+        AssociationMap[FileNameJoin@{$thisSourceDir,#}&,formatList]
     |>;
 
 
@@ -112,24 +125,25 @@ sampleFileDirectory =
 
 
 sampleFilePrepare[] :=
-    {sampleFilePrepare["pdf"],sampleFilePrepare["tex"]};
+    Map[sampleFilePrepare,formatList];
 
 sampleFilePrepare["pdf"] :=
-    Module[ {dir},
-        dir = sampleFileDirectory["pdf"];
-        If[ !DirectoryQ[dir],
-            CreateDirectory[dir]
-        ];
+    Module[ {dir = sampleFileDirectory["pdf"]},
+        sampleDirectoryCreate[dir];
         Which[
             !$NetworkConnected,
                 Failure["ConnectionFailed",<|
                     "MessageTemplate"->"The network connection fails."
                 |>],
-            !sampleFileCheck["pdf"],
-                samplePaperData//Query[1;;3,URLDownload[#URL,FileNameJoin@{dir,#name}]&];
+            !sampleFileMatchQ["pdf"],
+                sampleData[["pdf"]]//Query[1;;3,URLDownload[#URL,FileNameJoin@{dir,#Name}]&];
                 Export[
-                    FileNameJoin@{dir,samplePaperData[[4,"name"]]},
-                    "This is an example file."
+                    FileNameJoin@{dir,sampleData[["pdf",4,"Name"]]},
+                    "This is a sample PDF file with wrong ID 0000.00001."
+                ];
+                Export[
+                    FileNameJoin@{dir,sampleData[["pdf",5,"Name"]]},
+                    "This is a sample PDF file without ID."
                 ];
                 Success["SamplePDFPrepared",<|
                     "MessageTemplate"->"The sample PDF files have been prepared."
@@ -141,35 +155,47 @@ sampleFilePrepare["pdf"] :=
         ]
     ];
 
+sampleFilePrepare["png"] :=
+    Module[ {dir = sampleFileDirectory["png"]},
+        sampleDirectoryCreate[dir];
+        Which[
+            !sampleFileMatchQ["png"],
+                sampleData[["png"]]//Query[All,Export[FileNameJoin@{dir,#Name},Rasterize[#Content],"PNG"]&];
+                Success["SamplePNGPrepared",<|
+                    "MessageTemplate"->"The sample PNG files have been prepared."
+                |>],
+            True,
+                Success["SamplePNGPrepared",<|
+                    "MessageTemplate"->"The sample PNG files exist."
+                |>]
+        ]
+    ];
+
 sampleFilePrepare["tex"] :=
-    Module[ {dir},
-        dir = sampleFileDirectory["tex"];
-        If[ !DirectoryQ[dir],
-            CreateDirectory[dir]
-        ];
-        If[ !sampleFileCheck["tex"],
-            sampleTeXData//Query[All,Export[FileNameJoin@{dir,#name},#string,"Text"]&];
-            Success["SamplePDFPrepared",<|
+    Module[ {dir = sampleFileDirectory["tex"]},
+        sampleDirectoryCreate[dir];
+        If[ !sampleFileMatchQ["tex"],
+            sampleData[["tex"]]//Query[All,Export[FileNameJoin@{dir,#Name},#Content,"Text"]&];
+            Success["SampleTeXPrepared",<|
                 "MessageTemplate"->"The sample TeX files have been prepared."
             |>],
             (*Else*)
-            Success["SamplePDFPrepared",<|
+            Success["SampleTeXPrepared",<|
                 "MessageTemplate"->"The sample TeX files exist."
             |>]
         ]
     ];
 
 
-sampleFileCheck["pdf"] :=
+sampleFileMatchQ[format_] :=
     SameQ[
-        samplePaperData[[All,"name"]]//Map[FileBaseName]//Sort,
-        sampleFileDirectory["pdf"]//getFileNameByExtension["pdf"]//Sort
+        sampleData[[format,All,"Name"]]//Map[FileNameTake]//Sort,
+        sampleFileDirectory[format]//getFileNameByExtension[format]//Sort
     ];
 
-sampleFileCheck["tex"] :=
-    SameQ[
-        sampleTeXData[[All,"name"]]//Map[FileBaseName]//Sort,
-        sampleFileDirectory["tex"]//getFileNameByExtension["tex"]//Sort
+sampleDirectoryCreate[dir_] :=
+    If[ !DirectoryQ[dir],
+        CreateDirectory[dir]
     ];
 
 

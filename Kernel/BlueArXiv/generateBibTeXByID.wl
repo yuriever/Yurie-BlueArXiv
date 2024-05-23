@@ -21,7 +21,17 @@ Needs["Yurie`BlueArXiv`extractID`"];
 
 
 generateBibTeXByID::usage =
-    "generate BibTeX entries on INSPIRE by arXiv IDs extracted from string or PDF file/folder path.";
+    "generate BibTeX entries on INSPIRE by arXiv IDs extracted from string, image or PDF file/directory path.";
+
+generateBibTeXByIDAsBibData;
+
+
+(* ::Subsection:: *)
+(*Message*)
+
+
+generateBibTeXByID::connectionFailed =
+    "connection failed.";
 
 
 (* ::Section:: *)
@@ -39,13 +49,13 @@ Begin["`Private`"];
 (*Option*)
 
 
-generateBibTeXByID//Options = {
-    "clickToCopy"->True,
-    Splice@Options@generateBibTeXByIDFromPathAsItemList
-};
+generateBibTeXByIDAsBibData//Options =
+    Options@extractIDData;
 
-generateBibTeXByIDFromPathAsItemList//Options =
-    Options@extractIDFromPathAsItemList;
+generateBibTeXByID//Options = {
+    "ClickToCopy"->True,
+    Splice@Options@generateBibTeXByIDAsBibData
+};
 
 
 (* ::Subsection:: *)
@@ -53,79 +63,100 @@ generateBibTeXByIDFromPathAsItemList//Options =
 
 
 generateBibTeXByID[
-    "string",
-    HoldPattern[targetFolder:(_?DirectoryQ):$defaultDownloadDir],
+    tag:$tagPattern:"string",
+    HoldPattern[targetDir:(_?DirectoryQ):$defaultDownloadDir],
     HoldPattern[bibName_String:$defaultBibName],
     opts:OptionsPattern[]
-][arg_] :=
-    generateBibTeXByIDFromStringAsItemList[targetFolder,bibName][arg]//ifAddButton[OptionValue["clickToCopy"],"key","ID","BibTeX"]//
-    	Dataset[#,HiddenItems->{"BibTeX"->True}]&
-
-generateBibTeXByID[
-    "path",
-    HoldPattern[targetFolder:(_?DirectoryQ):$defaultDownloadDir],
-    HoldPattern[bibName_String:$defaultBibName],
-    opts:OptionsPattern[]
-][arg_] :=
-    Module[ {fopts},
-        fopts = FilterRules[{opts,Options[generateBibTeXByID]},Options[generateBibTeXByIDFromPathAsItemList]];
-        generateBibTeXByIDFromPathAsItemList[targetFolder,bibName,fopts][arg]//ifAddButton[OptionValue["clickToCopy"],"key","ID","BibTeX"]//
+][input_] :=
+    Module[ {fopts,bibData},
+        fopts =
+        	FilterRules[{opts,Options[generateBibTeXByID]},Options[generateBibTeXByIDAsBibData]];
+        bibData=
+        	generateBibTeXByIDAsBibData[tag,targetDir,bibName,fopts][input];
+        bibData//ifAddButton[OptionValue["ClickToCopy"],"ID","BibKey","BibTeX"]//
 	    	Dataset[#,HiddenItems->{"BibTeX"->True}]&
     ];
-
-generateBibTeXByID[
-    HoldPattern[targetFolder:(_?DirectoryQ):$defaultDownloadDir],
-    HoldPattern[bibName_String:$defaultBibName],
-    opts:OptionsPattern[]
-][arg_] :=
-    generateBibTeXByID["string",targetFolder,bibName,opts][arg];
 
 
 (* ::Subsection:: *)
 (*Helper*)
 
 
-generateBibTeXByIDFromStringAsItemList[targetFolder_,bibName_][stringOrStringList_] :=
-    Module[ {itemList},
-        itemList = stringOrStringList//extractIDFromStringAsItemList//getBibTeXItemFromIDListAsList;
-        exportBibTeXFile[targetFolder,bibName,itemList];
-        itemList
-    ];
+generateBibTeXByIDAsBibData[tag_,targetDir_,bibName_String,opts:OptionsPattern[]][input_] :=
+    input//extractIDData[tag,opts]//getBibDataFromIDData[targetDir,bibName];
 
 
-generateBibTeXByIDFromPathAsItemList[targetFolder_,bibName_String,opts:OptionsPattern[]][pathOrPathList_] :=
-    Module[ {idDataList,idList,itemList},
-        idDataList = pathOrPathList//extractIDFromPathAsItemList[opts];
-        idList = idDataList//Query[All,#ID&];
-        itemList =
+getBibDataFromIDData[targetDir_,bibName_][idData_] :=
+    Module[ {idList,idValidList,bibData},
+        idList =
+            idData//Query[All,#ID&];
+        idValidList =
+            DeleteDuplicates@DeleteCases[idList,"NotFound"];
+        bibData =
+            idValidList//getRawBibDataFromIDList//addBibKeyToBibData;
+        If[ MemberQ[idList,"NotFound"],
+            bibData =
+                Join[
+                    bibData,
+                    {<|"ID"->"NotFound","BibTeX"->Missing["Failed"],"BibKey"->Missing["Failed"]|>}
+                ]
+        ];
+        bibData =
             JoinAcross[
-                getBibTeXItemFromIDListAsList[idList],
-                idDataList,
+                bibData//addBibKeyToBibData,
+                idData,
                 "ID"
             ];
-        exportBibTeXFile[targetFolder,bibName,itemList];
-        itemList
+        exportBib[targetDir,bibName,bibData];
+        bibData
     ];
 
 
-getBibTeXItemFromIDListAsList[idList_] :=
-    Map[
-        <|"ID"->#,"BibTeX"->URLExecute@HTTPRequest["https://inspirehep.net/api/arxiv/"<>#<>"?format=bibtex"]|>&,
-        idList
-    ]//Query[All,<|"key"->getBibTeXKeyFromItem[#BibTeX],#|>&];
+getRawBibDataFromIDList[idList_] :=
+    If[ idList==={},
+        (*if there is no valid ID, return empty list.*)
+        {},
+        (*Else*)
+        (*improve robustness against failure of HTTPRequest.*)
+        Enclose[
+            ConfirmMatch[
+                (*return the raw data.*)
+                idList//Map[<|"ID"->#,"BibTeX"->requestBib[#]|>&],
+                _List,
+                Message[generateBibTeXByID::connectionFailed]
+            ],
+            (*if the connection fails, return list of empty associations.*)
+            Table[<||>,Length@idList]&
+        ]
+    ];
 
 
-getBibTeXKeyFromItem[bibtex_String] :=
+requestBib[id_]:=
+    Enclose[
+        ConfirmMatch[
+            URLExecute@HTTPRequest["https://inspirehep.net/api/arxiv/"<>id<>"?format=bibtex"],
+            _String
+        ],
+        (*if the returned value is not a string, return a missing.*)
+        Missing["NotFound"]&
+    ];
+
+
+addBibKeyToBibData[bibData_] :=
+    bibData//Query[All,<|"BibKey"->getBibKey[#BibTeX],#|>&];
+
+
+getBibKey[bibtex_String] :=
     First@StringCases[bibtex,StartOfString~~Shortest[__]~~"{"~~Shortest[key__]~~",\n"~~__:>key]; 
 
-getBibTeXKeyFromItem[_] :=
+getBibKey[_] :=
     Missing["Failed"];
 
 
-exportBibTeXFile[targetFolder_,bibName_,itemList_] :=
+exportBib[targetDir_,bibName_,bibData_] :=
     Export[
-        FileNameJoin@{targetFolder,bibName},
-        itemList//Query[Select[Head[#BibTeX]===String&],#BibTeX&]//Riffle[#,""]&,
+        FileNameJoin@{targetDir,bibName},
+        bibData//Query[Select[Head[#BibTeX]===String&],#BibTeX&]//Riffle[#,""]&,
         "List"
     ];
 

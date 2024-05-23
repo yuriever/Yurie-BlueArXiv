@@ -7,8 +7,8 @@
 BeginPackage["Yurie`BlueArXiv`"];
 
 
-(*ClearAll["`*"];*)
-(*ClearAll["`*`*"];*)
+(*ClearAll["`*"];
+ClearAll["`*`*"];*)
 
 
 Get["Yurie`BlueArXiv`Usage`"];

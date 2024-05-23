@@ -3,17 +3,17 @@
 (*** Wolfram Notebook File ***)
 (* http://www.wolfram.com/nb *)
 
-(* CreatedBy='Mathematica 13.3' *)
+(* CreatedBy='Mathematica 14.0' *)
 
 (*CacheID: 234*)
 (* Internal cache information:
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    111850,       2306]
-NotebookOptionsPosition[    103569,       2132]
-NotebookOutlinePosition[    104396,       2160]
-CellTagsIndexPosition[    104315,       2155]
+NotebookDataLength[    116972,       2401]
+NotebookOptionsPosition[    108558,       2225]
+NotebookOutlinePosition[    109386,       2253]
+CellTagsIndexPosition[    109305,       2248]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -32,56 +32,39 @@ Cell[TextData[{
     ButtonBox["downloadByID",
      BaseStyle->"Link",
      ButtonData->"paclet:Yurie/BlueArXiv/ref/downloadByID"], "[", 
-    RowBox[{"\"\<string\>\"", ",", 
+    RowBox[{
+     StyleBox["tag", "TI"], ",", 
      StyleBox["dir", "TI"]}], "]"}], "[", 
-   StyleBox["stringOrStringList", "TI"], "]"}]], "InlineFormula",
-  ExpressionUUID->"a755fd72-f733-4398-9007-5ae270a1926b"],
- "\[LineSeparator]download to ",
+   StyleBox["input", "TI"], "]"}]], "InlineFormula",ExpressionUUID->
+  "a755fd72-f733-4398-9007-5ae270a1926b"],
+ "\[LineSeparator]download by arXiv IDs extracted from string, image or PDF \
+file/directory path to ",
  Cell[BoxData[
   StyleBox["dir", "TI"]], "InlineFormula",ExpressionUUID->
-  "060f8f2d-febe-416b-9626-c363af13f3dc"],
- " by arXiv IDs extracted from ",
- Cell[BoxData[
-  StyleBox["stringOrStringList", "TI"]], "InlineFormula",ExpressionUUID->
-  "181b6bfc-ad97-4f9a-98f4-9728689bfd3b"],
- ".\n",
- Cell["   ", "ModInfo",ExpressionUUID->"d24e9669-a6d6-4047-941c-3b07f99f42b7"],
- Cell[BoxData[
-  RowBox[{
-   RowBox[{
-    ButtonBox["downloadByID",
-     BaseStyle->"Link",
-     ButtonData->"paclet:Yurie/BlueArXiv/ref/downloadByID"], "[", 
-    RowBox[{"\"\<path\>\"", ",", 
-     StyleBox["dir", "TI"]}], "]"}], "[", 
-   StyleBox["pathOrPathList", "TI"], "]"}]], "InlineFormula",ExpressionUUID->
-  "efd5d86c-2438-488a-9ac0-6f67a0b094b0"],
- "\[LineSeparator]download to ",
- Cell[BoxData[
-  StyleBox["dir", "TI"]], "InlineFormula",ExpressionUUID->
-  "9f02f298-8ddb-413b-873f-f3826ddf4dc3"],
- " by arXiv IDs extracted from ",
- Cell[BoxData[
-  ButtonBox["PDF",
-   BaseStyle->"Link"]], "InlineFormula",ExpressionUUID->
-  "762f65ad-5c47-4a15-8333-7d7735335a79"],
- " file/folder ",
- Cell[BoxData[
-  StyleBox["pathOrPathList", "TI"]], "InlineFormula",ExpressionUUID->
-  "a56d0452-bf98-447b-8dc7-4a50300abd9a"],
+  "190cf29d-b1c5-4aec-9aae-5a431598e170"],
  "."
 }], "Usage",
  CellID->1714310991,ExpressionUUID->"67ed1dca-ef07-43e5-a255-0e5bda051e9e"],
 
 Cell[TextData[{
- "The tag ",
- StyleBox["\"string\"", "InlineCode"],
- " can be omitted."
+ "The tag can be ",
+ StyleBox["\"string\"|\"image\"|\"path\"", "InlineCode"],
+ "."
 }], "Notes",
  CellID->53058877,ExpressionUUID->"c6d13b0d-9091-42b6-8438-a41566326f58"],
 
 Cell[TextData[{
- "The default download directory ",
+ "Only the first page of ",
+ Cell[BoxData[
+  ButtonBox["PDF",
+   BaseStyle->"Link"]], "InlineFormula",ExpressionUUID->
+  "e3d51437-19f3-494a-b443-ea0a098966b3"],
+ " files will be searched."
+}], "Notes",
+ CellID->1275541487,ExpressionUUID->"ec6c5de4-6788-4739-8823-31e38764344a"],
+
+Cell[TextData[{
+ "The default downloads directory ",
  Cell[BoxData[
   StyleBox["dir", "TI"]], "InlineFormula",ExpressionUUID->
   "5fdbfe56-6549-4ddf-9437-e13ee34ade32"],
@@ -91,65 +74,63 @@ Cell[TextData[{
 }], "Notes",
  CellID->1895991825,ExpressionUUID->"0c336961-bede-49f4-abbb-acc3bef3e427"],
 
-Cell[TextData[{
- "Only the first page of ",
- Cell[BoxData[
-  ButtonBox["PDF",
-   BaseStyle->"Link"]], "InlineFormula",ExpressionUUID->
-  "670ef7b2-ddb2-4b24-91ee-166477549f10"],
- " file will be scanned."
-}], "Notes",
- CellID->915202092,ExpressionUUID->"59081913-4047-4690-9ad4-704f0082e797"],
-
 Cell["The following options can be given: ", "Notes",
  CellID->1784217585,ExpressionUUID->"f7c57d7b-eedb-4e5d-97b8-5e87e8bef06f"],
 
 Cell[BoxData[GridBox[{
    {Cell["   ", "ModInfo",ExpressionUUID->
-     "1387bed4-b458-488e-9103-2ed8f240900f"], "\"\<clickToCopy\>\"", 
+     "73378d5d-ea1a-4988-be59-0671f4a2bf37"], "\"\<ClickToCopy\>\"", 
     ButtonBox["True",
      BaseStyle->"Link"], Cell[TextData[{
      "The entries in the output ",
      Cell[BoxData[
       ButtonBox["Dataset",
        BaseStyle->"Link"]], "InlineFormula",ExpressionUUID->
-      "f3ea0ad4-9e3a-428b-b77e-db4b13f8d2e3"],
+      "dc1c67bc-1191-40aa-b05c-d048f4cb100c"],
      " can be copied by clicking."
-    }], "TableText",ExpressionUUID->"3b922341-dcbe-4cba-a107-8ab648efe991"]},
+    }], "TableText",ExpressionUUID->"eb38449e-7632-43e9-ad20-1855b9ebaecf"]},
    {Cell["   ", "ModInfo",ExpressionUUID->
-     "45781a1e-921f-4b64-b175-25a8c8abd52f"], "\"\<hideDirectory\>\"", 
+     "fafe95d2-5528-496c-8681-484f8440dc64"], "\"\<HideDirectory\>\"", 
     ButtonBox["True",
      BaseStyle->"Link"], Cell[
     "If the tag is \"path\", the root path will be hidden.", "TableText",
-     ExpressionUUID->"61c5f3a4-fb03-46b4-9086-4cfd1f5fe405"]},
+     ExpressionUUID->"e087e222-f9b2-4ec6-a01e-2b41b7698325"]},
    {Cell["      ", "ModInfo",ExpressionUUID->
-     "b922670e-6075-4d04-b949-03422619349d"], "\"\<hideFileObject\>\"", 
+     "9f42d94c-dba9-4634-acb1-2d199dd76524"], "\"\<HideFile\>\"", 
     ButtonBox["False",
      BaseStyle->"Link"], Cell[TextData[{
      "The downloaded ",
      Cell[BoxData[
       ButtonBox["File",
        BaseStyle->"Link"]], "InlineFormula",ExpressionUUID->
-      "cab5c25e-4a90-4d07-bdaf-498ab80226dd"],
+      "372d5044-e57a-4113-ad57-17224181c2f7"],
      " objects will be hidden."
-    }], "TableText",ExpressionUUID->"5a37ed6d-5ab3-4bb7-8782-ac8bc66583c4"]},
+    }], "TableText",ExpressionUUID->"3a215a84-0aa5-44c9-acdb-f2548fdb06d1"]},
    {Cell["   ", "ModInfo",ExpressionUUID->
-     "b777b4de-9fe0-4d84-8184-18f8a9b6874c"], "\"\<mergeDuplicateID\>\"", 
+     "adc4eacf-a5e8-4539-bc7d-2b7fa3544acf"], "\"\<MergeDuplicateID\>\"", 
     ButtonBox["True",
      BaseStyle->"Link"], Cell["\<\
-The result will be gathered and sorted by \"ID\". Otherwise there can be \
-duplicate IDs from different positions.\
-\>", "TableText",ExpressionUUID->"25e0e765-2e9d-4ca8-8a71-62925349e0bf"]},
-   {Cell["   ", "ModInfo",ExpressionUUID->
-     "8d543848-3f69-4507-a8ee-330a47880695"], "\"\<tryFileName\>\"", 
+The result will be gathered by \"ID\". Otherwise there can be duplicate IDs \
+from different sources.\
+\>", "TableText",ExpressionUUID->"e3572bd2-650e-46b8-ba92-c108b51d1c68"]},
+   {Cell["      ", "ModInfo",ExpressionUUID->
+     "87375236-0a90-44b6-b9bf-080e095a5982"], "\"\<ShowHighlightedImage\>\"", 
+    
     ButtonBox["True",
      BaseStyle->"Link"], Cell["\<\
-IDs in the file name are extracted firstly, and if not found then the first \
-page is searched. Otherwise only IDs in the first page are extracted.\
-\>", "TableText",ExpressionUUID->"9986f5be-8557-4eef-a3cb-b752c8fbfd5c"]}
+If the tag is \"image\", the recognized IDs will be highlighted in the image.\
+\
+\>", "TableText",ExpressionUUID->"5840ffe3-dd76-44f6-a466-47f9cc6bfdae"]},
+   {Cell["   ", "ModInfo",ExpressionUUID->
+     "cd68358d-afbf-4606-81dc-689210dbadc2"], "\"\<TryFileName\>\"", 
+    ButtonBox["True",
+     BaseStyle->"Link"], Cell["\<\
+The file name will be searched firstly, and if no ID is found then the first \
+page will be searched. Otherwise only the first page will be searched.\
+\>", "TableText",ExpressionUUID->"c7258885-a2f1-4d88-a8b4-98b18e3760f3"]}
   }]], "3ColumnTableMod",
  TaggingRules->{"Alphabetized" -> True},
- CellID->1048878768,ExpressionUUID->"7e10338e-e375-4f08-b79c-c7f0b474f36c"]
+ CellID->1879298385,ExpressionUUID->"7d9108d4-eb6e-4244-a679-a29e0b604312"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -202,10 +183,10 @@ Cell[TextData[{
     "6f499f97-d3b1-4c6e-bf8e-5265f6af840f"], 
    DynamicModuleBox[{$CellContext`nbobj$$ = NotebookObject[
     "c5a77222-cab3-49f6-b8de-8248dc60ab47", 
-     "ded5f3a2-a8f5-4656-aa83-0f18088b74f7"], $CellContext`cellobj$$ = 
+     "af044469-d63b-4431-b2cd-c030560b2d2d"], $CellContext`cellobj$$ = 
     CellObject[
     "76dac956-d6ab-4520-b2de-18f8ad2f22b2", 
-     "4567da2a-b53d-44b5-98c4-57d1631b88b7"]}, 
+     "ef03f5b0-cd23-4e34-b317-f7bfd89f0478"]}, 
     TemplateBox[{
       GraphicsBox[{{
          Thickness[0.06], 
@@ -330,10 +311,9 @@ Cell[BoxData[
  RowBox[{
   RowBox[{"SetOptions", "[", 
    RowBox[{"downloadByID", ",", 
-    RowBox[{"\"\<clickToCopy\>\"", "->", "False"}], ",", 
-    RowBox[{"\"\<hideFileObject\>\"", "->", "True"}]}], "]"}], ";"}]], "Input",\
-
- CellLabel->"In[18]:=",
+    RowBox[{"\"\<ClickToCopy\>\"", "->", "False"}], ",", 
+    RowBox[{"\"\<HideFile\>\"", "->", "True"}]}], "]"}], ";"}]], "Input",
+ CellLabel->"In[56]:=",
  CellID->2075423583,ExpressionUUID->"f6a799a8-5cc0-49ce-ad55-b179e5d8c856"],
 
 Cell["Set the target directory:", "ExampleText",
@@ -346,7 +326,7 @@ Cell[BoxData[
     RowBox[{"{", 
      RowBox[{"$HomeDirectory", ",", "\"\<Downloads\>\""}], "}"}]}]}], 
   ";"}]], "Input",
- CellLabel->"In[19]:=",
+ CellLabel->"In[57]:=",
  CellID->24945376,ExpressionUUID->"352b6fc6-eff1-48f0-9b17-0b94e70bd664"],
 
 Cell[CellGroupData[{
@@ -370,7 +350,7 @@ Cell[BoxData[
  RowBox[{
   RowBox[{"sampleString", "[", "\"\<ID\>\"", "]"}], "//", 
   RowBox[{"downloadByID", "[", "dir", "]"}]}]], "Input",
- CellLabel->"In[20]:=",
+ CellLabel->"In[58]:=",
  CellID->615925397,ExpressionUUID->"2a846e8e-0543-4761-aacd-826381669306"],
 
 Cell[BoxData[
@@ -378,49 +358,49 @@ Cell[BoxData[
   TagBox[
    DynamicModuleBox[{TypeSystem`NestedGrid`PackagePrivate`$state$$ = <|
     "InitialData" -> {<|
-       "ID" -> "0000.00001", "item" -> Missing["Failed"], "URL" -> 
+       "ID" -> "0000.00001", "Paper" -> Missing["Failed"], "URL" -> 
         Missing["Failed"]|>, <|
-       "ID" -> "1207.7214", "item" -> 
+       "ID" -> "1207.7214", "Paper" -> 
         "1207.7214v2 Observation of a new particle in the search for the \
 Standard Model Higgs boson with the ATLAS detector at the LHC, The ATLAS \
 Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf"|>, <|
-       "ID" -> "1706.03762", "item" -> 
+       "ID" -> "1706.03762", "Paper" -> 
         "1706.03762v7 Attention Is All You Need, Ashish Vaswani", "URL" -> 
         "http://arxiv.org/pdf/1706.03762v7.pdf"|>, <|
-       "ID" -> "hep-th/9802150", "item" -> 
+       "ID" -> "hep-th/9802150", "Paper" -> 
         "9802150v2 Anti De Sitter Space And Holography, Edward Witten", "URL" -> 
         "http://arxiv.org/pdf/hep-th/9802150v2.pdf"|>}, "AllowEmbedding" -> 
      True, "InitialShape" -> 
-     TypeSystem`PackageScope`HeaderShape[<|{All, "ID"} -> 1, {All, "item"} -> 
+     TypeSystem`PackageScope`HeaderShape[<|{All, "ID"} -> 1, {All, "Paper"} -> 
         1, {All, "URL"} -> 1|>, 
        TypeSystem`PackageScope`Limited[
         TypeSystem`PackageScope`ColumnShape[
          TypeSystem`PackageScope`Limited[
           
           TypeSystem`PackageScope`RowShape[<|
-           "ID" -> TypeSystem`PackageScope`AtomShape[156.8], "item" -> 
+           "ID" -> TypeSystem`PackageScope`AtomShape[156.8], "Paper" -> 
             TypeSystem`PackageScope`AtomShape[560.], "URL" -> 
             TypeSystem`PackageScope`AtomShape[459.20000000000005`]|>], 
           DirectedInfinity[1], 3, {All}]], 4, 
         DirectedInfinity[1], {}]], "InitialType" -> TypeSystem`Vector[
-       TypeSystem`Struct[{"ID", "item", "URL"}, {
+       TypeSystem`Struct[{"ID", "Paper", "URL"}, {
          TypeSystem`Atom[String], 
          TypeSystem`Atom[String], 
          TypeSystem`Atom[String]}], 4], "Meta" -> <||>, "RowTarget" -> 20, 
      "ColumnTarget" -> 10, "Shape" -> 
-     TypeSystem`PackageScope`HeaderShape[<|{All, "ID"} -> 1, {All, "item"} -> 
+     TypeSystem`PackageScope`HeaderShape[<|{All, "ID"} -> 1, {All, "Paper"} -> 
         1, {All, "URL"} -> 1|>, 
        TypeSystem`PackageScope`Limited[
         TypeSystem`PackageScope`ColumnShape[
          TypeSystem`PackageScope`Limited[
           
           TypeSystem`PackageScope`RowShape[<|
-           "ID" -> TypeSystem`PackageScope`AtomShape[156.8], "item" -> 
+           "ID" -> TypeSystem`PackageScope`AtomShape[156.8], "Paper" -> 
             TypeSystem`PackageScope`AtomShape[560.], "URL" -> 
             TypeSystem`PackageScope`AtomShape[459.20000000000005`]|>], 
           DirectedInfinity[1], 3, {All}]], 4, 
         DirectedInfinity[1], {}]], "Type" -> TypeSystem`Vector[
-       TypeSystem`Struct[{"ID", "item", "URL"}, {
+       TypeSystem`Struct[{"ID", "Paper", "URL"}, {
          TypeSystem`Atom[String], 
          TypeSystem`Atom[String], 
          TypeSystem`Atom[String]}], 4], "Path" -> {}, "DisplayedRowCount" -> 
@@ -471,9 +451,9 @@ Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf"|>, <|
               Annotation[
                EventHandler[
                 MouseAppearance[
-                 Mouseover["item", 
+                 Mouseover["Paper", 
                   Style[
-                  "item", FontColor -> 
+                  "Paper", FontColor -> 
                    RGBColor[
                     0.27450980392156865`, 0.5372549019607843, 
                     0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
@@ -489,11 +469,11 @@ Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf"|>, <|
                    TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{
-                   All, "item"}, 1]]], 
+                   All, "Paper"}, 1]]], 
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{
-                All, "item"}, "ColumnHeader", True], "Mouse"], 
+                All, "Paper"}, "ColumnHeader", True], "Mouse"], 
               ImageSize -> {{1, Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], Background -> 
              GrayLevel[0.95], Alignment -> {Left, Baseline}], 
@@ -546,7 +526,7 @@ Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf"|>, <|
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{1, 
-                 Key["item"]}, "Item", False], "Mouse"], 
+                 Key["Paper"]}, "Item", False], "Mouse"], 
               ImageSize -> {{560., Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
@@ -581,7 +561,7 @@ Collaboration",
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{2, 
-                 Key["item"]}, "Item", False], "Mouse"], 
+                 Key["Paper"]}, "Item", False], "Mouse"], 
               ImageSize -> {{560., Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
@@ -612,7 +592,7 @@ Collaboration",
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
-                 Key["item"]}, "Item", False], "Mouse"], 
+                 Key["Paper"]}, "Item", False], "Mouse"], 
               ImageSize -> {{560., Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
@@ -644,7 +624,7 @@ Collaboration",
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{4, 
-                 Key["item"]}, "Item", False], "Mouse"], 
+                 Key["Paper"]}, "Item", False], "Mouse"], 
               ImageSize -> {{560., Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
@@ -964,8 +944,8 @@ lastPathIsLeafHeader, TypeSystem`NestedGrid`PackagePrivate`headerHidden$ = And[
   Editable->False,
   SelectWithContents->True,
   Selectable->False]], "Output",
- CellLabel->"Out[20]=",
- CellID->1787529961,ExpressionUUID->"a071ad11-f383-4096-bcde-adda6118b5ae"]
+ CellLabel->"Out[58]=",
+ CellID->1978274316,ExpressionUUID->"b4aefa4d-c22a-40e1-ab2f-fbe1726161c3"]
 }, Open  ]]
 }, Open  ]],
 
@@ -995,7 +975,7 @@ Cell[BoxData[
   RowBox[{"sampleFileDirectory", "[", "\"\<pdf\>\"", "]"}], "//", 
   RowBox[{"downloadByID", "[", 
    RowBox[{"\"\<path\>\"", ",", "dir"}], "]"}]}]], "Input",
- CellLabel->"In[21]:=",
+ CellLabel->"In[59]:=",
  CellID->1747141489,ExpressionUUID->"74f81028-4552-48b0-886b-798a14f06338"],
 
 Cell[BoxData[
@@ -1003,78 +983,79 @@ Cell[BoxData[
   TagBox[
    DynamicModuleBox[{TypeSystem`NestedGrid`PackagePrivate`$state$$ = <|
     "InitialData" -> {<|
-       "ID" -> "0000.00001", "item" -> Missing["Failed"], "URL" -> 
-        Missing["Failed"], "file" -> {"wrongID-0000.00001"}, 
-        "IDLocation" -> {"foundInFileName"}|>, <|
-       "ID" -> "1207.7214", "item" -> 
+       "ID" -> "0000.00001", "Paper" -> Missing["Failed"], "URL" -> 
+        Missing["Failed"], "FileName" -> {"wrongID-0000.00001.pdf"}, 
+        "IDLocation" -> {"FileName"}|>, <|
+       "ID" -> "1207.7214", "Paper" -> 
         "1207.7214v2 Observation of a new particle in the search for the \
 Standard Model Higgs boson with the ATLAS detector at the LHC, The ATLAS \
 Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf", 
-        "file" -> {"newID-1207.7214"}, 
-        "IDLocation" -> {"foundInFileName"}|>, <|
-       "ID" -> "1706.03762", "item" -> 
+        "FileName" -> {"newID-1207.7214.pdf"}, 
+        "IDLocation" -> {"FileName"}|>, <|
+       "ID" -> "1706.03762", "Paper" -> 
         "1706.03762v7 Attention Is All You Need, Ashish Vaswani", "URL" -> 
         "http://arxiv.org/pdf/1706.03762v7.pdf", 
-        "file" -> {"csID-1706.03762"}, 
-        "IDLocation" -> {"foundInFileName"}|>, <|
-       "ID" -> "hep-th/9802150", "item" -> 
+        "FileName" -> {"csID-1706.03762.pdf"}, 
+        "IDLocation" -> {"FileName"}|>, <|
+       "ID" -> "hep-th/9802150", "Paper" -> 
         "9802150v2 Anti De Sitter Space And Holography, Edward Witten", "URL" -> 
         "http://arxiv.org/pdf/hep-th/9802150v2.pdf", 
-        "file" -> {"oldID-9802150"}, "IDLocation" -> {"foundInFirstPage"}|>}, 
-     "AllowEmbedding" -> True, "InitialShape" -> 
-     TypeSystem`PackageScope`HeaderShape[<|{All, "ID"} -> 1, {All, "item"} -> 
-        1, {All, "URL"} -> 1, {All, "file"} -> 1, {All, "IDLocation"} -> 1|>, 
-       
+        "FileName" -> {"oldID-9802150.pdf", "oldID-9802150.pdf"}, 
+        "IDLocation" -> {"FirstPageExtra", "FirstPageExtra"}|>, <|
+       "ID" -> "NotFound", "Paper" -> Missing["Failed"], "URL" -> 
+        Missing["Failed"], "FileName" -> {"noID.pdf"}, 
+        "IDLocation" -> {"None"}|>}, "AllowEmbedding" -> True, "InitialShape" -> 
+     TypeSystem`PackageScope`HeaderShape[<|{All, "ID"} -> 1, {All, "Paper"} -> 
+        1, {All, "URL"} -> 1, {All, "FileName"} -> 1, {All, "IDLocation"} -> 
+        1|>, 
        TypeSystem`PackageScope`Limited[
         TypeSystem`PackageScope`ColumnShape[
          TypeSystem`PackageScope`Limited[
           
           TypeSystem`PackageScope`RowShape[<|
-           "ID" -> TypeSystem`PackageScope`AtomShape[156.8], "item" -> 
+           "ID" -> TypeSystem`PackageScope`AtomShape[156.8], "Paper" -> 
             TypeSystem`PackageScope`AtomShape[560.], "URL" -> 
-            TypeSystem`PackageScope`AtomShape[459.20000000000005`], "file" -> 
-            TypeSystem`PackageScope`UnknownShape[False], "IDLocation" -> 
-            TypeSystem`PackageScope`UnknownShape[False]|>], 
-          DirectedInfinity[1], 5, {All}]], 4, 
+            TypeSystem`PackageScope`AtomShape[459.20000000000005`], 
+            "FileName" -> TypeSystem`PackageScope`UnknownShape[False], 
+            "IDLocation" -> TypeSystem`PackageScope`UnknownShape[False]|>], 
+          DirectedInfinity[1], 5, {All}]], 5, 
         DirectedInfinity[1], {}]], "InitialType" -> TypeSystem`Vector[
-       TypeSystem`Struct[{"ID", "item", "URL", "file", "IDLocation"}, {
+       TypeSystem`Struct[{"ID", "Paper", "URL", "FileName", "IDLocation"}, {
          TypeSystem`Atom[String], 
          TypeSystem`Atom[String], 
          TypeSystem`Atom[String], 
          TypeSystem`Vector[
-          TypeSystem`Atom[String], 1], 
+          TypeSystem`Atom[String], TypeSystem`AnyLength], 
          TypeSystem`Vector[
-          TypeSystem`Atom[
-           TypeSystem`Enumeration["foundInFileName", "foundInFirstPage"]], 
-          1]}], 4], "Meta" -> <||>, "RowTarget" -> 20, "ColumnTarget" -> 10, 
-     "Shape" -> TypeSystem`PackageScope`HeaderShape[<|{All, "ID"} -> 
-        1, {All, "item"} -> 1, {All, "URL"} -> 1, {All, "file"} -> 
-        1, {All, "IDLocation"} -> 1|>, 
+          TypeSystem`Atom[String], TypeSystem`AnyLength]}], 5], 
+     "Meta" -> <||>, "RowTarget" -> 20, "ColumnTarget" -> 10, "Shape" -> 
+     TypeSystem`PackageScope`HeaderShape[<|{All, "ID"} -> 1, {All, "Paper"} -> 
+        1, {All, "URL"} -> 1, {All, "FileName"} -> 1, {All, "IDLocation"} -> 
+        1|>, 
        TypeSystem`PackageScope`Limited[
         TypeSystem`PackageScope`ColumnShape[
          TypeSystem`PackageScope`Limited[
           
           TypeSystem`PackageScope`RowShape[<|
-           "ID" -> TypeSystem`PackageScope`AtomShape[156.8], "item" -> 
+           "ID" -> TypeSystem`PackageScope`AtomShape[156.8], "Paper" -> 
             TypeSystem`PackageScope`AtomShape[560.], "URL" -> 
-            TypeSystem`PackageScope`AtomShape[459.20000000000005`], "file" -> 
-            TypeSystem`PackageScope`UnknownShape[False], "IDLocation" -> 
-            TypeSystem`PackageScope`UnknownShape[False]|>], 
-          DirectedInfinity[1], 5, {All}]], 4, 
+            TypeSystem`PackageScope`AtomShape[459.20000000000005`], 
+            "FileName" -> TypeSystem`PackageScope`UnknownShape[False], 
+            "IDLocation" -> TypeSystem`PackageScope`UnknownShape[False]|>], 
+          DirectedInfinity[1], 5, {All}]], 5, 
         DirectedInfinity[1], {}]], "Type" -> TypeSystem`Vector[
-       TypeSystem`Struct[{"ID", "item", "URL", "file", "IDLocation"}, {
+       TypeSystem`Struct[{"ID", "Paper", "URL", "FileName", "IDLocation"}, {
          TypeSystem`Atom[String], 
          TypeSystem`Atom[String], 
          TypeSystem`Atom[String], 
          TypeSystem`Vector[
-          TypeSystem`Atom[String], 1], 
+          TypeSystem`Atom[String], TypeSystem`AnyLength], 
          TypeSystem`Vector[
-          TypeSystem`Atom[
-           TypeSystem`Enumeration["foundInFileName", "foundInFirstPage"]], 
-          1]}], 4], "Path" -> {}, "DisplayedRowCount" -> 4, 
-     "DisplayedColumnCount" -> 5, "DataRowCount" -> 4, "DataColumnCount" -> 5,
-      "SortPaths" -> {}, "SortDirections" -> {}, "HiddenItemsMap" -> Null, 
-     "UpdateType" -> 1|>, TypeSystem`NestedGrid`PackagePrivate`$outputID$$, 
+          TypeSystem`Atom[String], TypeSystem`AnyLength]}], 5], "Path" -> {}, 
+     "DisplayedRowCount" -> 5, "DisplayedColumnCount" -> 5, "DataRowCount" -> 
+     5, "DataColumnCount" -> 5, "SortPaths" -> {}, "SortDirections" -> {}, 
+     "HiddenItemsMap" -> Null, "UpdateType" -> 1|>, 
+    TypeSystem`NestedGrid`PackagePrivate`$outputID$$, 
     TypeSystem`NestedGrid`PackagePrivate`$path$$ = {}, 
     TypeSystem`NestedGrid`PackagePrivate`$vPos$$ = 1, 
     TypeSystem`NestedGrid`PackagePrivate`$hPos$$ = 1, 
@@ -1119,9 +1100,9 @@ Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf",
               Annotation[
                EventHandler[
                 MouseAppearance[
-                 Mouseover["item", 
+                 Mouseover["Paper", 
                   Style[
-                  "item", FontColor -> 
+                  "Paper", FontColor -> 
                    RGBColor[
                     0.27450980392156865`, 0.5372549019607843, 
                     0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
@@ -1137,11 +1118,11 @@ Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf",
                    TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{
-                   All, "item"}, 1]]], 
+                   All, "Paper"}, 1]]], 
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{
-                All, "item"}, "ColumnHeader", True], "Mouse"], 
+                All, "Paper"}, "ColumnHeader", True], "Mouse"], 
               ImageSize -> {{1, Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], Background -> 
              GrayLevel[0.95], Alignment -> {Left, Baseline}], 
@@ -1181,9 +1162,9 @@ Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf",
               Annotation[
                EventHandler[
                 MouseAppearance[
-                 Mouseover["file", 
+                 Mouseover["FileName", 
                   Style[
-                  "file", FontColor -> 
+                  "FileName", FontColor -> 
                    RGBColor[
                     0.27450980392156865`, 0.5372549019607843, 
                     0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
@@ -1199,11 +1180,11 @@ Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf",
                    TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{
-                   All, "file"}, 1]]], 
+                   All, "FileName"}, 1]]], 
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{
-                All, "file"}, "ColumnHeader", True], "Mouse"], 
+                All, "FileName"}, "ColumnHeader", True], "Mouse"], 
               ImageSize -> {{1, Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], Background -> 
              GrayLevel[0.95], Alignment -> {Left, Baseline}], 
@@ -1256,7 +1237,7 @@ Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf",
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{1, 
-                 Key["item"]}, "Item", False], "Mouse"], 
+                 Key["Paper"]}, "Item", False], "Mouse"], 
               ImageSize -> {{560., Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
@@ -1279,11 +1260,11 @@ Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf",
                 MouseAppearance[
                  Mouseover[
                   
-                  Style[{"wrongID-0000.00001"}, ShowStringCharacters -> 
+                  Style[{"wrongID-0000.00001.pdf"}, ShowStringCharacters -> 
                    False], 
                   Style[
                    
-                   Style[{"wrongID-0000.00001"}, ShowStringCharacters -> 
+                   Style[{"wrongID-0000.00001.pdf"}, ShowStringCharacters -> 
                     False], FontColor -> 
                    RGBColor[
                     0.27450980392156865`, 0.5372549019607843, 
@@ -1300,11 +1281,11 @@ Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf",
                    TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{1, 
-                    Key["file"]}, 4]]], 
+                    Key["FileName"]}, 4]]], 
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{1, 
-                 Key["file"]}, "Item", False], "Mouse"], 
+                 Key["FileName"]}, "Item", False], "Mouse"], 
               ImageMargins -> {{5, 3}, {4, 5}}]], 
             Item[
              Pane[
@@ -1312,9 +1293,9 @@ Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf",
                EventHandler[
                 MouseAppearance[
                  Mouseover[
-                  Style[{"foundInFileName"}, ShowStringCharacters -> False], 
+                  Style[{"FileName"}, ShowStringCharacters -> False], 
                   Style[
-                   Style[{"foundInFileName"}, ShowStringCharacters -> False], 
+                   Style[{"FileName"}, ShowStringCharacters -> False], 
                    FontColor -> 
                    RGBColor[
                     0.27450980392156865`, 0.5372549019607843, 
@@ -1356,7 +1337,7 @@ Collaboration",
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{2, 
-                 Key["item"]}, "Item", False], "Mouse"], 
+                 Key["Paper"]}, "Item", False], "Mouse"], 
               ImageSize -> {{560., Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
@@ -1376,10 +1357,13 @@ Collaboration",
                EventHandler[
                 MouseAppearance[
                  Mouseover[
-                  Style[{"newID-1207.7214"}, ShowStringCharacters -> False], 
+                  
+                  Style[{"newID-1207.7214.pdf"}, ShowStringCharacters -> 
+                   False], 
                   Style[
-                   Style[{"newID-1207.7214"}, ShowStringCharacters -> False], 
-                   FontColor -> 
+                   
+                   Style[{"newID-1207.7214.pdf"}, ShowStringCharacters -> 
+                    False], FontColor -> 
                    RGBColor[
                     0.27450980392156865`, 0.5372549019607843, 
                     0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
@@ -1395,11 +1379,11 @@ Collaboration",
                    TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{2, 
-                    Key["file"]}, 4]]], 
+                    Key["FileName"]}, 4]]], 
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{2, 
-                 Key["file"]}, "Item", False], "Mouse"], 
+                 Key["FileName"]}, "Item", False], "Mouse"], 
               ImageMargins -> {{5, 3}, {4, 5}}]], 
             Item[
              Pane[
@@ -1407,9 +1391,9 @@ Collaboration",
                EventHandler[
                 MouseAppearance[
                  Mouseover[
-                  Style[{"foundInFileName"}, ShowStringCharacters -> False], 
+                  Style[{"FileName"}, ShowStringCharacters -> False], 
                   Style[
-                   Style[{"foundInFileName"}, ShowStringCharacters -> False], 
+                   Style[{"FileName"}, ShowStringCharacters -> False], 
                    FontColor -> 
                    RGBColor[
                     0.27450980392156865`, 0.5372549019607843, 
@@ -1449,7 +1433,7 @@ Collaboration",
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
-                 Key["item"]}, "Item", False], "Mouse"], 
+                 Key["Paper"]}, "Item", False], "Mouse"], 
               ImageSize -> {{560., Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
@@ -1469,10 +1453,13 @@ Collaboration",
                EventHandler[
                 MouseAppearance[
                  Mouseover[
-                  Style[{"csID-1706.03762"}, ShowStringCharacters -> False], 
+                  
+                  Style[{"csID-1706.03762.pdf"}, ShowStringCharacters -> 
+                   False], 
                   Style[
-                   Style[{"csID-1706.03762"}, ShowStringCharacters -> False], 
-                   FontColor -> 
+                   
+                   Style[{"csID-1706.03762.pdf"}, ShowStringCharacters -> 
+                    False], FontColor -> 
                    RGBColor[
                     0.27450980392156865`, 0.5372549019607843, 
                     0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
@@ -1488,11 +1475,11 @@ Collaboration",
                    TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{3, 
-                    Key["file"]}, 4]]], 
+                    Key["FileName"]}, 4]]], 
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{3, 
-                 Key["file"]}, "Item", False], "Mouse"], 
+                 Key["FileName"]}, "Item", False], "Mouse"], 
               ImageMargins -> {{5, 3}, {4, 5}}]], 
             Item[
              Pane[
@@ -1500,9 +1487,9 @@ Collaboration",
                EventHandler[
                 MouseAppearance[
                  Mouseover[
-                  Style[{"foundInFileName"}, ShowStringCharacters -> False], 
+                  Style[{"FileName"}, ShowStringCharacters -> False], 
                   Style[
-                   Style[{"foundInFileName"}, ShowStringCharacters -> False], 
+                   Style[{"FileName"}, ShowStringCharacters -> False], 
                    FontColor -> 
                    RGBColor[
                     0.27450980392156865`, 0.5372549019607843, 
@@ -1543,7 +1530,7 @@ Collaboration",
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{4, 
-                 Key["item"]}, "Item", False], "Mouse"], 
+                 Key["Paper"]}, "Item", False], "Mouse"], 
               ImageSize -> {{560., Full}, Automatic}, 
               ImageMargins -> {{5, 3}, {4, 5}}], 
              ItemSize -> {Full, Automatic}], 
@@ -1563,10 +1550,13 @@ Collaboration",
                EventHandler[
                 MouseAppearance[
                  Mouseover[
-                  Style[{"oldID-9802150"}, ShowStringCharacters -> False], 
+                  
+                  Style[{"oldID-9802150.pdf", "oldID-9802150.pdf"}, 
+                   ShowStringCharacters -> False], 
                   Style[
-                   Style[{"oldID-9802150"}, ShowStringCharacters -> False], 
-                   FontColor -> 
+                   
+                   Style[{"oldID-9802150.pdf", "oldID-9802150.pdf"}, 
+                    ShowStringCharacters -> False], FontColor -> 
                    RGBColor[
                     0.27450980392156865`, 0.5372549019607843, 
                     0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
@@ -1582,11 +1572,11 @@ Collaboration",
                    TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`localHold[
                     TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{4, 
-                    Key["file"]}, 4]]], 
+                    Key["FileName"]}, 4]]], 
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{4, 
-                 Key["file"]}, "Item", False], "Mouse"], 
+                 Key["FileName"]}, "Item", False], "Mouse"], 
               ImageMargins -> {{5, 3}, {4, 5}}]], 
             Item[
              Pane[
@@ -1594,11 +1584,13 @@ Collaboration",
                EventHandler[
                 MouseAppearance[
                  Mouseover[
-                  Style[{"foundInFirstPage"}, ShowStringCharacters -> False], 
                   
+                  Style[{"FirstPageExtra", "FirstPageExtra"}, 
+                   ShowStringCharacters -> False], 
                   Style[
-                   Style[{"foundInFirstPage"}, ShowStringCharacters -> False],
-                    FontColor -> 
+                   
+                   Style[{"FirstPageExtra", "FirstPageExtra"}, 
+                    ShowStringCharacters -> False], FontColor -> 
                    RGBColor[
                     0.27450980392156865`, 0.5372549019607843, 
                     0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
@@ -1618,6 +1610,101 @@ Collaboration",
                TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
                 TypeSystem`NestedGrid`PackagePrivate`localHold[
                 TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{4, 
+                 Key["IDLocation"]}, "Item", False], "Mouse"], 
+              ImageMargins -> {{5, 3}, {4, 5}}]]}, {
+            Item[
+             Pane[
+              Annotation["NotFound", 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{5, 
+                 Key["ID"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{156.8, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+               Style["\[LongDash]", 
+                GrayLevel[0.75]], 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{5, 
+                 Key["Paper"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{560., Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+               Style["\[LongDash]", 
+                GrayLevel[0.75]], 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{5, 
+                 Key["URL"]}, "Item", False], "Mouse"], 
+              ImageSize -> {{459.20000000000005`, Full}, Automatic}, 
+              ImageMargins -> {{5, 3}, {4, 5}}], 
+             ItemSize -> {Full, Automatic}], 
+            Item[
+             Pane[
+              Annotation[
+               EventHandler[
+                MouseAppearance[
+                 Mouseover[
+                  Style[{"noID.pdf"}, ShowStringCharacters -> False], 
+                  Style[
+                   Style[{"noID.pdf"}, ShowStringCharacters -> False], 
+                   FontColor -> 
+                   RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                If[
+                  TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$], 
+                  TypeSystem`NestedGrid`PackagePrivate`updateState[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{5, 
+                    Key["FileName"]}, 4]]], 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{5, 
+                 Key["FileName"]}, "Item", False], "Mouse"], 
+              ImageMargins -> {{5, 3}, {4, 5}}]], 
+            Item[
+             Pane[
+              Annotation[
+               EventHandler[
+                MouseAppearance[
+                 Mouseover[
+                  Style[{"None"}, ShowStringCharacters -> False], 
+                  Style[
+                   Style[{"None"}, ShowStringCharacters -> False], FontColor -> 
+                   RGBColor[
+                    0.27450980392156865`, 0.5372549019607843, 
+                    0.792156862745098]]], "LinkHand"], {"MouseClicked", 1} :> 
+                If[
+                  TypeSystem`NestedGrid`PackagePrivate`checkInteractivity[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$], 
+                  TypeSystem`NestedGrid`PackagePrivate`updateState[
+                  TypeSystem`NestedGrid`PackagePrivate`$state$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$path$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$vPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$hPos$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`$grid$$, 
+                   TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`localHold[
+                    TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]][{5, 
+                    Key["IDLocation"]}, 4]]], 
+               TypeSystem`NestedGrid`PackagePrivate`$SliceMarker[
+                TypeSystem`NestedGrid`PackagePrivate`localHold[
+                TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][{5, 
                  Key["IDLocation"]}, "Item", False], "Mouse"], 
               ImageMargins -> {{5, 3}, {4, 5}}]]}}, 
           BaseStyle -> {
@@ -1764,8 +1851,7 @@ lastPathIsLeafHeader, TypeSystem`NestedGrid`PackagePrivate`headerHidden$ = And[
                     TypeSystem`NestedGrid`PackagePrivate`$outputID$$]][
                     TypeSystem`NestedGrid`PackagePrivate`lastPath$, 
                     "Descending"]], MenuEvaluator -> Automatic], Nothing], 
-                    If[
-                    TypeSystem`NestedGrid`PackagePrivate`sortDirection$ =!= 
+                    If[TypeSystem`NestedGrid`PackagePrivate`sortDirection$ =!= 
                     None, 
                     MenuItem["Unsort", 
                     KernelExecute[
@@ -1909,13 +1995,13 @@ lastPathIsLeafHeader, TypeSystem`NestedGrid`PackagePrivate`headerHidden$ = And[
         Hold[
           TypeSystem`NestedGrid`PackagePrivate`localHold[
           TypeSystem`NestedGrid`PackagePrivate`$outputID$$]]], StandardForm],
-      ImageSizeCache->{1619., {93.193115234375, 99.806884765625}},
+      ImageSizeCache->{1842., {110.193115234375, 116.806884765625}},
       TrackedSymbols:>{
        TypeSystem`NestedGrid`PackagePrivate`$state$$, 
         TypeSystem`NestedGrid`PackagePrivate`$grid$$}], 
      TypeSystem`NestedGrid`PackagePrivate`mouseAnnotation$$ = 
      MouseAnnotation[],
-     ImageSizeCache->{1619., {93.193115234375, 99.806884765625}}],
+     ImageSizeCache->{1842., {110.193115234375, 116.806884765625}}],
     BaseStyle->{LineBreakWithin -> False},
     DynamicModuleValues:>{},
     Initialization:>(TypeSystem`NestedGrid`PackagePrivate`$outputID$$ = 
@@ -1927,8 +2013,8 @@ lastPathIsLeafHeader, TypeSystem`NestedGrid`PackagePrivate`headerHidden$ = And[
   Editable->False,
   SelectWithContents->True,
   Selectable->False]], "Output",
- CellLabel->"Out[21]=",
- CellID->246273809,ExpressionUUID->"90aee2c7-b152-4bad-96e9-96473f6de758"]
+ CellLabel->"Out[59]=",
+ CellID->30432856,ExpressionUUID->"eaa91508-06e3-4739-a078-66aea1958702"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
@@ -1969,44 +2055,51 @@ Cell[CellGroupData[{
 Cell[BoxData[
  InterpretationBox[Cell[
   "Options", "ExampleSection",ExpressionUUID->
-   "82f1c181-1c55-44ed-b00b-6c3ebb148121"],
+   "f377968a-4e94-4b0b-b931-b92287ac7c5d"],
   $Line = 0; Null]], "ExampleSection",
- CellID->1101489335,ExpressionUUID->"2cc5f3f5-7c33-46bf-a289-2bd4c474d751"],
+ CellID->383902806,ExpressionUUID->"f5f3923f-d52d-4871-8f6d-2f35b3ec8657"],
 
 Cell[BoxData[
  InterpretationBox[Cell[
-  "\"tryFileName\"", "ExampleSubsection",ExpressionUUID->
-   "57fc5f3a-245a-4c6c-8698-c42230f9000f"],
+  "\"ClickToCopy\"", "ExampleSubsection",ExpressionUUID->
+   "17632a14-7a5c-471b-b931-5e90f0144bd0"],
   $Line = 0; Null]], "ExampleSubsection",
- CellID->1422216205,ExpressionUUID->"41680ac6-e681-40ec-8297-041bcb8028c4"],
+ CellID->1213584854,ExpressionUUID->"5bef0c1c-90ee-4b3f-8687-b9826bfc5054"],
 
 Cell[BoxData[
  InterpretationBox[Cell[
-  "\"hideDirectory\"", "ExampleSubsection",ExpressionUUID->
-   "875dbc42-109b-4edd-968d-bb02cf5169ec"],
+  "\"HideDirectory\"", "ExampleSubsection",ExpressionUUID->
+   "dd3b3708-617c-4625-a9c0-cd8c5543240e"],
   $Line = 0; Null]], "ExampleSubsection",
- CellID->1694766325,ExpressionUUID->"393aff5b-9123-47cd-960e-880bba5fc8d9"],
+ CellID->2068445619,ExpressionUUID->"80d99785-a989-4fd0-aa43-fc41caa4c1f1"],
 
 Cell[BoxData[
  InterpretationBox[Cell[
-  "\"mergeDuplicateID\"", "ExampleSubsection",ExpressionUUID->
-   "380aae62-ca06-4b03-900f-def7970f31c1"],
+  "\"HideFile\"", "ExampleSubsection",ExpressionUUID->
+   "25e20e17-2855-4634-bac4-5bc37eb63f5e"],
   $Line = 0; Null]], "ExampleSubsection",
- CellID->1862014114,ExpressionUUID->"18abbd53-dff5-4ed0-af6c-13a1eaf93c5e"],
+ CellID->900240897,ExpressionUUID->"c6ea7a4f-8219-4138-950c-051a1ac10412"],
 
 Cell[BoxData[
  InterpretationBox[Cell[
-  "\"fileNameRegulate\"", "ExampleSubsection",ExpressionUUID->
-   "400bf3a4-b3ed-413b-846d-adc351fc11db"],
+  "\"MergeDuplicateID\"", "ExampleSubsection",ExpressionUUID->
+   "bee1b0b8-452f-477e-9440-eb5f38aef8f9"],
   $Line = 0; Null]], "ExampleSubsection",
- CellID->1739509914,ExpressionUUID->"c540ea13-1a9d-4ea8-b3a1-281d476a3e5c"],
+ CellID->1326462764,ExpressionUUID->"036f8499-0683-4b13-9160-07a57f227634"],
 
 Cell[BoxData[
  InterpretationBox[Cell[
-  "\"clickToCopy\"", "ExampleSubsection",ExpressionUUID->
-   "d2e16d6e-2253-476f-ade3-556980572848"],
+  "\"ShowHighlightedImage\"", "ExampleSubsection",ExpressionUUID->
+   "a1f0aee6-f126-40bf-bbe6-b88a55ecf759"],
   $Line = 0; Null]], "ExampleSubsection",
- CellID->100754340,ExpressionUUID->"376af58c-6419-4f5a-9bd6-933a7ae1db1b"]
+ CellID->831935041,ExpressionUUID->"750aed1c-ea33-4103-921c-ae8ef4429c94"],
+
+Cell[BoxData[
+ InterpretationBox[Cell[
+  "\"TryFileName\"", "ExampleSubsection",ExpressionUUID->
+   "63e0332d-613d-4b1e-9b98-f13a68cd4246"],
+  $Line = 0; Null]], "ExampleSubsection",
+ CellID->66208470,ExpressionUUID->"c8af0055-4050-4204-9e2a-42c1d8b47c16"]
 }, Open  ]],
 
 Cell[BoxData[
@@ -2130,7 +2223,7 @@ Cell[BoxData[""], "Template",
 }, Closed]]
 }, Open  ]]
 },
-WindowSize->{1159, 1022},
+WindowSize->{1280, 1387},
 WindowMargins->{{Automatic, 0}, {Automatic, 0}},
 Visible->True,
 TaggingRules-><|"Paclet" -> "Yurie/BlueArXiv"|>,
@@ -2147,14 +2240,14 @@ ExpressionUUID->"c5a77222-cab3-49f6-b8de-8248dc60ab47"
 (*CellTagsOutline
 CellTagsIndex->{
  "ExtendedExamples"->{
-  Cell[96971, 1937, 487, 13, 72, "ExtendedExamplesSection",ExpressionUUID->"48eaff66-0d50-47c7-b750-647ed0e59b5c",
+  Cell[101702, 2023, 487, 13, 72, "ExtendedExamplesSection",ExpressionUUID->"48eaff66-0d50-47c7-b750-647ed0e59b5c",
    CellTags->"ExtendedExamples",
    CellID->127332819]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"ExtendedExamples", 104120, 2148}
+ {"ExtendedExamples", 109109, 2241}
  }
 *)
 (*NotebookFileOutline
@@ -2162,149 +2255,151 @@ Notebook[{
 Cell[CellGroupData[{
 Cell[580, 22, 110, 1, 92, "ObjectName",ExpressionUUID->"9b96d885-6204-4478-b757-04dae2a0bd9e",
  CellID->1285244531],
-Cell[693, 25, 1783, 48, 155, "Usage",ExpressionUUID->"67ed1dca-ef07-43e5-a255-0e5bda051e9e",
+Cell[693, 25, 777, 21, 100, "Usage",ExpressionUUID->"67ed1dca-ef07-43e5-a255-0e5bda051e9e",
  CellID->1714310991],
-Cell[2479, 75, 174, 5, 34, "Notes",ExpressionUUID->"c6d13b0d-9091-42b6-8438-a41566326f58",
+Cell[1473, 48, 185, 5, 34, "Notes",ExpressionUUID->"c6d13b0d-9091-42b6-8438-a41566326f58",
  CellID->53058877],
-Cell[2656, 82, 344, 9, 34, "Notes",ExpressionUUID->"0c336961-bede-49f4-abbb-acc3bef3e427",
+Cell[1661, 55, 294, 8, 34, "Notes",ExpressionUUID->"ec6c5de4-6788-4739-8823-31e38764344a",
+ CellID->1275541487],
+Cell[1958, 65, 345, 9, 34, "Notes",ExpressionUUID->"0c336961-bede-49f4-abbb-acc3bef3e427",
  CellID->1895991825],
-Cell[3003, 93, 291, 8, 34, "Notes",ExpressionUUID->"59081913-4047-4690-9ad4-704f0082e797",
- CellID->915202092],
-Cell[3297, 103, 129, 1, 33, "Notes",ExpressionUUID->"f7c57d7b-eedb-4e5d-97b8-5e87e8bef06f",
+Cell[2306, 76, 129, 1, 33, "Notes",ExpressionUUID->"f7c57d7b-eedb-4e5d-97b8-5e87e8bef06f",
  CellID->1784217585],
-Cell[3429, 106, 2175, 45, 247, "3ColumnTableMod",ExpressionUUID->"7e10338e-e375-4f08-b79c-c7f0b474f36c",
- CellID->1048878768]
+Cell[2438, 79, 2501, 53, 273, "3ColumnTableMod",ExpressionUUID->"7d9108d4-eb6e-4244-a679-a29e0b604312",
+ CellID->1879298385]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[5641, 156, 459, 13, 50, "SeeAlsoSection",ExpressionUUID->"6e3b318c-731c-4e30-9b0d-4fcd3d0c0569",
+Cell[4976, 137, 459, 13, 50, "SeeAlsoSection",ExpressionUUID->"6e3b318c-731c-4e30-9b0d-4fcd3d0c0569",
  CellID->1496885667],
-Cell[6103, 171, 2437, 61, 30, "SeeAlso",ExpressionUUID->"6041a4d8-c700-466c-9638-09c6046f92e2",
+Cell[5438, 152, 2437, 61, 30, "SeeAlso",ExpressionUUID->"6041a4d8-c700-466c-9638-09c6046f92e2",
  CellID->386480664]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[8577, 237, 436, 12, 51, "TechNotesSection",ExpressionUUID->"27c2e843-8ae8-463b-b7f2-d64bcd6d7720",
+Cell[7912, 218, 436, 12, 51, "TechNotesSection",ExpressionUUID->"27c2e843-8ae8-463b-b7f2-d64bcd6d7720",
  CellID->1589971320],
-Cell[9016, 251, 101, 1, 24, "Tutorials",ExpressionUUID->"95bb76f6-d212-4a8f-adf2-5468e361ac8f",
+Cell[8351, 232, 101, 1, 24, "Tutorials",ExpressionUUID->"95bb76f6-d212-4a8f-adf2-5468e361ac8f",
  CellID->1508955619]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[9154, 257, 118, 1, 50, "MoreAboutSection",ExpressionUUID->"d4bbf241-cebb-4298-91a0-f7cecf19e9d3",
+Cell[8489, 238, 118, 1, 50, "MoreAboutSection",ExpressionUUID->"d4bbf241-cebb-4298-91a0-f7cecf19e9d3",
  CellID->1382701110],
-Cell[9275, 260, 211, 3, 24, "MoreAbout",ExpressionUUID->"65fbea85-0c79-4574-b47b-227e3f2a50e5",
+Cell[8610, 241, 211, 3, 24, "MoreAbout",ExpressionUUID->"65fbea85-0c79-4574-b47b-227e3f2a50e5",
  CellID->646546697]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[9523, 268, 473, 13, 50, "RelatedLinksSection",ExpressionUUID->"bb2663de-1d15-49aa-8525-92dd59c8e18f",
+Cell[8858, 249, 473, 13, 50, "RelatedLinksSection",ExpressionUUID->"bb2663de-1d15-49aa-8525-92dd59c8e18f",
  CellID->1444184475],
-Cell[9999, 283, 104, 1, 24, "RelatedLinks",ExpressionUUID->"c9d8488b-4d44-489e-a3d3-f55f5d079f92",
+Cell[9334, 264, 104, 1, 24, "RelatedLinks",ExpressionUUID->"c9d8488b-4d44-489e-a3d3-f55f5d079f92",
  CellID->1548292931]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[10140, 289, 531, 14, 87, "ExamplesInitializationSection",ExpressionUUID->"258c629a-eca7-4886-ae2a-0c616c3ba168",
+Cell[9475, 270, 531, 14, 87, "ExamplesInitializationSection",ExpressionUUID->"258c629a-eca7-4886-ae2a-0c616c3ba168",
  CellID->1099940618],
-Cell[10674, 305, 249, 4, 82, "ExampleInitialization",ExpressionUUID->"e74461bc-5b81-4000-b77c-96f9b845dfad",
+Cell[10009, 286, 249, 4, 82, "ExampleInitialization",ExpressionUUID->"e74461bc-5b81-4000-b77c-96f9b845dfad",
  CellID->328065661]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[10960, 314, 443, 12, 90, "PrimaryExamplesSection",ExpressionUUID->"add51a39-c70e-4266-bf64-991a66990b22",
+Cell[10295, 295, 443, 12, 90, "PrimaryExamplesSection",ExpressionUUID->"add51a39-c70e-4266-bf64-991a66990b22",
  CellID->2105709397],
-Cell[11406, 328, 326, 8, 33, "Input",ExpressionUUID->"f6a799a8-5cc0-49ce-ad55-b179e5d8c856",
+Cell[10741, 309, 318, 7, 33, "Input",ExpressionUUID->"f6a799a8-5cc0-49ce-ad55-b179e5d8c856",
  CellID->2075423583],
-Cell[11735, 338, 123, 1, 30, "ExampleText",ExpressionUUID->"6c74acaf-e124-4df6-bc25-e1828cda904c",
+Cell[11062, 318, 123, 1, 30, "ExampleText",ExpressionUUID->"6c74acaf-e124-4df6-bc25-e1828cda904c",
  CellID->344491689],
-Cell[11861, 341, 285, 8, 33, "Input",ExpressionUUID->"352b6fc6-eff1-48f0-9b17-0b94e70bd664",
+Cell[11188, 321, 285, 8, 33, "Input",ExpressionUUID->"352b6fc6-eff1-48f0-9b17-0b94e70bd664",
  CellID->24945376],
 Cell[CellGroupData[{
-Cell[12171, 353, 242, 5, 24, "ExampleDelimiter",ExpressionUUID->"52cdbf61-0d30-4d2a-aa06-40ede8c0e53d",
+Cell[11498, 333, 242, 5, 24, "ExampleDelimiter",ExpressionUUID->"52cdbf61-0d30-4d2a-aa06-40ede8c0e53d",
  CellID->639263774],
-Cell[12416, 360, 188, 4, 30, "ExampleText",ExpressionUUID->"8f54c4a8-1c8e-47c3-bb22-795f6147d02f",
+Cell[11743, 340, 188, 4, 30, "ExampleText",ExpressionUUID->"8f54c4a8-1c8e-47c3-bb22-795f6147d02f",
  CellID->1249381895],
 Cell[CellGroupData[{
-Cell[12629, 368, 238, 5, 33, "Input",ExpressionUUID->"2a846e8e-0543-4761-aacd-826381669306",
+Cell[11956, 348, 238, 5, 33, "Input",ExpressionUUID->"2a846e8e-0543-4761-aacd-826381669306",
  CellID->615925397],
-Cell[12870, 375, 32569, 592, 208, "Output",ExpressionUUID->"a071ad11-f383-4096-bcde-adda6118b5ae",
- CellID->1787529961]
+Cell[12197, 355, 32587, 592, 208, "Output",ExpressionUUID->"b4aefa4d-c22a-40e1-ab2f-fbe1726161c3",
+ CellID->1978274316]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[45488, 973, 242, 5, 24, "ExampleDelimiter",ExpressionUUID->"b1487c89-24ce-4899-9b64-b064a3c7f618",
+Cell[44833, 953, 242, 5, 24, "ExampleDelimiter",ExpressionUUID->"b1487c89-24ce-4899-9b64-b064a3c7f618",
  CellID->820361011],
-Cell[45733, 980, 336, 8, 32, "ExampleText",ExpressionUUID->"bc664899-db65-4c1e-a440-b7cf4cd592aa",
+Cell[45078, 960, 336, 8, 32, "ExampleText",ExpressionUUID->"bc664899-db65-4c1e-a440-b7cf4cd592aa",
  CellID->1559190772],
 Cell[CellGroupData[{
-Cell[46094, 992, 282, 6, 33, "Input",ExpressionUUID->"74f81028-4552-48b0-886b-798a14f06338",
+Cell[45439, 972, 282, 6, 33, "Input",ExpressionUUID->"74f81028-4552-48b0-886b-798a14f06338",
  CellID->1747141489],
-Cell[46379, 1000, 50531, 930, 208, "Output",ExpressionUUID->"90aee2c7-b152-4bad-96e9-96473f6de758",
- CellID->246273809]
+Cell[45724, 980, 55917, 1036, 242, "Output",ExpressionUUID->"eaa91508-06e3-4739-a078-66aea1958702",
+ CellID->30432856]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[96971, 1937, 487, 13, 72, "ExtendedExamplesSection",ExpressionUUID->"48eaff66-0d50-47c7-b750-647ed0e59b5c",
+Cell[101702, 2023, 487, 13, 72, "ExtendedExamplesSection",ExpressionUUID->"48eaff66-0d50-47c7-b750-647ed0e59b5c",
  CellTags->"ExtendedExamples",
  CellID->127332819],
-Cell[97461, 1952, 242, 5, 43, "ExampleSection",ExpressionUUID->"ddb5aa73-c420-4080-a9ce-6463dc231e93",
+Cell[102192, 2038, 242, 5, 43, "ExampleSection",ExpressionUUID->"ddb5aa73-c420-4080-a9ce-6463dc231e93",
  CellID->1188976521],
-Cell[97706, 1959, 264, 5, 27, "ExampleSection",ExpressionUUID->"5bb2af8b-7b09-472d-a51e-f322a504c84a",
+Cell[102437, 2045, 264, 5, 27, "ExampleSection",ExpressionUUID->"5bb2af8b-7b09-472d-a51e-f322a504c84a",
  CellID->793053112],
 Cell[CellGroupData[{
-Cell[97995, 1968, 244, 5, 27, "ExampleSection",ExpressionUUID->"2cc5f3f5-7c33-46bf-a289-2bd4c474d751",
- CellID->1101489335],
-Cell[98242, 1975, 258, 5, 32, "ExampleSubsection",ExpressionUUID->"41680ac6-e681-40ec-8297-041bcb8028c4",
- CellID->1422216205],
-Cell[98503, 1982, 260, 5, 26, "ExampleSubsection",ExpressionUUID->"393aff5b-9123-47cd-960e-880bba5fc8d9",
- CellID->1694766325],
-Cell[98766, 1989, 263, 5, 26, "ExampleSubsection",ExpressionUUID->"18abbd53-dff5-4ed0-af6c-13a1eaf93c5e",
- CellID->1862014114],
-Cell[99032, 1996, 263, 5, 26, "ExampleSubsection",ExpressionUUID->"c540ea13-1a9d-4ea8-b3a1-281d476a3e5c",
- CellID->1739509914],
-Cell[99298, 2003, 257, 5, 26, "ExampleSubsection",ExpressionUUID->"376af58c-6419-4f5a-9bd6-933a7ae1db1b",
- CellID->100754340]
+Cell[102726, 2054, 243, 5, 27, "ExampleSection",ExpressionUUID->"f5f3923f-d52d-4871-8f6d-2f35b3ec8657",
+ CellID->383902806],
+Cell[102972, 2061, 258, 5, 32, "ExampleSubsection",ExpressionUUID->"5bef0c1c-90ee-4b3f-8687-b9826bfc5054",
+ CellID->1213584854],
+Cell[103233, 2068, 260, 5, 26, "ExampleSubsection",ExpressionUUID->"80d99785-a989-4fd0-aa43-fc41caa4c1f1",
+ CellID->2068445619],
+Cell[103496, 2075, 254, 5, 26, "ExampleSubsection",ExpressionUUID->"c6ea7a4f-8219-4138-950c-051a1ac10412",
+ CellID->900240897],
+Cell[103753, 2082, 263, 5, 26, "ExampleSubsection",ExpressionUUID->"036f8499-0683-4b13-9160-07a57f227634",
+ CellID->1326462764],
+Cell[104019, 2089, 266, 5, 26, "ExampleSubsection",ExpressionUUID->"750aed1c-ea33-4103-921c-ae8ef4429c94",
+ CellID->831935041],
+Cell[104288, 2096, 256, 5, 26, "ExampleSubsection",ExpressionUUID->"c8af0055-4050-4204-9e2a-42c1d8b47c16",
+ CellID->66208470]
 }, Open  ]],
-Cell[99570, 2011, 248, 5, 43, "ExampleSection",ExpressionUUID->"3f227102-0993-481d-b402-12044fe9a5ca",
+Cell[104559, 2104, 248, 5, 43, "ExampleSection",ExpressionUUID->"3f227102-0993-481d-b402-12044fe9a5ca",
  CellID->947259338],
-Cell[99821, 2018, 259, 5, 27, "ExampleSection",ExpressionUUID->"032329d5-eaa4-4a77-be22-54d4a18a17a9",
+Cell[104810, 2111, 259, 5, 27, "ExampleSection",ExpressionUUID->"032329d5-eaa4-4a77-be22-54d4a18a17a9",
  CellID->1291418555],
-Cell[100083, 2025, 251, 5, 27, "ExampleSection",ExpressionUUID->"ddb905f9-e5ee-432e-9973-2921cee3e6a7",
+Cell[105072, 2118, 251, 5, 27, "ExampleSection",ExpressionUUID->"ddb905f9-e5ee-432e-9973-2921cee3e6a7",
  CellID->254433656],
-Cell[100337, 2032, 256, 5, 27, "ExampleSection",ExpressionUUID->"5556a9a0-bbb0-40f3-b80d-6329cb98a5df",
+Cell[105326, 2125, 256, 5, 27, "ExampleSection",ExpressionUUID->"5556a9a0-bbb0-40f3-b80d-6329cb98a5df",
  CellID->626515215],
-Cell[100596, 2039, 249, 5, 27, "ExampleSection",ExpressionUUID->"0ac61e81-8ebe-4bce-a472-afdecbe6b70e",
+Cell[105585, 2132, 249, 5, 27, "ExampleSection",ExpressionUUID->"0ac61e81-8ebe-4bce-a472-afdecbe6b70e",
  CellID->728897264]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[100882, 2049, 111, 1, 90, "MetadataSection",ExpressionUUID->"38bf7da7-dafc-4350-9140-160a4275627e",
+Cell[105871, 2142, 111, 1, 90, "MetadataSection",ExpressionUUID->"38bf7da7-dafc-4350-9140-160a4275627e",
  CellID->1329593560],
-Cell[100996, 2052, 477, 12, 33, "History",ExpressionUUID->"730ef9ec-b07e-4eba-84f3-a54c4d449f07",
+Cell[105985, 2145, 477, 12, 33, "History",ExpressionUUID->"730ef9ec-b07e-4eba-84f3-a54c4d449f07",
  CellID->1911615885],
 Cell[CellGroupData[{
-Cell[101498, 2068, 483, 13, 27, "CategorizationSection",ExpressionUUID->"75e4154c-40f0-47a5-80ed-ca8967329d6d",
+Cell[106487, 2161, 483, 13, 27, "CategorizationSection",ExpressionUUID->"75e4154c-40f0-47a5-80ed-ca8967329d6d",
  CellID->25336428],
-Cell[101984, 2083, 134, 2, 45, "Categorization",ExpressionUUID->"80b69ded-03da-463c-b117-323fe7de892e",
+Cell[106973, 2176, 134, 2, 45, "Categorization",ExpressionUUID->"80b69ded-03da-463c-b117-323fe7de892e",
  CellID->627583290],
-Cell[102121, 2087, 144, 2, 45, "Categorization",ExpressionUUID->"758474f7-03f1-4a4d-a6fe-9b05fb69c4db",
+Cell[107110, 2180, 144, 2, 45, "Categorization",ExpressionUUID->"758474f7-03f1-4a4d-a6fe-9b05fb69c4db",
  CellID->1161078544],
-Cell[102268, 2091, 139, 2, 45, "Categorization",ExpressionUUID->"48f11d3d-84f8-4605-afba-a69a816b3b40",
+Cell[107257, 2184, 139, 2, 45, "Categorization",ExpressionUUID->"48f11d3d-84f8-4605-afba-a69a816b3b40",
  CellID->63188719],
-Cell[102410, 2095, 153, 2, 45, "Categorization",ExpressionUUID->"e53c50d3-e154-4dd0-bf64-16ae3c096007",
+Cell[107399, 2188, 153, 2, 45, "Categorization",ExpressionUUID->"e53c50d3-e154-4dd0-bf64-16ae3c096007",
  CellID->1155878615]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[102600, 2102, 111, 1, 39, "KeywordsSection",ExpressionUUID->"345ec4e6-fafa-4973-8b06-2ab43576acd2",
+Cell[107589, 2195, 111, 1, 39, "KeywordsSection",ExpressionUUID->"345ec4e6-fafa-4973-8b06-2ab43576acd2",
  CellID->1613731594],
-Cell[102714, 2105, 100, 1, 70, "Keywords",ExpressionUUID->"e6957fbf-c035-47fd-9ea9-5723da9aad95",
+Cell[107703, 2198, 100, 1, 70, "Keywords",ExpressionUUID->"e6957fbf-c035-47fd-9ea9-5723da9aad95",
  CellID->1415922395]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[102851, 2111, 120, 1, 26, "TemplatesSection",ExpressionUUID->"6266b176-ff0c-462b-9860-fe2838505c99",
+Cell[107840, 2204, 120, 1, 26, "TemplatesSection",ExpressionUUID->"6266b176-ff0c-462b-9860-fe2838505c99",
  CellID->1141400358],
-Cell[102974, 2114, 147, 2, 70, "Template",ExpressionUUID->"88fce0e8-56d2-4194-8dfb-173937bd58e1",
+Cell[107963, 2207, 147, 2, 70, "Template",ExpressionUUID->"88fce0e8-56d2-4194-8dfb-173937bd58e1",
  CellID->44398255],
-Cell[103124, 2118, 138, 2, 70, "Template",ExpressionUUID->"29d02de3-368a-4fe2-b81c-a61bf4485e2d",
+Cell[108113, 2211, 138, 2, 70, "Template",ExpressionUUID->"29d02de3-368a-4fe2-b81c-a61bf4485e2d",
  CellID->1024646276],
-Cell[103265, 2122, 135, 2, 70, "Template",ExpressionUUID->"96f6a3e9-e3e9-47f5-a29b-516cbe48c89c",
+Cell[108254, 2215, 135, 2, 70, "Template",ExpressionUUID->"96f6a3e9-e3e9-47f5-a29b-516cbe48c89c",
  CellID->558595439],
-Cell[103403, 2126, 138, 2, 70, "Template",ExpressionUUID->"ed7452c3-6fac-44ed-83f1-7430cacc9b55",
+Cell[108392, 2219, 138, 2, 70, "Template",ExpressionUUID->"ed7452c3-6fac-44ed-83f1-7430cacc9b55",
  CellID->1662522236]
 }, Closed]]
 }, Open  ]]

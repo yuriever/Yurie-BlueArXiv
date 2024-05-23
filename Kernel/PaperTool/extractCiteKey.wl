@@ -17,12 +17,10 @@ Needs["Yurie`BlueArXiv`Common`"];
 
 
 extractCiteKey::usage =
-    "extract cite keys from string or TeX file/folder path.";
+    "extract cite keys from string or TeX file/directory path.";
 
 
-extractCiteKeyFromStringAsItemList;
-
-extractCiteKeyFromTeXAsItemList;
+extractCiteKeyData;
 
 
 (* ::Section:: *)
@@ -40,104 +38,102 @@ Begin["`Private`"];
 (*Option*)
 
 
-getCiteKeyFromTeXAsList//Options = {
-    "hideDirectory"->True
+getCiteKeyDataFromTeX//Options = {
+    "HideDirectory"->True
 };
 
-extractCiteKeyFromTeXAsItemList//Options =
-    Options@getCiteKeyFromTeXAsList;
+getCiteKeyDataFromPath//Options =
+    Options@getCiteKeyDataFromTeX;
+
+extractCiteKeyData//Options =
+    Options@getCiteKeyDataFromPath;
 
 extractCiteKey//Options = {
-    "clickToCopy"->True,
-    "rawCiteKey"->False,
-    Splice@Options@extractCiteKeyFromTeXAsItemList
+    "ClickToCopy"->True,
+    "RawCiteKey"->False,
+    Splice@Options@extractCiteKeyData
 };
-
-
-(* ::Subsection:: *)
-(*Message*)
-
-
-extractCiteKey::texfailimport =
-    "the TeX file fails to import: \n``";
 
 
 (* ::Subsection:: *)
 (*Main*)
 
 
-extractCiteKey["string",opts:OptionsPattern[]][stringOrStringList_] :=
-    stringOrStringList//extractCiteKeyFromStringAsItemList//ifAddButton[OptionValue["clickToCopy"]];
-
-extractCiteKey["path",opts:OptionsPattern[]][pathOrPathList_] :=
-    Module[ {fopts,itemList},
-        fopts = FilterRules[{opts,Options[extractCiteKey]},Options[extractCiteKeyFromTeXAsItemList]];
-        itemList = pathOrPathList//extractCiteKeyFromTeXAsItemList[fopts];
-        If[ OptionValue["rawCiteKey"],
-            itemList//Query[All,#citeKey&]//DeleteDuplicates//ifAddButton[OptionValue["clickToCopy"]],
+extractCiteKey[tag:$tagPattern:"string",opts:OptionsPattern[]][input_] :=
+    Module[ {fopts,idData},
+        fopts =
+            FilterRules[{opts,Options[extractCiteKey]},Options[extractCiteKeyData]];
+        idData =
+            extractCiteKeyData[tag,fopts][input];
+        If[ OptionValue["RawCiteKey"],
+            idData//ifAddButton[OptionValue["ClickToCopy"],"CiteKey"]//Query[All,#CiteKey&],
             (*Else*)
-            itemList//ifAddButton[OptionValue["clickToCopy"],"citeKey"]//Dataset
+            idData//ifAddButton[OptionValue["ClickToCopy"],"CiteKey"]//Dataset
         ]
     ];
-
-extractCiteKey[opts:OptionsPattern[]][stringOrStringList_] :=
-    extractCiteKey["string",opts][stringOrStringList];
 
 
 (* ::Subsection:: *)
 (*Helper*)
 
 
-extractCiteKeyFromStringAsItemList[stringOrStringList_] :=
-    stringOrStringList//getCiteKeyFromStringAsList//Sort;
-
-
-extractCiteKeyFromTeXAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
-    Module[ {fopts},
-        fopts = FilterRules[{opts,Options[extractCiteKeyFromTeXAsItemList]},Options[getCiteKeyFromTeXAsList]];
-        pathOrPathList//getTeXFromPathAsList//getCiteKeyFromTeXAsList[fopts]//Query[SortBy[#citeKey&]]
+extractCiteKeyData[tag_,opts:OptionsPattern[]][input_] :=
+    Module[ {idData},
+        idData =
+            Switch[tag,
+                "string",
+                    input//getCiteKeyDataFromString,
+                "image",
+                    Abort[],
+                "path",
+                    input//getCiteKeyDataFromPath[opts]
+            ];
+        idData//Query[SortBy[#CiteKey&]]
     ];
 
 
-getCiteKeyFromTeXAsList[OptionsPattern[]][file_] :=
-    Module[ {citeKeyList,itemList},
-        citeKeyList = file//importStringFromTeX//getCiteKeyFromStringAsList;
-        itemList = <|"citeKey"->#,"file"->file|>&/@citeKeyList;
-        If[ OptionValue["hideDirectory"],
-            itemList//Query[All,<|#,"file"->hideDirectory[#file]|>&],
-            itemList
-        ]
-    ];
-
-getCiteKeyFromTeXAsList[opts:OptionsPattern[]][fileList_List] :=
-    fileList//Map[getCiteKeyFromTeXAsList[opts]]//Flatten;
+(* ::Subsubsection:: *)
+(*String*)
 
 
-getCiteKeyFromStringAsList[stringOrStringList_] :=
+getCiteKeyDataFromString[string_] :=
+    string//getCiteKeyListFromString//Map[<|"CiteKey"->#|>&];
+
+
+getCiteKeyListFromString[string_] :=
     (*extract "\cite{...}"*)
-    stringOrStringList//StringCases[$citeKeyPattern:>"$2"]//Flatten//
+    string//StringCases[$citeKeyPattern:>"$2"]//Flatten//
 		(*extract multiple citekeys, then delete duplicated and empty keys.*)
 		StringSplit[#,","]&//Flatten//DeleteDuplicates//DeleteCases[""];
 
 
-hideDirectory[file_] :=
-    First@getFileNameByExtension["tex"][file];
+(* ::Subsubsection:: *)
+(*Path*)
 
 
-getTeXFromPathAsList[pathOrPathList_] :=
+getCiteKeyDataFromPath[opts:OptionsPattern[]][path_] :=
+    path//getTeXListFromPath//Map[getCiteKeyDataFromTeX[opts]]//Flatten;
+
+
+getTeXListFromPath[pathOrPathList_] :=
     getFilePathByExtension["tex"][pathOrPathList];
 
 
-importStringFromTeX[file_] :=
-    Quiet[
-        Check[
-            Import[file,"Text"],
-            Message[extractCiteKey::texfailimport,file];
-            ""
-        ],
-        All,
-        {extractCiteKey::texfailimport}
+getCiteKeyDataFromTeX[OptionsPattern[]][file_] :=
+    Module[ {citeKeyList,citeKeyData},
+        citeKeyList =
+            file//tryImport["","Text"]//getCiteKeyListFromString;
+        citeKeyData =
+            citeKeyList//Map[<|"CiteKey"->#,"FileName"->{file}|>&];
+        If[ OptionValue["HideDirectory"],
+            citeKeyData//Query[All,<|#,"FileName"->hideDirectory[#FileName]|>&],
+            citeKeyData
+        ]
     ];
+
+
+hideDirectory[file_] :=
+    file//getFileNameByExtension["tex"];
 
 
 (* ::Subsection:: *)

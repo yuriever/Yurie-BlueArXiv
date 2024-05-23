@@ -15,22 +15,22 @@ arXivPDFNameFormat::usage =
 (*downloadByID.wl*)
 
 downloadByID::usage =
-	"download by arXiv IDs extracted from string or PDF file/folder path.";
+	"download by arXiv IDs extracted from string, image or PDF file/directory path.";
 
 
 (*extractID.wl*)
 
 extractID::usage =
-	"extract arXiv IDs from string or PDF file/folder path.";
+	"extract arXiv IDs from string, image or PDF file/directory path.";
 
 
 (*generateBibTeXByID.wl*)
 
 generateBibTeXByID::usage =
-	"generate BibTeX entries on INSPIRE by arXiv IDs extracted from string or PDF file/folder path.";
+	"generate BibTeX entries on INSPIRE by arXiv IDs extracted from string, image or PDF file/directory path.";
 
 
 (*searchByID.wl*)
 
 searchByID::usage =
-	"search by arXiv IDs extracted from string or PDF file/folder path.";
+	"search by arXiv IDs extracted from string, image or PDF file/directory path.";

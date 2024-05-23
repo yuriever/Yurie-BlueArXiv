@@ -34,20 +34,33 @@ Begin["`Private`"];
 
 
 (* ::Subsection:: *)
+(*Constant*)
+
+
+tagList =
+    {"string","image","path"};
+
+
+(* ::Subsection:: *)
 (*Main*)
 
 
-arXivInterface[HoldPattern[targetFolder:(_?DirectoryQ):$defaultDownloadDir]] :=
-    kernel[targetFolder];
+arXivInterface[HoldPattern[targetDir:(_?DirectoryQ):$defaultDownloadDir]] :=
+    arXivInterfaceKernel[targetDir];
 
 
-kernel[targetFolder_] :=
+(* ::Subsection:: *)
+(*Helper*)
+
+
+arXivInterfaceKernel[targetDir_] :=
     Interpretation[
         {
             fun = "download",
             tag = "string",
             string = "",
-            target = targetFolder,
+            image = Null,
+            target = targetDir,
             width = First@CurrentValue[EvaluationNotebook[],"WindowSize"],
             height = Last@CurrentValue[EvaluationNotebook[],"WindowSize"]
         },
@@ -56,48 +69,51 @@ kernel[targetFolder_] :=
             Row@{
                 PopupMenu[Dynamic[fun],{"extract","search","download","generate BibTeX"},ImageSize->Small],
                 " from ",
-                PopupMenu[Dynamic[tag],{"string","path"},ImageSize->Small]
+                PopupMenu[Dynamic[tag],tagList,ImageSize->Small]
             },
             "",
-            "Downloads path:",
-            Sequence@@targetUnit,
+            "Downloads directory:",
+            InputField[
+                Dynamic[target],
+                String,
+                FieldHint->"Enter the downloads directory.",
+                FieldSize->{Dynamic[width]/20.,1}
+            ],
             "",
             "Input string/path:",
-            Sequence@@inputUnit
+            InputField[
+                Dynamic[string],
+                String,
+                FieldHint->"Enter a string or a PDF file/directory path.",
+                FieldSize->{Dynamic[width]/20.,{Dynamic[height]/200.,Infinity}}
+            ],
+            "",
+            "Input image:",
+            InputField[
+                Dynamic[image],
+                Expression,
+                FieldHint->"Copy an image here.",
+                FieldSize->{Dynamic[width]/20.,{Dynamic[height]/200.,Infinity}}
+            ]
         },
         Switch[fun,
             "extract",
-                extractID[tag][string],
+                extractID[tag]@selectInputByTag[string,image],
             "search",
-                searchByID[tag][string],
+                searchByID[tag]@selectInputByTag[string,image],
             "download",
-                downloadByID[tag,target][string],
+                downloadByID[tag,target]@selectInputByTag[string,image],
             "generate BibTeX",
-                generateBibTeXByID[tag,target][string]
+                generateBibTeXByID[tag,target]@selectInputByTag[string,image]
         ]
     ];
 
 
-(* ::Subsection:: *)
-(*Helper*)
+selectInputByTag["string"|"path"][string_,expr_] :=
+    string;
 
-
-targetUnit =
-    Hold@InputField[
-        Dynamic[target],
-        String,
-        FieldHint->"Enter the downloads path.",
-        FieldSize->{Dynamic[width]/17.,1}
-    ];
-
-
-inputUnit =
-    Hold@InputField[
-        Dynamic[string],
-        String,
-        FieldHint->"Enter a string or a PDF file/folder path.",
-        FieldSize->{Dynamic[width]/17.,{Dynamic[height]/100.,Infinity}}
-    ];
+selectInputByTag["image"][string_,expr_] =
+    expr;
 
 
 (* ::Subsection::Closed:: *)

@@ -17,58 +17,51 @@ Needs["Yurie`BlueArXiv`Common`"];
 
 
 extractTitleFromPDF::usage =
-    "extract title from PDF file/folder path.";
+    "extract title from PDF file/directory path.";
 
 
-extractTitleFromPathAsItemList;
+extractTitleDataFromPath;
 
 
 (* ::Section:: *)
 (*Private*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Begin*)
 
 
 Begin["`Private`"];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Option*)
 
 
-getTitleFromPDFAsItemList//Options = {
-    "hideDirectory"->True,
-    "titleExtractMethod"->"sortYAndFontSize",
+getTitleDataFromPDF//Options = {
+    "HideDirectory"->True,
+    "TitleExtractMethod"->"SortYAndFontSize",
     "YResolution"->25
 };
 
-extractTitleFromPathAsItemList//Options =
-    Options@getTitleFromPDFAsItemList;
+extractTitleDataFromPath//Options =
+    Options@getTitleDataFromPDF;
 
 extractTitleFromPDF//Options = {
-    "clickToCopy"->True,
-    Splice@Options@extractTitleFromPathAsItemList
+    "ClickToCopy"->True,
+    Splice@Options@extractTitleDataFromPath
 };
 
 
-(* ::Subsection::Closed:: *)
-(*Message*)
-
-
-extractTitleFromPDF::pdffailimport =
-    "the PDF file fails to import: \n``";
-
-
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Main*)
 
 
-extractTitleFromPDF[opts:OptionsPattern[]][pathOrPathList_] :=
+extractTitleFromPDF[opts:OptionsPattern[]][path_] :=
     Module[ {fopts},
-        fopts = FilterRules[{opts,Options[extractTitleFromPDF]},Options[extractTitleFromPathAsItemList]];
-        pathOrPathList//extractTitleFromPathAsItemList[fopts]//ifAddButton[OptionValue["clickToCopy"],"title"]//Dataset
+        fopts =
+            FilterRules[{opts,Options[extractTitleFromPDF]},Options[extractTitleDataFromPath]];
+        path//extractTitleDataFromPath[fopts]//ifAddButton[OptionValue["ClickToCopy"],"Title"]//Dataset
     ];
 
 
@@ -76,29 +69,27 @@ extractTitleFromPDF[opts:OptionsPattern[]][pathOrPathList_] :=
 (*Helper*)
 
 
-extractTitleFromPathAsItemList[opts:OptionsPattern[]][pathOrPathList_] :=
-    pathOrPathList//getPDFFromPathAsList//getTitleFromPDFAsItemList[opts]//DeleteDuplicates//Query[SortBy[#file&]];
+extractTitleDataFromPath[opts:OptionsPattern[]][path_] :=
+    path//getPDFListFromPath//Map[getTitleDataFromPDF[opts]]//Query[SortBy[#FileName&]];
 
 
-getTitleFromPDFAsItemList[opts:OptionsPattern[]][file_] :=
-    Module[ {title,itemList},
-        title = file//recognizeTitleFromPDFBy[OptionValue["titleExtractMethod"],OptionValue["YResolution"]]//regulateTitle;
-        itemList = {<|"title"->title,"file"->file|>};
-        If[ OptionValue["hideDirectory"],
-            itemList//Query[All,<|#,"file"->hideDirectory[#file]|>&],
-            itemList
+getTitleDataFromPDF[opts:OptionsPattern[]][file_] :=
+    Module[ {title},
+        title =
+            file//recognizeTitleFromPDFBy[OptionValue["TitleExtractMethod"],OptionValue["YResolution"]]//regulateTitle;
+        If[ OptionValue["HideDirectory"],
+            <|"Title"->title,"FileName"->hideDirectory[file]|>,
+            (*Else*)
+            <|"Title"->title,"FileName"->{file}|>
         ]
     ];
 
-getTitleFromPDFAsItemList[opts:OptionsPattern[]][fileList_List] :=
-    fileList//Map[getTitleFromPDFAsItemList[opts]]//Flatten;
-
 
 (*search grouped texts with larger Y coordinate and fontsize.*)
-recognizeTitleFromPDFBy["sortYAndFontSize",yresolution_][file_] :=
+recognizeTitleFromPDFBy["SortYAndFontSize",yresolution_][file_] :=
     Module[ {textData,counter,resultTextData,searchFirstNTexts},
         textData =
-            file//importFirstPageAsTextList//regulateTextList[yresolution];
+            file//tryImport[{Text[""]},{"PagePositionedText",1}]//regulateTextList[yresolution];
         searchFirstNTexts[data_List,n_] :=
             Intersection[
                 data//Query[ReverseSortBy[#Y&]]//Query[1;;n],
@@ -116,10 +107,10 @@ recognizeTitleFromPDFBy["sortYAndFontSize",yresolution_][file_] :=
         resultTextData//Query[MaximalBy[StringLength[#string]&]]//Query[1,#string&]
     ];
 
-recognizeTitleFromPDFBy["sumYAndFontSize",yresolution_][file_] :=
+recognizeTitleFromPDFBy["SumYAndFontSize",yresolution_][file_] :=
     Module[ {textData,maxY,maxFontSize,resultTextData},
         textData =
-            file//importFirstPageAsTextList//regulateTextList[yresolution];
+            file//tryImport[{Text[""]},{"PagePositionedText",1}]//regulateTextList[yresolution];
         maxY =
             textData//Query[All,#Y&]//Max;
         maxFontSize =
@@ -132,40 +123,31 @@ recognizeTitleFromPDFBy["sumYAndFontSize",yresolution_][file_] :=
 
 
 regulateTextList[yresolution_][text_Text] :=
-    text/.Text[Style[string_String,_,styleOptions___Rule],coords_List,offset_List]:>
-        KeyMap[ToString]@<|
-            "string"->string,
-            FilterRules[{styleOptions},{FontSize}],
-            "X"->coords[[1]],
-            "Y"->Round[coords[[2]],yresolution],
-            "offset"->offset
-        |>;
+    text//ReplaceAll[
+        Text[Style[string_String,_,styleOptions___Rule],coords_List,offset_List]:>
+            KeyMap[ToString]@<|
+                "string"->string,
+                FilterRules[{styleOptions},{FontSize}],
+                "X"->coords[[1]],
+                "Y"->Round[coords[[2]],yresolution],
+                "offset"->offset
+            |>
+    ];
 
 regulateTextList[yresolution_][textList_List] :=
     Module[ {textData},
-        textData = regulateTextList[yresolution]/@textList;
-        GatherBy[textData,#Y&]//Map[SortBy[#X&]]//Map[mergeByKey[{"string"->StringJoin,"X"->Min},First]]
+        textData =
+            regulateTextList[yresolution]/@textList;
+        GatherBy[textData,#Y&]//Map[SortBy[#X&]]//Map[mergeDataByKey[{"string"->StringJoin,"X"->Min},First]]
     ];
 
 
 hideDirectory[file_] :=
-    First@getFileNameByExtension["pdf"][file];
+    getFileNameByExtension["pdf"][file];
 
 
-getPDFFromPathAsList[pathOrPathList_] :=
-    getFilePathByExtension["pdf"][pathOrPathList];
-
-
-importFirstPageAsTextList[file_] :=
-    Quiet[
-        Check[
-            Import[file,{"PagePositionedText",1}],
-            Message[extractTitleFromPDF::pdffailimport,file];
-            {Text[""]}
-        ],
-        All,
-        {extractTitleFromPDF::pdffailimport}
-    ];
+getPDFListFromPath[path_] :=
+    getFilePathByExtension["pdf"][path];
 
 
 regulateTitle//Attributes =
@@ -184,6 +166,7 @@ regulateTitle[string_String] :=
 toLowerCase[string_] :=
     If[ Not@LowerCaseQ[string],
         ToLowerCase[string],
+        (*Else*)
         string
     ];
 
@@ -193,76 +176,12 @@ capitalize[string_String] :=
     If[ DeleteStopwords[#]==#&[string],
         (*deal with hyphenated names.*)
         StringSplit[string,"-"]//Capitalize//StringRiffle[#,"-"]&,
+        (*Else*)
         string
     ];
 
 
-(* ::Subsubsection:: *)
-(*mergeByKey*)
-
-
-mergeByKey[ruleList:{___Rule},default:_:Identity][assocList:{___Association}] :=
-    mergeByKeyKernel[assocList,ruleList,default];
-
-mergeByKey[assocList:{___Association},ruleList:{___Rule},default:_:Identity] :=
-    mergeByKeyKernel[assocList,ruleList,default];
-
-
-mergeByKeyKernel[{<||>...},_,_] :=
-    <||>;
-
-mergeByKeyKernel[assocList_,{},Identity] :=
-    (*in this case queryRuleList=={}, and Query[{}][...] will unexpectedly return an empty association.*)
-    getTransposedAssocListAndKeyList[assocList,{}]//First;
-
-mergeByKeyKernel[assocList_,ruleList_,default_] :=
-    Module[ {keyList,dataMerged,queryRuleList},
-        {dataMerged,keyList} =
-            getTransposedAssocListAndKeyList[assocList,ruleList];
-        queryRuleList =
-            prepareQueryRuleList[ruleList,keyList,default];
-        Query[queryRuleList]@dataMerged
-    ];
-
-
-getTransposedAssocListAndKeyList[assocList_,ruleList_] :=
-    Module[ {keyList,keyListList,dataPadded,dataMerged,missing},
-        keyListList =
-            Keys[assocList];
-        (*pad the list of associations by the placeholder missing if necessary.*)
-        If[ SameQ@@keyListList,
-            keyList =
-                First@keyListList;
-            dataMerged =
-                AssociationThread[
-                    keyList,
-                    Transpose@Values[assocList]
-                ],
-            (*Else*)
-            dataPadded =
-                KeyUnion[assocList,missing&];
-            keyList =
-                Keys@First@dataPadded;
-            dataMerged =
-                AssociationThread[
-                    keyList,
-                    DeleteCases[Transpose@Values[dataPadded],missing,{2}]
-                ];
-        ];
-        {dataMerged,Key/@keyList}
-    ];
-
-
-prepareQueryRuleList[ruleList_,keyList_,default_] :=
-    DeleteCases[
-        Thread[
-            keyList->Lookup[ruleList,keyList,default]
-        ],
-        _->Identity
-    ];
-
-
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*End*)
 
 
