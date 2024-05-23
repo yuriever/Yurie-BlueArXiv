@@ -21,10 +21,10 @@ Needs["Yurie`BlueArXiv`searchByID`"];
 
 
 downloadByID::usage =
-    "download by arXiv IDs extracted from string or PDF file/folder path.";
+    "download by arXiv IDs extracted from string, image or PDF file/directory path.";
 
 
-downloadByIDAsItemList;
+downloadByIDAsPaperData;
 
 
 (* ::Section:: *)
@@ -42,14 +42,14 @@ Begin["`Private`"];
 (*Option*)
 
 
-downloadByIDAsItemList//Options = {
-    "hideFileObject"->False,
-    Splice@Options@searchByIDAsItemList
+downloadByIDAsPaperData//Options = {
+    "HideFile"->False,
+    Splice@Options@searchByIDAsPaperData
 };
 
 downloadByID//Options = {
-    "clickToCopy"->True,
-    Splice@Options@downloadByIDAsItemList
+    "ClickToCopy"->True,
+    Splice@Options@downloadByIDAsPaperData
 };
 
 
@@ -58,13 +58,16 @@ downloadByID//Options = {
 
 
 downloadByID[
-    tag:"string"|"path":"string",
-    HoldPattern[targetFolder:(_?DirectoryQ):$defaultDownloadDir],
+    tag:$tagPattern:"string",
+    HoldPattern[targetDir:(_?DirectoryQ):$defaultDownloadDir],
     opts:OptionsPattern[]
-][arg_] :=
-    Module[ {fopts},
-        fopts = FilterRules[{opts,Options[downloadByID]},Options[downloadByIDAsItemList]];
-        downloadByIDAsItemList[tag,targetFolder,fopts][arg]//ifAddButton[OptionValue["clickToCopy"],"ID","item","URL"]//Dataset
+][input_] :=
+    Module[ {fopts,paperData},
+        fopts =
+            FilterRules[{opts,Options[downloadByID]},Options[downloadByIDAsPaperData]];
+        paperData =
+            downloadByIDAsPaperData[tag,targetDir,fopts][input];
+        paperData//ifAddButton[OptionValue["ClickToCopy"],"ID","Paper","URL"]//Dataset
     ];
 
 
@@ -72,31 +75,36 @@ downloadByID[
 (*Helper*)
 
 
-downloadByIDAsItemList[tag_,targetFolder_,opts:OptionsPattern[]][arg_] :=
-    Module[ {idDataList,fopts},
-        fopts = FilterRules[{opts,Options[downloadByIDAsItemList]},Options[searchByIDAsItemList]];
-        idDataList = searchByIDAsItemList[tag,fopts][arg];
+downloadByIDAsPaperData[tag_,targetDir_,opts:OptionsPattern[]][input_] :=
+    Module[ {paperData,fopts},
+        fopts =
+            FilterRules[{opts,Options[downloadByIDAsPaperData]},Options[searchByIDAsPaperData]];
+        paperData =
+            searchByIDAsPaperData[tag,fopts][input];
         (*download to the target path and return file objects*)
-        idDataList//Query[All,<|#,"fileObject"->downloadPDFFromURLAsFileObject[targetFolder,#URL,#item]|>&]//
-        	ifHideFileObject[OptionValue["hideFileObject"]]
+        paperData//downloadFromPaperDataAsFileObject[targetDir]//ifHideFile[OptionValue["HideFile"]]
     ];
 
 
-downloadPDFFromURLAsFileObject[_,_,Missing[_]] :=
+downloadFromPaperDataAsFileObject[targetDir_][paperData_] :=
+    paperData//Query[All,<|#,"File"->downloadByURL[targetDir,#URL,#Paper]|>&];
+
+
+ifHideFile[True][paperData_] :=
+    paperData//KeyDrop["File"];
+
+ifHideFile[False][paperData_] :=
+    paperData;
+
+
+downloadByURL[_,_,Missing[_]] :=
     Missing["Failed"];
 
-downloadPDFFromURLAsFileObject[targetFolder_,url_,item_String] :=
-    URLDownload[url,FileNameJoin@{targetFolder,item<>".pdf"}];
+downloadByURL[targetDir_,url_,paperName_String] :=
+    URLDownload[url,FileNameJoin@{targetDir,paperName<>".pdf"}];
 
-downloadPDFFromURLAsFileObject[targetFolder_,url_,item_] :=
-    URLDownload[url,FileNameJoin@{targetFolder,ToString[item]<>".pdf"}];
-
-
-ifHideFileObject[True][idDataList_] :=
-    idDataList//KeyDrop["fileObject"];
-
-ifHideFileObject[False][idDataList_] :=
-    idDataList;
+downloadByURL[targetDir_,url_,paperName_] :=
+    URLDownload[url,FileNameJoin@{targetDir,ToString[paperName]<>".pdf"}];
 
 
 (* ::Subsection:: *)
