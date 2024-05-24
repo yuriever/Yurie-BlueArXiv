@@ -92,7 +92,7 @@ arXivInterfaceKernel[targetDir:$pathPattern] :=
             InputField[
                 Dynamic[image],
                 Expression,
-                FieldHint->"Copy an image here.",
+                FieldHint->"Copy and paste an image here.",
                 FieldSize->{Dynamic[width]/20.,{Dynamic[height]/200.,Infinity}}
             ]
         },
