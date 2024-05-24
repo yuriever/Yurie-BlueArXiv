@@ -42,7 +42,7 @@ VerificationTest[
 VerificationTest[
 	devp`getPaperDataFromIDData[idData]
 	,
-	{Association["ID" -> "0000.00001", "Paper" -> Missing["Failed"], "URL" -> Missing["Failed"]], Association["ID" -> "1207.7214", "Paper" -> "1207.7214v2 Observation of a new particle in the search for the Standard Model Higgs boson with the ATLAS detector at the LHC, The ATLAS Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf"], Association["ID" -> "1706.03762", "Paper" -> "1706.03762v7 Attention Is All You Need, Ashish Vaswani", "URL" -> "http://arxiv.org/pdf/1706.03762v7.pdf"], Association["ID" -> "hep-th/9802150", "Paper" -> "9802150v2 Anti De Sitter Space And Holography, Edward Witten", "URL" -> "http://arxiv.org/pdf/hep-th/9802150v2.pdf"]}
+	{Association["ID" -> "0000.00001", "Paper" -> Missing["Failed"], "URL" -> Missing["IDNotExist"]], Association["ID" -> "1207.7214", "Paper" -> "1207.7214v2 Observation of a new particle in the search for the Standard Model Higgs boson with the ATLAS detector at the LHC, The ATLAS Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf"], Association["ID" -> "1706.03762", "Paper" -> "1706.03762v7 Attention Is All You Need, Ashish Vaswani", "URL" -> "http://arxiv.org/pdf/1706.03762v7.pdf"], Association["ID" -> "hep-th/9802150", "Paper" -> "9802150v2 Anti De Sitter Space And Holography, Edward Witten", "URL" -> "http://arxiv.org/pdf/hep-th/9802150v2.pdf"]}
 	,
 	TestID->"4-searchByID.nb"
 ]
@@ -67,7 +67,7 @@ VerificationTest[
 VerificationTest[
 	devp`getURLListFromPaperData[rawPaperData]
 	,
-	{Missing["Failed"], "http://arxiv.org/pdf/1207.7214v2.pdf", "http://arxiv.org/pdf/1706.03762v7.pdf", "http://arxiv.org/pdf/hep-th/9802150v2.pdf"}
+	{Missing["IDNotExist"], "http://arxiv.org/pdf/1207.7214v2.pdf", "http://arxiv.org/pdf/1706.03762v7.pdf", "http://arxiv.org/pdf/hep-th/9802150v2.pdf"}
 	,
 	TestID->"7-searchByID.nb"
 ]
@@ -75,7 +75,7 @@ VerificationTest[
 VerificationTest[
 	devp`getURL[rawPaperData[[1]]]
 	,
-	Missing["Failed"]
+	Missing["IDNotExist"]
 	,
 	TestID->"8-searchByID.nb"
 ]
@@ -91,7 +91,7 @@ VerificationTest[
 VerificationTest[
 	Block[{Yurie`BlueArXiv`extractID`Private`showHighlightedImage = Nothing}, dev`searchByIDAsPaperData["image"][img]]
 	,
-	{Association["ID" -> "0000.00001", "Paper" -> Missing["Failed"], "URL" -> Missing["Failed"]], Association["ID" -> "1207.7214", "Paper" -> "1207.7214v2 Observation of a new particle in the search for the Standard Model Higgs boson with the ATLAS detector at the LHC, The ATLAS Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf"], Association["ID" -> "1706.03762", "Paper" -> "1706.03762v7 Attention Is All You Need, Ashish Vaswani", "URL" -> "http://arxiv.org/pdf/1706.03762v7.pdf"], Association["ID" -> "hep-th/9802150", "Paper" -> "9802150v2 Anti De Sitter Space And Holography, Edward Witten", "URL" -> "http://arxiv.org/pdf/hep-th/9802150v2.pdf"]}
+	{Association["ID" -> "0000.00001", "Paper" -> Missing["Failed"], "URL" -> Missing["IDNotExist"]], Association["ID" -> "1207.7214", "Paper" -> "1207.7214v2 Observation of a new particle in the search for the Standard Model Higgs boson with the ATLAS detector at the LHC, The ATLAS Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf"], Association["ID" -> "1706.03762", "Paper" -> "1706.03762v7 Attention Is All You Need, Ashish Vaswani", "URL" -> "http://arxiv.org/pdf/1706.03762v7.pdf"], Association["ID" -> "hep-th/9802150", "Paper" -> "9802150v2 Anti De Sitter Space And Holography, Edward Witten", "URL" -> "http://arxiv.org/pdf/hep-th/9802150v2.pdf"]}
 	,
 	TestID->"10-searchByID.nb"
 ]
@@ -107,7 +107,7 @@ VerificationTest[
 VerificationTest[
 	Normal[searchByID["path", "ClickToCopy" -> False][dir]]
 	,
-	{Association["ID" -> "0000.00001", "Paper" -> Missing["Failed"], "URL" -> Missing["Failed"], "FileName" -> {"wrongID-0000.00001.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1207.7214", "Paper" -> "1207.7214v2 Observation of a new particle in the search for the Standard Model Higgs boson with the ATLAS detector at the LHC, The ATLAS Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf", "FileName" -> {"newID-1207.7214.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1706.03762", "Paper" -> "1706.03762v7 Attention Is All You Need, Ashish Vaswani", "URL" -> "http://arxiv.org/pdf/1706.03762v7.pdf", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "hep-th/9802150", "Paper" -> "9802150v2 Anti De Sitter Space And Holography, Edward Witten", "URL" -> "http://arxiv.org/pdf/hep-th/9802150v2.pdf", "FileName" -> {"oldID-9802150.pdf", "oldID-9802150.pdf"}, "IDLocation" -> {"FirstPageExtra", "FirstPageExtra"}], Association["ID" -> "NotFound", "Paper" -> Missing["Failed"], "URL" -> Missing["Failed"], "FileName" -> {"noID.pdf"}, "IDLocation" -> {"None"}]}
+	{Association["ID" -> "0000.00001", "Paper" -> Missing["Failed"], "URL" -> Missing["IDNotExist"], "FileName" -> {"wrongID-0000.00001.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1207.7214", "Paper" -> "1207.7214v2 Observation of a new particle in the search for the Standard Model Higgs boson with the ATLAS detector at the LHC, The ATLAS Collaboration", "URL" -> "http://arxiv.org/pdf/1207.7214v2.pdf", "FileName" -> {"newID-1207.7214.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1706.03762", "Paper" -> "1706.03762v7 Attention Is All You Need, Ashish Vaswani", "URL" -> "http://arxiv.org/pdf/1706.03762v7.pdf", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "hep-th/9802150", "Paper" -> "9802150v2 Anti De Sitter Space And Holography, Edward Witten", "URL" -> "http://arxiv.org/pdf/hep-th/9802150v2.pdf", "FileName" -> {"oldID-9802150.pdf", "oldID-9802150.pdf"}, "IDLocation" -> {"FirstPageExtra", "FirstPageExtra"}], Association["ID" -> "NotFound", "Paper" -> Missing["IDNotExist"], "URL" -> Missing["IDNotExist"], "FileName" -> {"noID.pdf"}, "IDLocation" -> {"None"}]}
 	,
 	TestID->"12-searchByID.nb"
 ]
