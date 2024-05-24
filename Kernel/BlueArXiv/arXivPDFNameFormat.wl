@@ -41,8 +41,8 @@ arXivPDFNameFormat//Attributes =
     {HoldAll};
 
 arXivPDFNameFormat[
-    HoldPattern[format_:"ID"<>" "<>"Title"<>", "<>"FirstAuthor"],
-    HoldPattern[regulator_Symbol:regulateFileName]
+    HoldPattern[format:(_String|_StringExpression|_StringJoin):"ID"<>" "<>"Title"<>", "<>"FirstAuthor"],
+    HoldPattern[regulator:(_Symbol|_Function):regulateFileName]
 ] :=
     (
         $arXivPDFNameFormatter =
@@ -59,7 +59,7 @@ arXivPDFNameFormat[
 formatter//Attributes =
     {HoldAll};
 
-formatter[format_] :=
+formatter[format:_String|_StringExpression|_StringJoin] :=
     Hold[format]//ReplaceAll[keywordToFunction]//ReplaceAll[{Hold[expr_]:>Hold[(expr)&]}]//ReleaseHold;
 
 

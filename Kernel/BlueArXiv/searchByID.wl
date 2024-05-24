@@ -68,9 +68,9 @@ searchByID[tag:$tagPattern:"string",opts:OptionsPattern[]][input_] :=
         fopts =
             FilterRules[{opts,Options[searchByID]},Options[searchByIDAsPaperData]];
         paperData =
-            searchByIDAsPaperData[tag,fopts][input];
+            input//throwWrongTypeInput[tag]//searchByIDAsPaperData[tag,fopts];
         paperData//ifAddButton[OptionValue["ClickToCopy"],"ID","Paper","URL"]//Dataset
-    ];
+    ]//Catch;
 
 
 (* ::Subsection:: *)
@@ -81,7 +81,7 @@ searchByIDAsPaperData[tag:$tagPattern,opts:OptionsPattern[]][input_] :=
     input//extractIDData[tag,opts]//getPaperDataFromIDData;
 
 
-getPaperDataFromIDData[idData_] :=
+getPaperDataFromIDData[idData_List] :=
     Module[ {idList,idValidList,rawPaperData,newPaperData,paperNameList,urlList},
         idList =
             idData//Query[All,#ID&];
@@ -102,7 +102,7 @@ getPaperDataFromIDData[idData_] :=
             newPaperData =
                 Join[
                     newPaperData,
-                    {<|"ID"->"NotFound","Paper"->Missing["Failed"],"URL"->Missing["Failed"]|>}
+                    {<|"ID"->"NotFound","Paper"->Missing["IDNotExist"],"URL"->Missing["IDNotExist"]|>}
                 ]
         ];
         JoinAcross[
@@ -113,7 +113,7 @@ getPaperDataFromIDData[idData_] :=
     ];
 
 
-getRawPaperDataFromIDList[idList_] :=
+getRawPaperDataFromIDList[idList_List] :=
     If[ idList==={},
         (*if there is no valid ID, return empty list.*)
         {},
@@ -132,17 +132,17 @@ getRawPaperDataFromIDList[idList_] :=
     ];
 
 
-getPaperNameListFromPaperData[paperData_] :=
+getPaperNameListFromPaperData[paperData_List] :=
     paperData//Query[All,$arXivPDFNameFormatter,FailureAction->"Replace"]//
     	Map[Switch[#,_Missing,#,_,$arXivPDFNameRegulator[#]]&];
 
 
-getURLListFromPaperData[paperData_] :=
+getURLListFromPaperData[paperData_List] :=
     paperData//Map[getURL];
 
 
 getURL[assoc_Association]/;MissingQ[assoc["ID"]] :=
-    Missing["Failed"];
+    Missing["IDNotExist"];
 
 getURL[assoc_Association] :=
     assoc["Link"]//KeyUnion//

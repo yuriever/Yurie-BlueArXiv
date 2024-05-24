@@ -70,23 +70,23 @@ generateBibTeXByID[
 ][input_] :=
     Module[ {fopts,bibData},
         fopts =
-        	FilterRules[{opts,Options[generateBibTeXByID]},Options[generateBibTeXByIDAsBibData]];
-        bibData=
-        	generateBibTeXByIDAsBibData[tag,targetDir,bibName,fopts][input];
-        bibData//ifAddButton[OptionValue["ClickToCopy"],"ID","BibKey","BibTeX"]//
-	    	Dataset[#,HiddenItems->{"BibTeX"->True}]&
-    ];
+            FilterRules[{opts,Options[generateBibTeXByID]},Options[generateBibTeXByIDAsBibData]];
+        bibData =
+            input//throwWrongTypeInput[tag]//generateBibTeXByIDAsBibData[tag,targetDir,bibName,fopts];
+        (*Dataset[#,HiddenItems->{"BibTeX"->True}]&*)
+        bibData//ifAddButton[OptionValue["ClickToCopy"],"ID","BibKey","BibTeX"]//Dataset
+    ]//Catch;
 
 
 (* ::Subsection:: *)
 (*Helper*)
 
 
-generateBibTeXByIDAsBibData[tag_,targetDir_,bibName_String,opts:OptionsPattern[]][input_] :=
+generateBibTeXByIDAsBibData[tag:$tagPattern,targetDir:$pathPattern,bibName_String,opts:OptionsPattern[]][input_] :=
     input//extractIDData[tag,opts]//getBibDataFromIDData[targetDir,bibName];
 
 
-getBibDataFromIDData[targetDir_,bibName_][idData_] :=
+getBibDataFromIDData[targetDir:$pathPattern,bibName_String][idData_List] :=
     Module[ {idList,idValidList,bibData},
         idList =
             idData//Query[All,#ID&];
@@ -98,7 +98,7 @@ getBibDataFromIDData[targetDir_,bibName_][idData_] :=
             bibData =
                 Join[
                     bibData,
-                    {<|"ID"->"NotFound","BibTeX"->Missing["Failed"],"BibKey"->Missing["Failed"]|>}
+                    {<|"ID"->"NotFound","BibTeX"->Missing["IDNotExist"],"BibKey"->Missing["IDNotExist"]|>}
                 ]
         ];
         bibData =
@@ -112,7 +112,7 @@ getBibDataFromIDData[targetDir_,bibName_][idData_] :=
     ];
 
 
-getRawBibDataFromIDList[idList_] :=
+getRawBibDataFromIDList[idList_List] :=
     If[ idList==={},
         (*if there is no valid ID, return empty list.*)
         {},
@@ -131,7 +131,7 @@ getRawBibDataFromIDList[idList_] :=
     ];
 
 
-requestBib[id_]:=
+requestBib[id_String] :=
     Enclose[
         ConfirmMatch[
             URLExecute@HTTPRequest["https://inspirehep.net/api/arxiv/"<>id<>"?format=bibtex"],
@@ -142,7 +142,7 @@ requestBib[id_]:=
     ];
 
 
-addBibKeyToBibData[bibData_] :=
+addBibKeyToBibData[bibData_List] :=
     bibData//Query[All,<|"BibKey"->getBibKey[#BibTeX],#|>&];
 
 
@@ -150,10 +150,10 @@ getBibKey[bibtex_String] :=
     First@StringCases[bibtex,StartOfString~~Shortest[__]~~"{"~~Shortest[key__]~~",\n"~~__:>key]; 
 
 getBibKey[_] :=
-    Missing["Failed"];
+    Missing["BibKeyNotFound"];
 
 
-exportBib[targetDir_,bibName_,bibData_] :=
+exportBib[targetDir:$pathPattern,bibName_String,bibData_List] :=
     Export[
         FileNameJoin@{targetDir,bibName},
         bibData//Query[Select[Head[#BibTeX]===String&],#BibTeX&]//Riffle[#,""]&,

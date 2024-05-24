@@ -53,12 +53,12 @@ arXivInterface[HoldPattern[targetDir:(_?DirectoryQ):$defaultDownloadDir]] :=
 (*Helper*)
 
 
-arXivInterfaceKernel[targetDir_] :=
+arXivInterfaceKernel[targetDir:$pathPattern] :=
     Interpretation[
         {
             fun = "download",
             tag = "string",
-            string = "",
+            str = "",
             image = Null,
             target = targetDir,
             width = First@CurrentValue[EvaluationNotebook[],"WindowSize"],
@@ -82,7 +82,7 @@ arXivInterfaceKernel[targetDir_] :=
             "",
             "Input string/path:",
             InputField[
-                Dynamic[string],
+                Dynamic[str],
                 String,
                 FieldHint->"Enter a string or a PDF file/directory path.",
                 FieldSize->{Dynamic[width]/20.,{Dynamic[height]/200.,Infinity}}
@@ -98,22 +98,22 @@ arXivInterfaceKernel[targetDir_] :=
         },
         Switch[fun,
             "extract",
-                extractID[tag]@selectInputByTag[string,image],
+                extractID[tag]@selectInputByTag[tag][str,image],
             "search",
-                searchByID[tag]@selectInputByTag[string,image],
+                searchByID[tag]@selectInputByTag[tag][str,image],
             "download",
-                downloadByID[tag,target]@selectInputByTag[string,image],
+                downloadByID[tag,target]@selectInputByTag[tag][str,image],
             "generate BibTeX",
-                generateBibTeXByID[tag,target]@selectInputByTag[string,image]
+                generateBibTeXByID[tag,target]@selectInputByTag[tag][str,image]
         ]
     ];
 
 
-selectInputByTag["string"|"path"][string_,expr_] :=
-    string;
+selectInputByTag["string"|"path"][str_String,image:$imagePattern] :=
+    str;
 
-selectInputByTag["image"][string_,expr_] =
-    expr;
+selectInputByTag["image"][str_String,image:$imagePattern] =
+    image;
 
 
 (* ::Subsection::Closed:: *)

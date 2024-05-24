@@ -77,7 +77,7 @@ extractCiteKey[tag:$tagPattern:"string",opts:OptionsPattern[]][input_] :=
 (*Helper*)
 
 
-extractCiteKeyData[tag_,opts:OptionsPattern[]][input_] :=
+extractCiteKeyData[tag:$tagPattern,opts:OptionsPattern[]][input_] :=
     Module[ {idData},
         idData =
             Switch[tag,
@@ -96,13 +96,13 @@ extractCiteKeyData[tag_,opts:OptionsPattern[]][input_] :=
 (*String*)
 
 
-getCiteKeyDataFromString[string_] :=
-    string//getCiteKeyListFromString//Map[<|"CiteKey"->#|>&];
+getCiteKeyDataFromString[str_String] :=
+    str//getCiteKeyListFromString//Map[<|"CiteKey"->#|>&];
 
 
-getCiteKeyListFromString[string_] :=
+getCiteKeyListFromString[str_String] :=
     (*extract "\cite{...}"*)
-    string//StringCases[$citeKeyPattern:>"$2"]//Flatten//
+    str//StringCases[$citeKeyPattern:>"$2"]//Flatten//
 		(*extract multiple citekeys, then delete duplicated and empty keys.*)
 		StringSplit[#,","]&//Flatten//DeleteDuplicates//DeleteCases[""];
 
@@ -111,20 +111,20 @@ getCiteKeyListFromString[string_] :=
 (*Path*)
 
 
-getCiteKeyDataFromPath[opts:OptionsPattern[]][path_] :=
+getCiteKeyDataFromPath[opts:OptionsPattern[]][path:$pathPattern] :=
     path//getTeXListFromPath//Map[getCiteKeyDataFromTeX[opts]]//Flatten;
 
 
-getTeXListFromPath[pathOrPathList_] :=
-    getFilePathByExtension["tex"][pathOrPathList];
+getTeXListFromPath[path:$pathPattern] :=
+    getFilePathByExtension["tex"][path];
 
 
-getCiteKeyDataFromTeX[OptionsPattern[]][file_] :=
+getCiteKeyDataFromTeX[OptionsPattern[]][filePath_String] :=
     Module[ {citeKeyList,citeKeyData},
         citeKeyList =
-            file//tryImport["","Text"]//getCiteKeyListFromString;
+            filePath//tryImport["","Text"]//getCiteKeyListFromString;
         citeKeyData =
-            citeKeyList//Map[<|"CiteKey"->#,"FileName"->{file}|>&];
+            citeKeyList//Map[<|"CiteKey"->#,"FileName"->{filePath}|>&];
         If[ OptionValue["HideDirectory"],
             citeKeyData//Query[All,<|#,"FileName"->hideDirectory[#FileName]|>&],
             citeKeyData
@@ -132,8 +132,8 @@ getCiteKeyDataFromTeX[OptionsPattern[]][file_] :=
     ];
 
 
-hideDirectory[file_] :=
-    file//getFileNameByExtension["tex"];
+hideDirectory[filePathList_List] :=
+    filePathList//getFileNameByExtension["tex"];
 
 
 (* ::Subsection:: *)

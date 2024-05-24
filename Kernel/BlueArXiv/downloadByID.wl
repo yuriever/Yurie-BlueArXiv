@@ -66,16 +66,16 @@ downloadByID[
         fopts =
             FilterRules[{opts,Options[downloadByID]},Options[downloadByIDAsPaperData]];
         paperData =
-            downloadByIDAsPaperData[tag,targetDir,fopts][input];
+            input//throwWrongTypeInput[tag]//downloadByIDAsPaperData[tag,targetDir,fopts];
         paperData//ifAddButton[OptionValue["ClickToCopy"],"ID","Paper","URL"]//Dataset
-    ];
+    ]//Catch;
 
 
 (* ::Subsection:: *)
 (*Helper*)
 
 
-downloadByIDAsPaperData[tag_,targetDir_,opts:OptionsPattern[]][input_] :=
+downloadByIDAsPaperData[tag:$tagPattern,targetDir:$pathPattern,opts:OptionsPattern[]][input_] :=
     Module[ {paperData,fopts},
         fopts =
             FilterRules[{opts,Options[downloadByIDAsPaperData]},Options[searchByIDAsPaperData]];
@@ -86,24 +86,24 @@ downloadByIDAsPaperData[tag_,targetDir_,opts:OptionsPattern[]][input_] :=
     ];
 
 
-downloadFromPaperDataAsFileObject[targetDir_][paperData_] :=
+downloadFromPaperDataAsFileObject[targetDir:$pathPattern][paperData_List] :=
     paperData//Query[All,<|#,"File"->downloadByURL[targetDir,#URL,#Paper]|>&];
 
 
-ifHideFile[True][paperData_] :=
+ifHideFile[True][paperData_List] :=
     paperData//KeyDrop["File"];
 
-ifHideFile[False][paperData_] :=
+ifHideFile[False][paperData_List] :=
     paperData;
 
 
 downloadByURL[_,_,Missing[_]] :=
-    Missing["Failed"];
+    Missing["PaperNotExist"];
 
-downloadByURL[targetDir_,url_,paperName_String] :=
+downloadByURL[targetDir:$pathPattern,url_String,paperName_String] :=
     URLDownload[url,FileNameJoin@{targetDir,paperName<>".pdf"}];
 
-downloadByURL[targetDir_,url_,paperName_] :=
+downloadByURL[targetDir:$pathPattern,url_String,paperName_String] :=
     URLDownload[url,FileNameJoin@{targetDir,ToString[paperName]<>".pdf"}];
 
 
