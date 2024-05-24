@@ -20,6 +20,15 @@ $citeKeyPattern::usage =
 $tagPattern::usage =
     "pattern of supported tags.";
 
+$imagePattern::usage =
+    "pattern of images.";
+
+$pathPattern::usage =
+    "pattern of paths.";
+
+
+throwWrongTypeInput::usage =
+	"check the input type according to the tag.";
 
 regulateFileName::usage =
     "regulate special characters in file name.";
@@ -68,8 +77,30 @@ $tagPattern =
     "string"|"image"|"path";
 
 
+$imagePattern =
+	_Image|Null;
+
+
+$pathPattern=
+	_String|_File;
+
+
 (* ::Subsection:: *)
 (*Main*)
+
+
+throwWrongTypeInput[tag_][input_]:=
+	Which[
+		tag==="string"&&MatchQ[input,_String],
+			input,
+		tag==="image"&&MatchQ[input,$imagePattern],
+			input,
+		tag==="path"&&MatchQ[input,$pathPattern],
+			input,
+		True,
+			Message[General::invencin,input];
+			input//Throw
+	];
 
 
 (* ::Subsubsection::Closed:: *)
@@ -93,7 +124,7 @@ regulateFileName[string_String] :=
 (*getFilePathByExtension*)
 
 
-getFilePathByExtension[extension_][path_] :=
+getFilePathByExtension[extension_][path:_String|_File] :=
     Which[
         DirectoryQ[path],
             FileNames[__~~"."~~extension~~EndOfString,path],
@@ -111,7 +142,7 @@ getFilePathByExtension[extension_][pathList_List] :=
 (*getFileNameByExtension*)
 
 
-getFileNameByExtension[extension_][pathOrPathList_] :=
+getFileNameByExtension[extension_][pathOrPathList:_String|_File|_List] :=
     pathOrPathList//getFilePathByExtension[extension]//Map[FileNameTake];
 
 
@@ -119,28 +150,28 @@ getFileNameByExtension[extension_][pathOrPathList_] :=
 (*ifAddButton*)
 
 
-ifAddButton[True,keys__][list:{___Association}] :=
-    addButton[keys][list];
+ifAddButton[True,keys__][data_List] :=
+    addButton[keys][data];
 
-ifAddButton[False,___][list_] :=
-    list;
+ifAddButton[False,___][data_List] :=
+    data;
 
 
-addButton[key_String][list_] :=
-    list//Query[All,<|#,key->addCopyButtonToString[Slot[key]]|>&]
+addButton[key_String][data_] :=
+    data//Query[All,<|#,key->addCopyButtonToString[Slot[key]]|>&]
 
-addButton["URL"][list_] :=
-    list//Query[All,<|#,"URL"->addHyperlinkToURL[#URL]|>&];
+addButton["URL"][data_] :=
+    data//Query[All,<|#,"URL"->addHyperlinkToURL[#URL]|>&];
 
-addButton[key_,restKeys__][list_] :=
-    list//addButton[key]//addButton[restKeys];
+addButton[key_String,restKeys__String][data_] :=
+    data//addButton[key]//addButton[restKeys];
 
 
 addHyperlinkToURL[value_String] :=
     Hyperlink[value,value,FrameMargins->Small];
 
-addHyperlinkToURL[_Missing] :=
-    Missing["Failed"];
+addHyperlinkToURL[Missing[any_]] :=
+    Missing[any];
 
 
 addCopyButtonToString[value_String] :=
@@ -149,17 +180,17 @@ addCopyButtonToString[value_String] :=
         value
     ];
 
-addCopyButtonToString[_Missing] :=
-    Missing["Failed"];
+addCopyButtonToString[Missing[any_]] :=
+    Missing[any];
 
 
 (* ::Subsubsection::Closed:: *)
 (*tryImport*)
 
 
-tryImport[return_,args___][file_] :=
+tryImport[return_,args___][filePath_String] :=
     Check[
-        Import[file,args],
+        Import[filePath,args],
         (*fail*)
         return
     ];

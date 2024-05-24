@@ -73,16 +73,16 @@ extractID[tag:$tagPattern:"string",opts:OptionsPattern[]][input_] :=
         fopts =
             FilterRules[{opts,Options[extractID]},Options[extractIDData]];
         idData =
-            extractIDData[tag,fopts][input];
+            input//throwWrongTypeInput[tag]//extractIDData[tag,fopts];
         idData//ifAddButton[OptionValue["ClickToCopy"],"ID"]//Dataset
-    ];
+    ]//Catch;
 
 
 (* ::Subsection:: *)
 (*Helper*)
 
 
-extractIDData[tag_,opts:OptionsPattern[]][input_] :=
+extractIDData[tag:$tagPattern,opts:OptionsPattern[]][input_] :=
     Module[ {fopts,idData},
         fopts["image"] =
             FilterRules[{opts,Options[extractIDData]},Options[getIDDataFromImage]];
@@ -103,10 +103,10 @@ extractIDData[tag_,opts:OptionsPattern[]][input_] :=
 
 (*the map from strings, images and files to IDs is many-to-one, hence all other key values except ID should be list.*)
 
-ifMergeDuplicateID[True][list_] :=
+ifMergeDuplicateID[True][list_List] :=
     GatherBy[list,#ID&]//Map[mergeDataByKey[{"ID"->First},Flatten@*Join]]
 
-ifMergeDuplicateID[False][list_] :=
+ifMergeDuplicateID[False][list_List] :=
     list;
 
 
@@ -126,10 +126,13 @@ getIDListFromString[str_String] :=
 (*Image*)
 
 
+getIDDataFromImage[OptionsPattern[]][Null] :=
+    {};
+
 getIDDataFromImage[opts:OptionsPattern[]][img_Image] :=
     Module[ {idData},
         idData =
-            img//getStringListFromImage//
+            img//getStringListFromImage//alignToStringList//
 		        Query[All,<|"ID"->First[getIDListFromString@#[[1]],""],"Position"->{#[[2]]}|>&]//
 		            Query[Select[#ID=!=""&]];
         If[ OptionValue["ShowHighlightedImage"],
@@ -142,20 +145,27 @@ getIDDataFromImage[opts:OptionsPattern[]][img_Image] :=
 
 
 getStringListFromImage[img_Image] :=
-    TextRecognize[img,"Word",{"Text","BoundingBox"}]//alignToStringList;
+    TextRecognize[img,"Word",{"Text","BoundingBox"}];
 
 
-(*if there is only one text recognized, the return value of TextRecognize is not a list of list.*)
-
-alignToStringList[list_] :=
-    If[ Head@First@list===String,
-        {list},
-        (*Else*)
-        list
+alignToStringList[list_List] :=
+    Which[
+        (*if there is no text recognized, return an empty list.*)
+        list==={},
+            {},
+        (*if there is only one text recognized, the returned value of TextRecognize is not a list of list.*)
+        Head@First@list===String,
+            {list},
+        True,
+            list
     ];
 
 
-showHighlightedImage[idData_][img_] :=
+(*if there is no text recognized, do not show the image.*)
+showHighlightedImage[{}][img_Image] :=
+    Null;
+
+showHighlightedImage[idData_List][img_Image] :=
     CellPrint@ExpressionCell[
         HighlightImage[img,{EdgeForm[{Transparent}],idData//Query[All,Tooltip[#Position,#ID]&]}],
         "Output",
@@ -167,37 +177,37 @@ showHighlightedImage[idData_][img_] :=
 (*Path*)
 
 
-getIDDataFromPath[opts:OptionsPattern[]][file_] :=
-    file//getPDFListFromPath//Map[getIDDataFromPDF[opts]]//Flatten;
+getIDDataFromPath[opts:OptionsPattern[]][path:$pathPattern] :=
+    path//getPDFListFromPath//Map[getIDDataFromPDF[opts]]//Flatten;
 
 
-getPDFListFromPath[path_] :=
+getPDFListFromPath[path:$pathPattern] :=
     getFilePathByExtension["pdf"][path];
 
 
-getIDDataFromPDF[OptionsPattern[]][file_] :=
+getIDDataFromPDF[OptionsPattern[]][filePath_String] :=
     Module[ {idData,idNumber,idList},
         If[ OptionValue["TryFileName"]===True,
             idList =
-                getIDListFromString[file];
+                getIDListFromString[filePath];
             idNumber =
                 Length@idList;
             idData =
                 Switch[ idNumber,
                     0,
-                        getIDDataFromPDFFirstPage[file],
+                        getIDDataFromPDFFirstPage[filePath],
                     1,
-                        {<|"ID"->First@idList,"FileName"->{file},"IDLocation"->{"FileName"}|>},
+                        {<|"ID"->First@idList,"FileName"->{filePath},"IDLocation"->{"FileName"}|>},
                     (*edge case: there are multiple IDs in the file name.*)
                     _,
                         MapThread[
                             <|"ID"->#1,"FileName"->#2,"IDLocation"->#3|>&,
-                            {idList,ConstantArray[{file},idNumber],ConstantArray[{"FileNameExtra"},idNumber]}
+                            {idList,ConstantArray[{filePath},idNumber],ConstantArray[{"FileNameExtra"},idNumber]}
                         ]
                 ],
             (*Else*)
             idData =
-                getIDDataFromPDFFirstPage[file]
+                getIDDataFromPDFFirstPage[filePath]
         ];
         If[ OptionValue["HideDirectory"],
             idData//Query[All,<|#,"FileName"->hideDirectory[#FileName]|>&],
@@ -207,29 +217,29 @@ getIDDataFromPDF[OptionsPattern[]][file_] :=
     ];
 
 
-getIDDataFromPDFFirstPage[file_] :=
+getIDDataFromPDFFirstPage[filePath_String] :=
     Module[ {idList,idNumber},
         idList =
-            file//tryImport["",{"Plaintext",1}]//getIDListFromString;
+            filePath//tryImport["",{"Plaintext",1}]//getIDListFromString;
         idNumber =
             Length@idList;
         Switch[ idNumber,
             0,
-                {<|"ID"->"NotFound","FileName"->{file},"IDLocation"->{"None"}|>},
+                {<|"ID"->"NotFound","FileName"->{filePath},"IDLocation"->{"None"}|>},
             1,
-                {<|"ID"->First@idList,"FileName"->{file},"IDLocation"->{"FirstPage"}|>},
+                {<|"ID"->First@idList,"FileName"->{filePath},"IDLocation"->{"FirstPage"}|>},
             (*edge case: there are multiple IDs in the first page.*)
             _,
                 MapThread[
                     <|"ID"->#1,"FileName"->#2,"IDLocation"->#3|>&,
-                    {idList,ConstantArray[{file},idNumber],ConstantArray[{"FirstPageExtra"},idNumber]}
+                    {idList,ConstantArray[{filePath},idNumber],ConstantArray[{"FirstPageExtra"},idNumber]}
                 ]
         ]
     ];
 
 
-hideDirectory[file_] :=
-    getFileNameByExtension["pdf"][file];
+hideDirectory[filePathList_List] :=
+    getFileNameByExtension["pdf"][filePathList];
 
 
 (* ::Subsection:: *)

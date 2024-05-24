@@ -57,11 +57,12 @@ extractTitleFromPDF//Options = {
 (*Main*)
 
 
-extractTitleFromPDF[opts:OptionsPattern[]][path_] :=
+extractTitleFromPDF[opts:OptionsPattern[]][input_] :=
     Module[ {fopts},
         fopts =
             FilterRules[{opts,Options[extractTitleFromPDF]},Options[extractTitleDataFromPath]];
-        path//extractTitleDataFromPath[fopts]//ifAddButton[OptionValue["ClickToCopy"],"Title"]//Dataset
+        input//throwWrongTypeInput["path"]//extractTitleDataFromPath[fopts]//
+        	ifAddButton[OptionValue["ClickToCopy"],"Title"]//Dataset
     ];
 
 
@@ -69,27 +70,27 @@ extractTitleFromPDF[opts:OptionsPattern[]][path_] :=
 (*Helper*)
 
 
-extractTitleDataFromPath[opts:OptionsPattern[]][path_] :=
+extractTitleDataFromPath[opts:OptionsPattern[]][path:_String|_File] :=
     path//getPDFListFromPath//Map[getTitleDataFromPDF[opts]]//Query[SortBy[#FileName&]];
 
 
-getTitleDataFromPDF[opts:OptionsPattern[]][file_] :=
+getTitleDataFromPDF[opts:OptionsPattern[]][filePath_String] :=
     Module[ {title},
         title =
-            file//recognizeTitleFromPDFBy[OptionValue["TitleExtractMethod"],OptionValue["YResolution"]]//regulateTitle;
+            filePath//recognizeTitleFromPDFBy[OptionValue["TitleExtractMethod"],OptionValue["YResolution"]]//regulateTitle;
         If[ OptionValue["HideDirectory"],
-            <|"Title"->title,"FileName"->hideDirectory[file]|>,
+            <|"Title"->title,"FileName"->hideDirectory[filePath]|>,
             (*Else*)
-            <|"Title"->title,"FileName"->{file}|>
+            <|"Title"->title,"FileName"->{filePath}|>
         ]
     ];
 
 
 (*search grouped texts with larger Y coordinate and fontsize.*)
-recognizeTitleFromPDFBy["SortYAndFontSize",yresolution_][file_] :=
+recognizeTitleFromPDFBy["SortYAndFontSize",yresolution_][filePath_String]/;yresolution>0 :=
     Module[ {textData,counter,resultTextData,searchFirstNTexts},
         textData =
-            file//tryImport[{Text[""]},{"PagePositionedText",1}]//regulateTextList[yresolution];
+            filePath//tryImport[{Text[""]},{"PagePositionedText",1}]//regulateTextList[yresolution];
         searchFirstNTexts[data_List,n_] :=
             Intersection[
                 data//Query[ReverseSortBy[#Y&]]//Query[1;;n],
@@ -107,10 +108,10 @@ recognizeTitleFromPDFBy["SortYAndFontSize",yresolution_][file_] :=
         resultTextData//Query[MaximalBy[StringLength[#string]&]]//Query[1,#string&]
     ];
 
-recognizeTitleFromPDFBy["SumYAndFontSize",yresolution_][file_] :=
+recognizeTitleFromPDFBy["SumYAndFontSize",yresolution_][filePath_String]/;yresolution>0 :=
     Module[ {textData,maxY,maxFontSize,resultTextData},
         textData =
-            file//tryImport[{Text[""]},{"PagePositionedText",1}]//regulateTextList[yresolution];
+            filePath//tryImport[{Text[""]},{"PagePositionedText",1}]//regulateTextList[yresolution];
         maxY =
             textData//Query[All,#Y&]//Max;
         maxFontSize =
@@ -142,11 +143,11 @@ regulateTextList[yresolution_][textList_List] :=
     ];
 
 
-hideDirectory[file_] :=
-    getFileNameByExtension["pdf"][file];
+hideDirectory[filePath_String] :=
+    getFileNameByExtension["pdf"][filePath];
 
 
-getPDFListFromPath[path_] :=
+getPDFListFromPath[path:$pathPattern] :=
     getFilePathByExtension["pdf"][path];
 
 
@@ -163,7 +164,7 @@ regulateTitle[string_String] :=
     string//StringSplit//Map[toLowerCase/*capitalize/*regulateFileName]//StringRiffle;
 
 
-toLowerCase[string_] :=
+toLowerCase[string_String] :=
     If[ Not@LowerCaseQ[string],
         ToLowerCase[string],
         (*Else*)
