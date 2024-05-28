@@ -26,6 +26,9 @@ $thisTestDir::usage =
 $thisTestSourceDir::usage =
     "directory of source notebook for unit test.";
 
+$thisCompletionDir::usage =
+    "directory of auto completion data.";
+
 
 (* ::Section:: *)
 (*Private*)
@@ -59,6 +62,9 @@ $thisTestDir =
 
 $thisTestSourceDir =
     $thisPaclet["AssetLocation","TestSource"];
+
+$thisCompletionDir =
+    FileNameJoin@{$thisPaclet["Location"],"AutoCompletionData"};
 
 
 (* ::Subsection::Closed:: *)

@@ -1,80 +1,14 @@
-{
-	"arXivInterface" -> {
-		8
-	},
-    "extractID" -> {
-        {
-            "string",
-            "image",
-            "path"
-        },
-        {
-            "ClickToCopy",
-            "HideDirectory",
-            "MergeDuplicateID",
-            "ShowHighlightedImage",
-            "TryFileName"
-        }
-    },
-    "searchByID" -> {
-        {
-            "string",
-            "image",
-            "path"
-        },
-        {
-            "ClickToCopy",
-            "HideDirectory",
-            "MergeDuplicateID",
-            "ShowHighlightedImage",
-            "TryFileName"
-        }
-    },
-    "downloadByID" -> {
-        {
-            "string",
-            "image",
-            "path"
-        },
-        8,
-        {
-            "ClickToCopy",
-            "HideDirectory",
-            "HideFile",
-            "MergeDuplicateID",
-            "ShowHighlightedImage",
-            "TryFileName"
-        }
-    },
-    "generateBibTeXByID" -> {
-        {
-            "string",
-            "image",
-            "path"
-        },
-        8,
-        0,
-        {
-            "ClickToCopy"
-        }
-    },
-    "extractCiteKey" -> {
-        {
-            "string",
-            "path"
-        },
-        {
-            "ClickToCopy",
-            "HideDirectory",
-            "RawCiteKey"
-        }
-    },
-    "extractTitleFromPDF" -> {
-        {
-            "ClickToCopy",
-            "HideDirectory",
-            "TitleExtractMethod",
-            "YResolution"
-        }
-    }
-}
+{"arXivInterface" -> {8}, "extractID" -> {{"string", "image", "path"}, 
+   {"ClickToCopy", "MergeDuplicateID", "TryFileName", "HideDirectory", 
+    "ShowHighlightedImage"}}, "searchByID" -> {{"string", "image", "path"}, 
+   {"ClickToCopy", "MergeDuplicateID", "TryFileName", "HideDirectory", 
+    "ShowHighlightedImage"}}, "downloadByID" -> 
+  {{"string", "image", "path"}, 8, {"ClickToCopy", "HideFile", 
+    "MergeDuplicateID", "TryFileName", "HideDirectory", 
+    "ShowHighlightedImage"}}, "generateBibTeXByID" -> 
+  {{"string", "image", "path"}, 8, 0, {"ClickToCopy", "MergeDuplicateID", 
+    "TryFileName", "HideDirectory", "ShowHighlightedImage"}}, 
+ "extractCiteKey" -> {{"string", "image", "path"}, 
+   {"ClickToCopy", "RawCiteKey", "HideDirectory"}}, 
+ "extractTitleFromPDF" -> {{"ClickToCopy", "HideDirectory", 
+    "TitleExtractMethod", "YResolution"}}}

@@ -8,14 +8,24 @@ PacletObject[
     "SourceControlURL" -> "https://github.com/yuriever/Yurie-BlueArXiv",
     "License" -> "MIT",
     "PublisherID" -> "Yurie",
-    "Version" -> "2.1.2",
+    "Version" -> "2.1.3",
     "WolframVersion" -> "13+",
     "PrimaryContext" -> "Yurie`BlueArXiv`",
     "Extensions" -> {
       {
         "Kernel",
         "Root" -> "Kernel",
-        "Context" -> {"Yurie`BlueArXiv`", "Yurie`PaperTool`"}
+        "Context" -> {"Yurie`BlueArXiv`", "Yurie`PaperTool`"},
+        "Symbols" -> {
+          "Yurie`BlueArXiv`arXivInterface",
+          "Yurie`BlueArXiv`arXivPDFNameFormat",
+          "Yurie`BlueArXiv`downloadByID",
+          "Yurie`BlueArXiv`extractID",
+          "Yurie`BlueArXiv`generateBibTeXByID",
+          "Yurie`BlueArXiv`searchByID",
+          "Yurie`PaperTool`extractCiteKey",
+          "Yurie`PaperTool`extractTitleFromPDF"
+        }
       },
       {
         "Kernel",
