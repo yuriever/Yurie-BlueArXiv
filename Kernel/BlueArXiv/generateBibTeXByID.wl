@@ -68,11 +68,9 @@ generateBibTeXByID[
     HoldPattern[bibName_String:$defaultBibName],
     opts:OptionsPattern[]
 ][input_] :=
-    Module[ {fopts,bibData},
-        fopts =
-            FilterRules[{opts,Options[generateBibTeXByID]},Options[generateBibTeXByIDAsBibData]];
+    Module[ {bibData},
         bibData =
-            input//throwWrongTypeInput[tag]//generateBibTeXByIDAsBibData[tag,targetDir,bibName,fopts];
+            input//throwWrongTypeInput[tag]//generateBibTeXByIDAsBibData[tag,targetDir,bibName,FilterRules[{opts,Options[generateBibTeXByID]},Options[generateBibTeXByIDAsBibData]]];
         (*Dataset[#,HiddenItems->{"BibTeX"->True}]&*)
         bibData//ifAddButton[OptionValue["ClickToCopy"],"ID","BibKey","BibTeX"]//Dataset
     ]//Catch;
@@ -83,7 +81,7 @@ generateBibTeXByID[
 
 
 generateBibTeXByIDAsBibData[tag:$tagPattern,targetDir:$pathPattern,bibName_String,opts:OptionsPattern[]][input_] :=
-    input//extractIDData[tag,opts]//getBibDataFromIDData[targetDir,bibName];
+    input//extractIDData[tag,FilterRules[{opts,Options@generateBibTeXByIDAsBibData},Options@extractIDData]]//getBibDataFromIDData[targetDir,bibName];
 
 
 getBibDataFromIDData[targetDir:$pathPattern,bibName_String][idData_List] :=

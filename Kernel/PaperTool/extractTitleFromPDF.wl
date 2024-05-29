@@ -58,12 +58,8 @@ extractTitleFromPDF//Options = {
 
 
 extractTitleFromPDF[opts:OptionsPattern[]][input_] :=
-    Module[ {fopts},
-        fopts =
-            FilterRules[{opts,Options[extractTitleFromPDF]},Options[extractTitleDataFromPath]];
-        input//throwWrongTypeInput["path"]//extractTitleDataFromPath[fopts]//
-        	ifAddButton[OptionValue["ClickToCopy"],"Title"]//Dataset
-    ];
+    input//throwWrongTypeInput["path"]//extractTitleDataFromPath[FilterRules[{opts,Options[extractTitleFromPDF]},Options[extractTitleDataFromPath]]]//
+    	ifAddButton[OptionValue["ClickToCopy"],"Title"]//Dataset
 
 
 (* ::Subsection:: *)
@@ -71,7 +67,7 @@ extractTitleFromPDF[opts:OptionsPattern[]][input_] :=
 
 
 extractTitleDataFromPath[opts:OptionsPattern[]][path:_String|_File] :=
-    path//getPDFListFromPath//Map[getTitleDataFromPDF[opts]]//Query[SortBy[#FileName&]];
+    path//getPDFListFromPath//Map[getTitleDataFromPDF[FilterRules[{opts,Options@extractTitleDataFromPath},Options@getTitleDataFromPDF]]]//Query[SortBy[#FileName&]];
 
 
 getTitleDataFromPDF[opts:OptionsPattern[]][filePath_String] :=

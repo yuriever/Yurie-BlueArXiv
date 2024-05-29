@@ -64,11 +64,9 @@ searchByID::connectionFailed =
 
 
 searchByID[tag:$tagPattern:"string",opts:OptionsPattern[]][input_] :=
-    Module[ {fopts,paperData},
-        fopts =
-            FilterRules[{opts,Options[searchByID]},Options[searchByIDAsPaperData]];
+    Module[ {paperData},
         paperData =
-            input//throwWrongTypeInput[tag]//searchByIDAsPaperData[tag,fopts];
+            input//throwWrongTypeInput[tag]//searchByIDAsPaperData[tag,FilterRules[{opts,Options[searchByID]},Options[searchByIDAsPaperData]]];
         paperData//ifAddButton[OptionValue["ClickToCopy"],"ID","Paper","URL"]//Dataset
     ]//Catch;
 
@@ -78,7 +76,7 @@ searchByID[tag:$tagPattern:"string",opts:OptionsPattern[]][input_] :=
 
 
 searchByIDAsPaperData[tag:$tagPattern,opts:OptionsPattern[]][input_] :=
-    input//extractIDData[tag,opts]//getPaperDataFromIDData;
+    input//extractIDData[tag,FilterRules[{opts,Options@searchByIDAsPaperData},Options@extractIDData]]//getPaperDataFromIDData;
 
 
 getPaperDataFromIDData[idData_List] :=
