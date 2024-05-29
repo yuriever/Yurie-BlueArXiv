@@ -69,11 +69,9 @@ extractID//Options = {
 
 
 extractID[tag:$tagPattern:"string",opts:OptionsPattern[]][input_] :=
-    Module[ {fopts,idData},
-        fopts =
-            FilterRules[{opts,Options[extractID]},Options[extractIDData]];
+    Module[ {idData},
         idData =
-            input//throwWrongTypeInput[tag]//extractIDData[tag,fopts];
+            input//throwWrongTypeInput[tag]//extractIDData[tag,FilterRules[{opts,Options[extractID]},Options[extractIDData]]];
         idData//ifAddButton[OptionValue["ClickToCopy"],"ID"]//Dataset
     ]//Catch;
 
@@ -83,19 +81,15 @@ extractID[tag:$tagPattern:"string",opts:OptionsPattern[]][input_] :=
 
 
 extractIDData[tag:$tagPattern,opts:OptionsPattern[]][input_] :=
-    Module[ {fopts,idData},
-        fopts["image"] =
-            FilterRules[{opts,Options[extractIDData]},Options[getIDDataFromImage]];
-        fopts["path"] =
-            FilterRules[{opts,Options[extractIDData]},Options[getIDDataFromPath]];
+    Module[ {idData},
         idData =
             Switch[tag,
                 "string",
                     input//getIDDataFromString,
                 "image",
-                    input//getIDDataFromImage[fopts["image"]],
+                    input//getIDDataFromImage[FilterRules[{opts,Options[extractIDData]},Options[getIDDataFromImage]]],
                 "path",
-                    input//getIDDataFromPath[fopts["path"]]
+                    input//getIDDataFromPath[FilterRules[{opts,Options[extractIDData]},Options[getIDDataFromPath]]]
             ];
         idData//ifMergeDuplicateID[OptionValue["MergeDuplicateID"]]//Query[SortBy[#ID&]]
     ];
@@ -129,7 +123,7 @@ getIDListFromString[str_String] :=
 getIDDataFromImage[OptionsPattern[]][Null] :=
     {};
 
-getIDDataFromImage[opts:OptionsPattern[]][img_Image] :=
+getIDDataFromImage[OptionsPattern[]][img_Image] :=
     Module[ {idData},
         idData =
             img//getStringListFromImage//alignToStringList//
@@ -178,7 +172,7 @@ showHighlightedImage[idData_List][img_Image] :=
 
 
 getIDDataFromPath[opts:OptionsPattern[]][path:$pathPattern] :=
-    path//getPDFListFromPath//Map[getIDDataFromPDF[opts]]//Flatten;
+    path//getPDFListFromPath//Map[getIDDataFromPDF[FilterRules[{opts,Options@getIDDataFromPath},Options@getIDDataFromPDF]]]//Flatten;
 
 
 getPDFListFromPath[path:$pathPattern] :=

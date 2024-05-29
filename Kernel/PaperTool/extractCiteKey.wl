@@ -60,11 +60,9 @@ extractCiteKey//Options = {
 
 
 extractCiteKey[tag:$tagPattern:"string",opts:OptionsPattern[]][input_] :=
-    Module[ {fopts,idData},
-        fopts =
-            FilterRules[{opts,Options[extractCiteKey]},Options[extractCiteKeyData]];
+    Module[ {idData},
         idData =
-            extractCiteKeyData[tag,fopts][input];
+            extractCiteKeyData[tag,FilterRules[{opts,Options[extractCiteKey]},Options[extractCiteKeyData]]][input];
         If[ OptionValue["RawCiteKey"],
             idData//ifAddButton[OptionValue["ClickToCopy"],"CiteKey"]//Query[All,#CiteKey&],
             (*Else*)
@@ -86,7 +84,7 @@ extractCiteKeyData[tag:$tagPattern,opts:OptionsPattern[]][input_] :=
                 "image",
                     Abort[],
                 "path",
-                    input//getCiteKeyDataFromPath[opts]
+                    input//getCiteKeyDataFromPath[FilterRules[{opts,Options@extractCiteKeyData},Options@getCiteKeyDataFromPath]]
             ];
         idData//Query[SortBy[#CiteKey&]]
     ];
@@ -112,7 +110,7 @@ getCiteKeyListFromString[str_String] :=
 
 
 getCiteKeyDataFromPath[opts:OptionsPattern[]][path:$pathPattern] :=
-    path//getTeXListFromPath//Map[getCiteKeyDataFromTeX[opts]]//Flatten;
+    path//getTeXListFromPath//Map[getCiteKeyDataFromTeX[FilterRules[{opts,Options@getCiteKeyDataFromPath},Options@getCiteKeyDataFromTeX]]]//Flatten;
 
 
 getTeXListFromPath[path:$pathPattern] :=
