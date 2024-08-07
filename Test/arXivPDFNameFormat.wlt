@@ -20,7 +20,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	list := {Yurie`BlueArXiv`Default`$arXivPDFNameFormatter, Yurie`BlueArXiv`Default`$arXivPDFNameRegulator}; 
+	list := {Yurie`BlueArXiv`Variable`$arXivPDFNameFormatter, Yurie`BlueArXiv`Variable`$arXivPDFNameRegulator}; 
 	list
 	,
 	{StringJoin[Lookup[#1, "ID"], " ", Lookup[#1, "Title", ""], ", ", Lookup[#1, "Author", "", #1[[1,"Name"]] & ]] & , Yurie`BlueArXiv`Common`regulateFileName}

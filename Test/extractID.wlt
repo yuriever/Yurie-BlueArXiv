@@ -21,9 +21,7 @@ VerificationTest[
 ]
 
 VerificationTest[
-	Off[$ContextAliases::cxinuse]; 
-	$ContextAliases["dev`"] = "Yurie`BlueArXiv`extractID`"; 
-	($ContextAliases["devp`"] = "Yurie`BlueArXiv`extractID`Private`"; )
+	str = sampleString["ID"]; 
 	,
 	Null
 	,
@@ -31,27 +29,19 @@ VerificationTest[
 ]
 
 VerificationTest[
-	str = sampleString["ID"]; 
+	Yurie`BlueArXiv`extractID`Private`getIDDataFromString[str]
 	,
-	Null
+	{Association["ID" -> "hep-th/9802150"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "0000.00001"]}
 	,
 	TestID->"3-extractID.nb"
 ]
 
 VerificationTest[
-	devp`getIDDataFromString[str]
-	,
-	{Association["ID" -> "hep-th/9802150"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "0000.00001"]}
-	,
-	TestID->"4-extractID.nb"
-]
-
-VerificationTest[
-	dev`extractIDData["string"][str]
+	Yurie`BlueArXiv`extractID`extractIDData["string"][str]
 	,
 	{Association["ID" -> "0000.00001"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "hep-th/9802150"]}
 	,
-	TestID->"5-extractID.nb"
+	TestID->"4-extractID.nb"
 ]
 
 VerificationTest[
@@ -59,7 +49,7 @@ VerificationTest[
 	,
 	{Association["ID" -> "0000.00001"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "hep-th/9802150"]}
 	,
-	TestID->"6-extractID.nb"
+	TestID->"5-extractID.nb"
 ]
 
 VerificationTest[
@@ -67,39 +57,39 @@ VerificationTest[
 	,
 	Null
 	,
+	TestID->"6-extractID.nb"
+]
+
+VerificationTest[
+	Query[All, KeyDrop["Position"]][Yurie`BlueArXiv`extractID`Private`getIDDataFromImage["ShowHighlightedImage" -> False][img]]
+	,
+	{Association["ID" -> "hep-th/9802150"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "0000.00001"]}
+	,
 	TestID->"7-extractID.nb"
 ]
 
 VerificationTest[
-	devp`getIDDataFromImage["ShowHighlightedImage" -> False][img]
+	Block[{Yurie`BlueArXiv`extractID`Private`showHighlightedImage = Nothing}, Yurie`BlueArXiv`extractID`Private`getIDDataFromImage[][img]]
 	,
-	{Association["ID" -> "hep-th/9802150", "Position" -> {Rectangle[{3, 109}, {272, 140}]}], Association["ID" -> "1207.7214", "Position" -> {Rectangle[{317, 116}, {488, 138}]}], Association["ID" -> "1706.03762", "Position" -> {Rectangle[{3, 12}, {193, 34}]}], Association["ID" -> "0000.00001", "Position" -> {Rectangle[{238, 12}, {429, 34}]}]}
+	{Association["ID" -> "hep-th/9802150"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "0000.00001"]}
 	,
 	TestID->"8-extractID.nb"
 ]
 
 VerificationTest[
-	Block[{devp`showHighlightedImage = Nothing}, devp`getIDDataFromImage[][img]]
+	Block[{Yurie`BlueArXiv`extractID`Private`showHighlightedImage = Nothing}, Yurie`BlueArXiv`extractID`extractIDData["image"][img]]
 	,
-	{Association["ID" -> "hep-th/9802150"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "0000.00001"]}
+	{Association["ID" -> "0000.00001"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "hep-th/9802150"]}
 	,
 	TestID->"9-extractID.nb"
 ]
 
 VerificationTest[
-	Block[{devp`showHighlightedImage = Nothing}, dev`extractIDData["image"][img]]
+	Query[All, KeyDrop["Position"]][Normal[extractID["image", "ClickToCopy" -> False, "ShowHighlightedImage" -> False][img]]]
 	,
 	{Association["ID" -> "0000.00001"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "hep-th/9802150"]}
 	,
 	TestID->"10-extractID.nb"
-]
-
-VerificationTest[
-	Normal[extractID["image", "ClickToCopy" -> False, "ShowHighlightedImage" -> False][img]]
-	,
-	{Association["ID" -> "0000.00001", "Position" -> {Rectangle[{238, 12}, {429, 34}]}], Association["ID" -> "1207.7214", "Position" -> {Rectangle[{317, 116}, {488, 138}]}], Association["ID" -> "1706.03762", "Position" -> {Rectangle[{3, 12}, {193, 34}]}], Association["ID" -> "hep-th/9802150", "Position" -> {Rectangle[{3, 109}, {272, 140}]}]}
-	,
-	TestID->"11-extractID.nb"
 ]
 
 VerificationTest[
@@ -108,48 +98,48 @@ VerificationTest[
 	,
 	Null
 	,
+	TestID->"11-extractID.nb"
+]
+
+VerificationTest[
+	Yurie`BlueArXiv`extractID`Private`getIDDataFromPDF[][pdf]
+	,
+	{Association["ID" -> "1706.03762", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FileName"}]}
+	,
 	TestID->"12-extractID.nb"
 ]
 
 VerificationTest[
-	devp`getIDDataFromPDF[][pdf]
+	Yurie`BlueArXiv`extractID`Private`getIDDataFromPDF["TryFileName" -> False][pdf]
 	,
-	{Association["ID" -> "1706.03762", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FileName"}]}
+	{Association["ID" -> "1706.03762", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FirstPage"}]}
 	,
 	TestID->"13-extractID.nb"
 ]
 
 VerificationTest[
-	devp`getIDDataFromPDF["TryFileName" -> False][pdf]
+	temp = Yurie`BlueArXiv`extractID`Private`getIDDataFromPDF["HideDirectory" -> False][pdf]; 
+	temp[[1,"FileName",1]] === pdf
 	,
-	{Association["ID" -> "1706.03762", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FirstPage"}]}
+	True
 	,
 	TestID->"14-extractID.nb"
 ]
 
 VerificationTest[
-	temp = devp`getIDDataFromPDF["HideDirectory" -> False][pdf]; 
-	temp[[1,"FileName",1]] === pdf
+	Yurie`BlueArXiv`extractID`Private`getIDDataFromPath[][dir]
 	,
-	True
+	{Association["ID" -> "1706.03762", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1207.7214", "FileName" -> {"newID-1207.7214.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "NotFound", "FileName" -> {"noID.pdf"}, "IDLocation" -> {"None"}], Association["ID" -> "hep-th/9802150", "FileName" -> {"oldID-9802150.pdf"}, "IDLocation" -> {"FirstPageExtra"}], Association["ID" -> "hep-th/9802150", "FileName" -> {"oldID-9802150.pdf"}, "IDLocation" -> {"FirstPageExtra"}], Association["ID" -> "0000.00001", "FileName" -> {"wrongID-0000.00001.pdf"}, "IDLocation" -> {"FileName"}]}
 	,
 	TestID->"15-extractID.nb"
 ]
 
 VerificationTest[
-	devp`getIDDataFromPath[][dir]
-	,
-	{Association["ID" -> "1706.03762", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1207.7214", "FileName" -> {"newID-1207.7214.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "NotFound", "FileName" -> {"noID.pdf"}, "IDLocation" -> {"None"}], Association["ID" -> "hep-th/9802150", "FileName" -> {"oldID-9802150.pdf"}, "IDLocation" -> {"FirstPageExtra"}], Association["ID" -> "hep-th/9802150", "FileName" -> {"oldID-9802150.pdf"}, "IDLocation" -> {"FirstPageExtra"}], Association["ID" -> "0000.00001", "FileName" -> {"wrongID-0000.00001.pdf"}, "IDLocation" -> {"FileName"}]}
-	,
-	TestID->"16-extractID.nb"
-]
-
-VerificationTest[
-	dev`extractIDData["path"][dir]
+	Yurie`BlueArXiv`extractID`extractIDData["path"][dir]
 	,
 	{Association["ID" -> "0000.00001", "FileName" -> {"wrongID-0000.00001.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1207.7214", "FileName" -> {"newID-1207.7214.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1706.03762", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "hep-th/9802150", "FileName" -> {"oldID-9802150.pdf", "oldID-9802150.pdf"}, "IDLocation" -> {"FirstPageExtra", "FirstPageExtra"}], Association["ID" -> "NotFound", "FileName" -> {"noID.pdf"}, "IDLocation" -> {"None"}]}
 	,
-	TestID->"17-extractID.nb"
+	TestID->"16-extractID.nb"
 ]
 
 VerificationTest[
@@ -157,15 +147,7 @@ VerificationTest[
 	,
 	{Association["ID" -> "0000.00001", "FileName" -> {"wrongID-0000.00001.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1207.7214", "FileName" -> {"newID-1207.7214.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1706.03762", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "hep-th/9802150", "FileName" -> {"oldID-9802150.pdf", "oldID-9802150.pdf"}, "IDLocation" -> {"FirstPageExtra", "FirstPageExtra"}], Association["ID" -> "NotFound", "FileName" -> {"noID.pdf"}, "IDLocation" -> {"None"}]}
 	,
-	TestID->"18-extractID.nb"
-]
-
-VerificationTest[
-	$ContextAliases =. 
-	,
-	Null
-	,
-	TestID->"19-extractID.nb"
+	TestID->"17-extractID.nb"
 ]
 
 VerificationTest[

@@ -9,9 +9,11 @@ BeginPackage["Yurie`BlueArXiv`searchByID`"];
 
 Needs["Yurie`BlueArXiv`"];
 
-Needs["Yurie`BlueArXiv`Common`"];
+Needs["Yurie`BlueArXiv`Constant`"];
 
-Needs["Yurie`BlueArXiv`Default`"];
+Needs["Yurie`BlueArXiv`Variable`"];
+
+Needs["Yurie`BlueArXiv`Common`"];
 
 Needs["Yurie`BlueArXiv`extractID`"];
 

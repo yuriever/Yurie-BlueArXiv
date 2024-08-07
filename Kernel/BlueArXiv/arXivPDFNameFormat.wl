@@ -9,9 +9,9 @@ BeginPackage["Yurie`BlueArXiv`arXivPDFNameFormat`"];
 
 Needs["Yurie`BlueArXiv`"];
 
-Needs["Yurie`BlueArXiv`Common`"];
+Needs["Yurie`BlueArXiv`Variable`"];
 
-Needs["Yurie`BlueArXiv`Default`"];
+Needs["Yurie`BlueArXiv`Common`"];
 
 
 (* ::Section:: *)

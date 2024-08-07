@@ -9,9 +9,7 @@ BeginPackage["Yurie`BlueArXiv`arXivInterface`"];
 
 Needs["Yurie`BlueArXiv`"];
 
-Needs["Yurie`BlueArXiv`Common`"];
-
-Needs["Yurie`BlueArXiv`Default`"];
+Needs["Yurie`BlueArXiv`Constant`"];
 
 
 (* ::Section:: *)

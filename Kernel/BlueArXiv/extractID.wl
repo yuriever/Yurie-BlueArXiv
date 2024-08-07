@@ -9,9 +9,9 @@ BeginPackage["Yurie`BlueArXiv`extractID`"];
 
 Needs["Yurie`BlueArXiv`"];
 
-Needs["Yurie`BlueArXiv`Common`"];
+Needs["Yurie`BlueArXiv`Constant`"];
 
-Needs["Yurie`BlueArXiv`Default`"];
+Needs["Yurie`BlueArXiv`Common`"];
 
 
 (* ::Section:: *)
@@ -48,8 +48,14 @@ getIDDataFromPDF//Options = {
 getIDDataFromPath//Options =
     Options@getIDDataFromPDF;
 
+getStringListFromImage//Options = {
+	"TextLevel"->"Line",
+	Splice@Options@TextRecognize
+};
+
 getIDDataFromImage//Options = {
-    "ShowHighlightedImage"->True
+    "ShowHighlightedImage"->True,
+    Splice@Options@getStringListFromImage
 };
 
 extractIDData//Options = {
@@ -123,12 +129,13 @@ getIDListFromString[str_String] :=
 getIDDataFromImage[OptionsPattern[]][Null] :=
     {};
 
-getIDDataFromImage[OptionsPattern[]][img_Image] :=
+getIDDataFromImage[opts:OptionsPattern[]][img_Image] :=
     Module[ {idData},
         idData =
-            img//getStringListFromImage//alignToStringList//
-		        Query[All,<|"ID"->First[getIDListFromString@#[[1]],""],"Position"->{#[[2]]}|>&]//
-		            Query[Select[#ID=!=""&]];
+            img//getStringListFromImage[FilterRules[{opts,Options[getIDDataFromImage]},Options[getStringListFromImage]]]//
+            	alignToStringList//trimString//
+			        Query[All,<|"ID"->First[getIDListFromString@#[[1]],""],"Position"->{#[[2]]}|>&]//
+			            Query[Select[#ID=!=""&]];
         If[ OptionValue["ShowHighlightedImage"],
             showHighlightedImage[idData][img];
             idData//Query[All,KeyDrop["Position"]],
@@ -138,8 +145,8 @@ getIDDataFromImage[OptionsPattern[]][img_Image] :=
     ];
 
 
-getStringListFromImage[img_Image] :=
-    TextRecognize[img,"Word",{"Text","BoundingBox"}];
+getStringListFromImage[opts:OptionsPattern[]][img_Image] :=
+    TextRecognize[img,OptionValue["TextLevel"],{"Text","BoundingBox"},FilterRules[{opts,Options[getStringListFromImage]},Options[TextRecognize]]];
 
 
 alignToStringList[list_List] :=
@@ -153,6 +160,10 @@ alignToStringList[list_List] :=
         True,
             list
     ];
+
+
+trimString[list_List]:=
+	list//MapAt[StringDelete[WhitespaceCharacter],{All,1}];
 
 
 (*if there is no text recognized, do not show the image.*)
