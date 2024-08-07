@@ -7,24 +7,11 @@
 BeginPackage["Yurie`BlueArXiv`Common`"];
 
 
+Needs["Yurie`BlueArXiv`Constant`"];
+
+
 (* ::Section:: *)
 (*Public*)
-
-
-$arXivIDPattern::usage =
-    "string pattern of valid arXiv ID.";
-
-$citeKeyPattern::usage =
-    "string pattern of cite key.";
-
-$tagPattern::usage =
-    "pattern of supported tags.";
-
-$imagePattern::usage =
-    "pattern of images.";
-
-$pathPattern::usage =
-    "pattern of paths.";
 
 
 throwWrongTypeInput::usage =
@@ -53,40 +40,19 @@ mergeDataByKey::usage =
 (*Private*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Begin*)
 
 
 Begin["`Private`"];
 
 
-(* ::Subsection::Closed:: *)
-(*Constant*)
-
-
-$arXivIDPattern =
-    RegularExpression["(\\d{4}\\.\\d{4,5})|((astro-ph|cond-mat|gr-qc|hep-ex|hep-lat|hep-ph|hep-th|math-ph|nlin|nucl-ex|nucl-th|physics|quant-ph|math|cs)/\\d{7})"];
-
-
-$citeKeyPattern =
-    (*no whitespace tolerance.*)
-    RegularExpression["(\\\\cite{)(\\S*?)(})"];
-
-
-$tagPattern =
-    "string"|"image"|"path";
-
-
-$imagePattern =
-    _Image|Null;
-
-
-$pathPattern =
-    _String|_File;
-
-
 (* ::Subsection:: *)
 (*Main*)
+
+
+(* ::Subsubsection:: *)
+(*throwWrongTypeInput*)
 
 
 throwWrongTypeInput[tag_][input_] :=
@@ -103,7 +69,7 @@ throwWrongTypeInput[tag_][input_] :=
     ];
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*regulateFileName*)
 
 
@@ -120,7 +86,7 @@ regulateFileName[string_String] :=
     ];
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*getFilePathByExtension*)
 
 
@@ -138,7 +104,7 @@ getFilePathByExtension[extension_][pathList_List] :=
     pathList//Map[getFilePathByExtension[extension]]//Flatten;
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*getFileNameByExtension*)
 
 
@@ -146,7 +112,7 @@ getFileNameByExtension[extension_][pathOrPathList:_String|_File|_List] :=
     pathOrPathList//getFilePathByExtension[extension]//Map[FileNameTake];
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*ifAddButton*)
 
 
@@ -184,7 +150,7 @@ addCopyButtonToString[Missing[any_]] :=
     Missing[any];
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*tryImport*)
 
 
@@ -196,7 +162,7 @@ tryImport[return_,args___][filePath_String] :=
     ];
 
 
-(* ::Subsubsection::Closed:: *)
+(* ::Subsubsection:: *)
 (*mergeDataByID*)
 
 
@@ -263,7 +229,7 @@ prepareQueryRuleList[ruleList_,keyList_,default_] :=
     ];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*End*)
 
 

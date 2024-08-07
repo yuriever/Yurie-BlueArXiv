@@ -13,9 +13,12 @@ ClearAll["`*`*"];*)
 
 Get["Yurie`BlueArXiv`Usage`"];
 
-Get["Yurie`BlueArXiv`Common`"];
 
-Get["Yurie`BlueArXiv`Default`"];
+Get["Yurie`BlueArXiv`Constant`"];
+
+Get["Yurie`BlueArXiv`Variable`"];
+
+Get["Yurie`BlueArXiv`Common`"];
 
 
 Get["Yurie`BlueArXiv`arXivPDFNameFormat`"];

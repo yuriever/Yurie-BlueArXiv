@@ -9,9 +9,9 @@ BeginPackage["Yurie`BlueArXiv`downloadByID`"];
 
 Needs["Yurie`BlueArXiv`"];
 
-Needs["Yurie`BlueArXiv`Common`"];
+Needs["Yurie`BlueArXiv`Constant`"];
 
-Needs["Yurie`BlueArXiv`Default`"];
+Needs["Yurie`BlueArXiv`Common`"];
 
 Needs["Yurie`BlueArXiv`searchByID`"];
 

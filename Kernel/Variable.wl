@@ -4,7 +4,7 @@
 (*Begin*)
 
 
-BeginPackage["Yurie`BlueArXiv`Default`"];
+BeginPackage["Yurie`BlueArXiv`Variable`"];
 
 
 (*clear the states when loading.*)
@@ -24,12 +24,6 @@ $arXivPDFNameFormatter::usage =
 
 $arXivPDFNameRegulator::usage =
     "regulator of file names, set by arXivPDFNameFormat.";
-
-$defaultDownloadDir::usage =
-    "default download directory";
-
-$defaultBibName::usage =
-    "default BibTeX file name.";
 
 
 (* ::Section:: *)
@@ -62,14 +56,6 @@ $arXivPDFNameFormatter =
 
 $arXivPDFNameRegulator =
     regulateFileName;
-
-
-$defaultDownloadDir :=
-    FileNameJoin@{$HomeDirectory,"Downloads"};
-
-
-$defaultBibName :=
-    "refs-"<>CreateUUID[]<>".bib";
 
 
 (* ::Subsection:: *)

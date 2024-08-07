@@ -9,6 +9,8 @@ BeginPackage["Yurie`PaperTool`extractTitleFromPDF`"];
 
 Needs["Yurie`PaperTool`"];
 
+Needs["Yurie`BlueArXiv`Constant`"];
+
 Needs["Yurie`BlueArXiv`Common`"];
 
 
