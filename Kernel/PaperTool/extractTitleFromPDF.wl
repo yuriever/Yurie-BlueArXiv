@@ -150,7 +150,7 @@ getPDFListFromPath[path:$pathPattern] :=
 regulateTitle//Attributes =
     {Listable};
 
-regulateTitle[""] =
+regulateTitle[""] :=
     "";
 
 regulateTitle[arg_Missing] :=

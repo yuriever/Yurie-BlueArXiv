@@ -112,7 +112,7 @@ arXivInterfaceKernel[targetDir:$pathPattern] :=
 selectInputByTag["string"|"path"][str_String,image:$imagePattern] :=
     str;
 
-selectInputByTag["image"][str_String,image:$imagePattern] =
+selectInputByTag["image"][str_String,image:$imagePattern] :=
     image;
 
 

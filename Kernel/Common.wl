@@ -28,7 +28,7 @@ $pathPattern::usage =
 
 
 throwWrongTypeInput::usage =
-	"check the input type according to the tag.";
+    "check the input type according to the tag.";
 
 regulateFileName::usage =
     "regulate special characters in file name.";
@@ -43,7 +43,7 @@ ifAddButton::usage =
     "whether to add click-to-copy/hyperlink button to list of associations.";
 
 tryImport::usage =
-	"try to import the file, otherwise return the specified value and message.";
+    "try to import the file, otherwise return the specified value and message.";
 
 mergeDataByKey::usage =
     "merge a list of associations using different merge functions according to keys.";
@@ -78,29 +78,29 @@ $tagPattern =
 
 
 $imagePattern =
-	_Image|Null;
+    _Image|Null;
 
 
-$pathPattern=
-	_String|_File;
+$pathPattern =
+    _String|_File;
 
 
 (* ::Subsection:: *)
 (*Main*)
 
 
-throwWrongTypeInput[tag_][input_]:=
-	Which[
-		tag==="string"&&MatchQ[input,_String],
-			input,
-		tag==="image"&&MatchQ[input,$imagePattern],
-			input,
-		tag==="path"&&MatchQ[input,$pathPattern],
-			input,
-		True,
-			Message[General::invencin,input];
-			input//Throw
-	];
+throwWrongTypeInput[tag_][input_] :=
+    Which[
+        tag==="string"&&MatchQ[input,_String],
+            input,
+        tag==="image"&&MatchQ[input,$imagePattern],
+            input,
+        tag==="path"&&MatchQ[input,$pathPattern],
+            input,
+        True,
+            Message[General::invencin,input];
+            input//Throw
+    ];
 
 
 (* ::Subsubsection::Closed:: *)
