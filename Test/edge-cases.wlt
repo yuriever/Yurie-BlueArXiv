@@ -33,7 +33,7 @@ VerificationTest[
 	,
 	x
 	,
-	{General::invencin}
+	{General::elmntav}
 	,
 	TestID->"3-edge-cases.nb"
 ]
@@ -51,7 +51,7 @@ VerificationTest[
 	,
 	a
 	,
-	{General::invencin}
+	{General::elmntav}
 	,
 	TestID->"5-edge-cases.nb"
 ]
@@ -69,7 +69,7 @@ VerificationTest[
 	,
 	a
 	,
-	{General::invencin}
+	{General::elmntav}
 	,
 	TestID->"7-edge-cases.nb"
 ]
