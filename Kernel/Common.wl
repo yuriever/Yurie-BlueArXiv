@@ -64,7 +64,7 @@ throwWrongTypeInput[tag_][input_] :=
         tag==="path"&&MatchQ[input,$pathPattern],
             input,
         True,
-            Message[General::invencin,input];
+            Message[General::elmntav,"input",input];
             input//Throw
     ];
 

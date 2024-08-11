@@ -35,7 +35,7 @@ Begin["`Private`"];
 (*Constant*)
 
 
-tagList =
+$tagList =
     {"string","image","path"};
 
 
@@ -67,7 +67,7 @@ arXivInterfaceKernel[targetDir:$pathPattern] :=
             Row@{
                 PopupMenu[Dynamic[fun],{"extract","search","download","generate BibTeX"},ImageSize->Small],
                 " from ",
-                PopupMenu[Dynamic[tag],tagList,ImageSize->Small]
+                PopupMenu[Dynamic[tag],$tagList,ImageSize->Small]
             },
             "",
             "Downloads directory:",
@@ -107,10 +107,10 @@ arXivInterfaceKernel[targetDir:$pathPattern] :=
     ];
 
 
-selectInputByTag["string"|"path"][str_String,image:$imagePattern] :=
+selectInputByTag["string"|"path"][str_,_] :=
     str;
 
-selectInputByTag["image"][str_String,image:$imagePattern] :=
+selectInputByTag["image"][_,image_] :=
     image;
 
 
