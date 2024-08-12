@@ -7,16 +7,7 @@
 BeginPackage["Yurie`PaperTool`"];
 
 
-(*ClearAll["`*"];*)
-(*ClearAll["`*`*"];*)
-
-
 Get["Yurie`PaperTool`Usage`"];
-
-
-Get["Yurie`BlueArXiv`Constant`"];
-
-Get["Yurie`BlueArXiv`Common`"];
 
 
 Get["Yurie`PaperTool`extractTitleFromPDF`"];

@@ -10,11 +10,7 @@ BeginPackage["Yurie`BlueArXiv`"];
 Get["Yurie`BlueArXiv`Usage`"];
 
 
-Get["Yurie`BlueArXiv`Constant`"];
-
 Get["Yurie`BlueArXiv`Variable`"];
-
-Get["Yurie`BlueArXiv`Common`"];
 
 
 Get["Yurie`BlueArXiv`arXivPDFNameFormat`"];
