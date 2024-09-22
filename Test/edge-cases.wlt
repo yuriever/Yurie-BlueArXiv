@@ -31,7 +31,7 @@ VerificationTest[
 VerificationTest[
 	extractID["string"][x]
 	,
-	x
+	Quiet[x]
 	,
 	{General::elmntav}
 	,
@@ -49,7 +49,7 @@ VerificationTest[
 VerificationTest[
 	extractID["image"][a]
 	,
-	a
+	Quiet[a]
 	,
 	{General::elmntav}
 	,
@@ -67,7 +67,7 @@ VerificationTest[
 VerificationTest[
 	extractID["path"][a]
 	,
-	a
+	Quiet[a]
 	,
 	{General::elmntav}
 	,
