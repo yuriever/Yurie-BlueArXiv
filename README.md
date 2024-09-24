@@ -8,6 +8,10 @@ This paclet uses the following APIs:
 
 * [INSPIRE REST API](https://github.com/inspirehep/rest-api-doc)
 
+## Documentation
+
+[Yurie/BlueArXiv](https://resources.wolframcloud.com/PacletRepository/resources/Yurie/BlueArXiv/)
+
 ## Install
 
 Install via the Wolfram Language Paclet Repository (may need `PacletSiteUpdate@PacletSites[]`):
@@ -54,7 +58,3 @@ PacletInstall["Yurie/BlueArXiv"]
 ``` wl
 PacletUninstall["Yurie/BlueArXiv"]
 ```
-
-## Documentation
-
-[Yurie/BlueArXiv](https://resources.wolframcloud.com/PacletRepository/resources/Yurie/BlueArXiv/)
