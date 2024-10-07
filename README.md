@@ -1,4 +1,4 @@
-# Yurie/BlueArXiv test
+# Yurie/BlueArXiv
 
 A Mathematica paclet for downloading preprints and generating BibTeX by arXiv IDs.
 
