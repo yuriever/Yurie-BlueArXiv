@@ -1,4 +1,4 @@
-{"arXivInterface" -> {8}, "extractID" -> {{"string", "image", "path"}, 
+{"extractID" -> {{"string", "image", "path"}, 
    {"ClickToCopy", "MergeDuplicateID", "TryFileName", "HideDirectory", 
     "ShowHighlightedImage", "TextLevel"}}, 
  "searchByID" -> {{"string", "image", "path"}, 
@@ -9,8 +9,4 @@
     "HideDirectory", "ShowHighlightedImage", "TextLevel"}}, 
  "generateBibTeXByID" -> {{"string", "image", "path"}, 8, 0, 
    {"ClickToCopy", "MergeDuplicateID", "TryFileName", "HideDirectory", 
-    "ShowHighlightedImage", "TextLevel"}}, 
- "extractCiteKey" -> {{"string", "image", "path"}, 
-   {"ClickToCopy", "RawCiteKey", "HideDirectory"}}, 
- "extractTitleFromPDF" -> {{"ClickToCopy", "HideDirectory", 
-    "TitleExtractMethod", "YResolution"}}}
+    "ShowHighlightedImage", "TextLevel"}}}

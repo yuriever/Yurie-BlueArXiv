@@ -14,9 +14,6 @@ BeginPackage["Yurie`BlueArXiv`Constant`"];
 $arXivIDPattern::usage =
     "string pattern of valid arXiv ID.";
 
-$citeKeyPattern::usage =
-    "string pattern of cite key.";
-
 $tagPattern::usage =
     "pattern of supported tags.";
 
@@ -50,11 +47,6 @@ Begin["`Private`"];
 
 $arXivIDPattern =
     RegularExpression["(\\d{4}\\.\\d{4,5})|((astro-ph|cond-mat|gr-qc|hep-ex|hep-lat|hep-ph|hep-th|math-ph|nlin|nucl-ex|nucl-th|physics|quant-ph|math|cs)/\\d{7})"];
-
-
-$citeKeyPattern =
-    (*no whitespace tolerance.*)
-    RegularExpression["(\\\\cite{)(\\S*?)(})"];
 
 
 $tagPattern =
