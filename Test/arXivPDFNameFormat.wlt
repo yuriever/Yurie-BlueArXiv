@@ -3,54 +3,54 @@
 (*arXivPDFNameFormat.nb*)
 
 VerificationTest[
-	Begin["Global`"];
+    Begin["Global`"];
 	ClearAll["`*"]
-	,
-	Null
-	,
-	TestID->"0-arXivPDFNameFormat.nb"
+    ,
+    Null
+    ,
+    TestID->"0-arXivPDFNameFormat.nb"
 ]
 
 VerificationTest[
-	Get["Yurie`BlueArXiv`"]
-	,
-	Null
-	,
-	TestID->"1-arXivPDFNameFormat.nb"
+    Get["Yurie`BlueArXiv`"]
+    ,
+    Null
+    ,
+    TestID->"1-arXivPDFNameFormat.nb"
 ]
 
 VerificationTest[
-	list := {Yurie`BlueArXiv`Variable`$arXivPDFNameFormatter, Yurie`BlueArXiv`Variable`$arXivPDFNameRegulator}; 
-	list
-	,
-	{StringJoin[Lookup[#1, "ID"], " ", Lookup[#1, "Title", ""], ", ", Lookup[#1, "Author", "", #1[[1,"Name"]] & ]] & , Yurie`BlueArXiv`Common`regulateFileName}
-	,
-	TestID->"2-arXivPDFNameFormat.nb"
+    list := {Yurie`BlueArXiv`Variable`$arXivPDFNameFormatter, Yurie`BlueArXiv`Variable`$arXivPDFNameRegulator}; 
+    list
+    ,
+    {StringJoin[Lookup[#1, "ID"], " ", Lookup[#1, "Title", ""], ", ", Lookup[#1, "Author", "", #1[[1,"Name"]] & ]] & , Yurie`BlueArXiv`Common`regulateFileName}
+    ,
+    TestID->"2-arXivPDFNameFormat.nb"
 ]
 
 VerificationTest[
-	arXivPDFNameFormat["ID", f]; 
-	list
-	,
-	{Lookup[#1, "ID"] & , f}
-	,
-	TestID->"3-arXivPDFNameFormat.nb"
+    arXivPDFNameFormat["ID", f]; 
+    list
+    ,
+    {Lookup[#1, "ID"] & , f}
+    ,
+    TestID->"3-arXivPDFNameFormat.nb"
 ]
 
 VerificationTest[
-	arXivPDFNameFormat[]; 
-	list
-	,
-	{StringJoin[Lookup[#1, "ID"], " ", Lookup[#1, "Title", ""], ", ", Lookup[#1, "Author", "", #1[[1,"Name"]] & ]] & , Yurie`BlueArXiv`Common`regulateFileName}
-	,
-	TestID->"4-arXivPDFNameFormat.nb"
+    arXivPDFNameFormat[]; 
+    list
+    ,
+    {StringJoin[Lookup[#1, "ID"], " ", Lookup[#1, "Title", ""], ", ", Lookup[#1, "Author", "", #1[[1,"Name"]] & ]] & , Yurie`BlueArXiv`Common`regulateFileName}
+    ,
+    TestID->"4-arXivPDFNameFormat.nb"
 ]
 
 VerificationTest[
-	ClearAll["`*"];
+    ClearAll["`*"];
 	End[]
-	,
-	"Global`"
-	,
-	TestID->"∞-arXivPDFNameFormat.nb"
+    ,
+    "Global`"
+    ,
+    TestID->"∞-arXivPDFNameFormat.nb"
 ]
