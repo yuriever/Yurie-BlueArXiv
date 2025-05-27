@@ -133,13 +133,6 @@ addButton[key_String,restKeys__String][data_] :=
     data//addButton[key]//addButton[restKeys];
 
 
-addHyperlinkToURL[value_String] :=
-    Hyperlink[value,value,FrameMargins->Small];
-
-addHyperlinkToURL[Missing[any_]] :=
-    Missing[any];
-
-
 addCopyButtonToString[value_String] :=
     Interpretation[{},
         Button[value,CopyToClipboard@value,Appearance->"Frameless",FrameMargins->Small],
@@ -147,6 +140,13 @@ addCopyButtonToString[value_String] :=
     ];
 
 addCopyButtonToString[Missing[any_]] :=
+    Missing[any];
+
+
+addHyperlinkToURL[value_String] :=
+    Hyperlink[value,value,FrameMargins->Small];
+
+addHyperlinkToURL[Missing[any_]] :=
     Missing[any];
 
 
