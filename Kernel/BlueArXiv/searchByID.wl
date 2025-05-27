@@ -134,7 +134,7 @@ getRawPaperDataFromIDList[idList_List] :=
 
 getPaperNameListFromPaperData[paperData_List] :=
     paperData//Query[All,$arXivPDFNameFormatter,FailureAction->"Replace"]//
-    	Map[Switch[#,_Missing,#,_,$arXivPDFNameRegulator[#]]&];
+        Map[Switch[#,_Missing,#,_,$arXivPDFNameRegulator[#]]&];
 
 
 getURLListFromPaperData[paperData_List] :=
@@ -146,8 +146,8 @@ getURL[assoc_Association]/;MissingQ[assoc["ID"]] :=
 
 getURL[assoc_Association] :=
     assoc["Link"]//KeyUnion//
-    	Query[Select[#Type==="application/pdf"&],FailureAction->"Replace"]//
-			Query[All,"Href",FailureAction->"Replace"]//First//StringJoin[#,".pdf"]&;
+        Query[Select[#Type==="application/pdf"&],FailureAction->"Replace"]//
+            Query[All,"Href",FailureAction->"Replace"]//First//StringJoin[#,".pdf"]&;
 
 
 (* ::Subsection:: *)

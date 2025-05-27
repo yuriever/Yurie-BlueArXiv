@@ -8,7 +8,7 @@ PacletObject[
     "SourceControlURL" -> "https://github.com/yuriever/Yurie-BlueArXiv",
     "License" -> "MIT",
     "PublisherID" -> "Yurie",
-    "Version" -> "2.5.0",
+    "Version" -> "3.0.0",
     "WolframVersion" -> "14.1+",
     "PrimaryContext" -> "Yurie`BlueArXiv`",
     "Extensions" -> {
