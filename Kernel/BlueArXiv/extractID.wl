@@ -49,8 +49,8 @@ getIDDataFromPath//Options =
     Options@getIDDataFromPDF;
 
 getStringListFromImage//Options = {
-	"TextLevel"->"Line",
-	Splice@Options@TextRecognize
+    "TextLevel"->"Line",
+    Splice@Options@TextRecognize
 };
 
 getIDDataFromImage//Options = {
@@ -133,9 +133,9 @@ getIDDataFromImage[opts:OptionsPattern[]][img_Image] :=
     Module[ {idData},
         idData =
             img//getStringListFromImage[FilterRules[{opts,Options[getIDDataFromImage]},Options[getStringListFromImage]]]//
-            	alignToStringList//trimString//
-			        Query[All,<|"ID"->First[getIDListFromString@#[[1]],""],"Position"->{#[[2]]}|>&]//
-			            Query[Select[#ID=!=""&]];
+                alignToStringList//trimString//
+                    Query[All,<|"ID"->First[getIDListFromString@#[[1]],""],"Position"->{#[[2]]}|>&]//
+                        Query[Select[#ID=!=""&]];
         If[ OptionValue["ShowHighlightedImage"],
             showHighlightedImage[idData][img];
             idData//Query[All,KeyDrop["Position"]],
@@ -163,7 +163,7 @@ alignToStringList[list_List] :=
 
 
 trimString[list_List]:=
-	list//MapAt[StringDelete[WhitespaceCharacter],{All,1}];
+    list//MapAt[StringDelete[WhitespaceCharacter],{All,1}];
 
 
 (*if there is no text recognized, do not show the image.*)
