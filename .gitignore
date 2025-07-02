@@ -1,18 +1,14 @@
-.gitattributes
-
-# Mac files
+# macOS system files
 .DS_Store
 
-# Eclipse files
-.project
-.metadata
-.settings
+# VSCode settings
+.vscode/
 
-# developer directory
-Workbench
-TestSource
+# Developer workspace
+Workbench/
+TestSource/
 
 # build files
-build/incremental
-build/Yurie__BlueArXiv
-build/HTML
+build/incremental/
+build/Yurie__BlueArXiv/
+build/HTML/
