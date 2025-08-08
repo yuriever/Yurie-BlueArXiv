@@ -1,4 +1,7 @@
-# Yurie/BlueArXiv
+# [Yurie/BlueArXiv](https://github.com/yuriever/Yurie-BlueArXiv)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Wolfram Language](https://img.shields.io/badge/Wolfram%20Language-14.2%2B-red.svg)](https://www.wolfram.com/language/)
 
 A Mathematica paclet for downloading preprints and generating BibTeX by arXiv IDs.
 
@@ -11,55 +14,51 @@ This paclet uses the following APIs:
 
 ## Documentation
 
-[Yurie/BlueArXiv](https://resources.wolframcloud.com/PacletRepository/resources/Yurie/BlueArXiv/)
+[Documentation](https://resources.wolframcloud.com/PacletRepository/resources/Yurie/BlueArXiv/)
 
 
-## Install
+## Usage
 
-Install via the Wolfram Language Paclet Repository (may need `PacletSiteUpdate@PacletSites[]`):
+Install from the Wolfram Language Paclet Repository:
 
 ``` wl
+PacletSiteUpdate@PacletSites[];
+
 PacletInstall["Yurie/BlueArXiv"]
 ```
 
 Install from this repository:
 
-1. download the built paclet `build/*.paclet`;
+1. Clone or download this repository
 
-2. install the paclet:
+2. Move the entire folder to the user paclet directory:
 
-    ``` wl
-    PacletInstall@File["the/path/of/paclet"]
+   ```wl
+   $UserBasePacletsDirectory
+   ```
+
+3. Rebuild the paclet data:
+
+   ```wl
+   PacletDataRebuild[]
+   ```
+
+4. Load the paclet
+
+    ```wl
+    Needs["Yurie`BlueArXiv`"]
     ```
 
-Install manually:
 
-1. download this repository, and move it to the paclet directory `$UserBasePacletsDirectory`;
+### Uninstallation
 
-2. rebuild the internal paclet data:
-
-    ``` wl
-    PacletDataRebuild[]
-    ```
-
-
-## Load
-
-``` wl
-Needs["Yurie`BlueArXiv`"]
-Needs["Yurie`PaperTool`"]
-```
-
-
-## Upgrade
-
-``` wl
-PacletInstall["Yurie/BlueArXiv"]
-```
-
-
-## Uninstall
-
-``` wl
+```wl
 PacletUninstall["Yurie/BlueArXiv"]
+```
+
+
+### Installation checking
+
+```wl
+PacletFind["Yurie/BlueArXiv"]
 ```

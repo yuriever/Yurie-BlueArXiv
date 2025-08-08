@@ -9,7 +9,7 @@ PacletObject[
     "License" -> "MIT",
     "PublisherID" -> "Yurie",
     "Version" -> "3.0.0",
-    "WolframVersion" -> "14.1+",
+    "WolframVersion" -> "14.2+",
     "PrimaryContext" -> "Yurie`BlueArXiv`",
     "Extensions" -> {
       {
