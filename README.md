@@ -12,9 +12,7 @@ This paclet uses the following APIs:
 * [INSPIRE REST API](https://github.com/inspirehep/rest-api-doc)
 
 
-## Documentation
-
-[Documentation](https://resources.wolframcloud.com/PacletRepository/resources/Yurie/BlueArXiv/)
+## [Documentation](https://resources.wolframcloud.com/PacletRepository/resources/Yurie/BlueArXiv/)
 
 
 ## Usage
