@@ -1,7 +1,7 @@
 # [Yurie/BlueArXiv](https://github.com/yuriever/Yurie-BlueArXiv)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Wolfram Language](https://img.shields.io/badge/Wolfram%20Language-14.2%2B-red.svg)](https://www.wolfram.com/language/)
+[![Wolfram Language](https://img.shields.io/badge/Wolfram%20Language-14.3%2B-red.svg)](https://www.wolfram.com/language/)
 
 A Mathematica paclet for downloading preprints and generating BibTeX by arXiv IDs.
 
