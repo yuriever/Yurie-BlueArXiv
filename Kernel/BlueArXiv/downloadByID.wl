@@ -62,7 +62,7 @@ downloadByID[
     HoldPattern[targetDir:(_?DirectoryQ):$defaultDownloadDir],
     opts:OptionsPattern[]
 ][input_] :=
-    Module[ {paperData},
+    Module[{paperData},
         paperData =
             input//throwWrongTypeInput[tag]//downloadByIDAsPaperData[tag,targetDir,FilterRules[{opts,Options[downloadByID]},Options[downloadByIDAsPaperData]]];
         paperData//ifAddButton[OptionValue["ClickToCopy"],"ID","Paper","URL"]//Dataset
@@ -74,7 +74,7 @@ downloadByID[
 
 
 downloadByIDAsPaperData[tag:$tagPattern,targetDir:$pathPattern,opts:OptionsPattern[]][input_] :=
-    Module[ {paperData},
+    Module[{paperData},
         paperData =
             searchByIDAsPaperData[tag,FilterRules[{opts,Options[downloadByIDAsPaperData]},Options[searchByIDAsPaperData]]][input];
         (*download to the target path and return file objects*)

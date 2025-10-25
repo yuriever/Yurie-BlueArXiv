@@ -66,7 +66,7 @@ searchByID::connectionFailed =
 
 
 searchByID[tag:$tagPattern:"string",opts:OptionsPattern[]][input_] :=
-    Module[ {paperData},
+    Module[{paperData},
         paperData =
             input//throwWrongTypeInput[tag]//searchByIDAsPaperData[tag,FilterRules[{opts,Options[searchByID]},Options[searchByIDAsPaperData]]];
         paperData//ifAddButton[OptionValue["ClickToCopy"],"ID","Paper","URL"]//Dataset
@@ -82,7 +82,7 @@ searchByIDAsPaperData[tag:$tagPattern,opts:OptionsPattern[]][input_] :=
 
 
 getPaperDataFromIDData[idData_List] :=
-    Module[ {idList,idValidList,rawPaperData,newPaperData,paperNameList,urlList},
+    Module[{idList,idValidList,rawPaperData,newPaperData,paperNameList,urlList},
         idList =
             idData//Query[All,#ID&];
         idValidList =
@@ -98,7 +98,7 @@ getPaperDataFromIDData[idData_List] :=
                 <|"ID"->#1,"Paper"->#2,"URL"->#3|>&,
                 {idValidList,paperNameList,urlList}
             ];
-        If[ MemberQ[idList,"NotFound"],
+        If[MemberQ[idList,"NotFound"],
             newPaperData =
                 Join[
                     newPaperData,
@@ -114,7 +114,7 @@ getPaperDataFromIDData[idData_List] :=
 
 
 getRawPaperDataFromIDList[idList_List] :=
-    If[ idList==={},
+    If[idList==={},
         (*if there is no valid ID, return empty list.*)
         {},
         (*Else*)

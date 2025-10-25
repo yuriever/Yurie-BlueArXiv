@@ -181,7 +181,7 @@ mergeDataByIDKernel[assocList_,{},Identity] :=
     getTransposedAssocListAndKeyList[assocList,{}]//First;
 
 mergeDataByIDKernel[assocList_,ruleList_,default_] :=
-    Module[ {keyList,dataMerged,queryRuleList},
+    Module[{keyList,dataMerged,queryRuleList},
         {dataMerged,keyList} =
             getTransposedAssocListAndKeyList[assocList,ruleList];
         queryRuleList =
@@ -191,11 +191,11 @@ mergeDataByIDKernel[assocList_,ruleList_,default_] :=
 
 
 getTransposedAssocListAndKeyList[assocList_,ruleList_] :=
-    Module[ {keyList,keyListList,dataPadded,dataMerged,missing},
+    Module[{keyList,keyListList,dataPadded,dataMerged,missing},
         keyListList =
             Keys[assocList];
         (*pad the list of associations by the placeholder missing if necessary.*)
-        If[ SameQ@@keyListList,
+        If[SameQ@@keyListList,
             keyList =
                 First@keyListList;
             dataMerged =

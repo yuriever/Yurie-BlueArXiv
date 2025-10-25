@@ -128,7 +128,7 @@ sampleFilePrepare[] :=
     Map[sampleFilePrepare,formatList];
 
 sampleFilePrepare["pdf"] :=
-    Module[ {dir = sampleFileDirectory["pdf"]},
+    Module[{dir = sampleFileDirectory["pdf"]},
         sampleDirectoryCreate[dir];
         Which[
             !$NetworkConnected,
@@ -156,7 +156,7 @@ sampleFilePrepare["pdf"] :=
     ];
 
 sampleFilePrepare["png"] :=
-    Module[ {dir = sampleFileDirectory["png"]},
+    Module[{dir = sampleFileDirectory["png"]},
         sampleDirectoryCreate[dir];
         Which[
             !sampleFileMatchQ["png"],
@@ -172,9 +172,9 @@ sampleFilePrepare["png"] :=
     ];
 
 sampleFilePrepare["tex"] :=
-    Module[ {dir = sampleFileDirectory["tex"]},
+    Module[{dir = sampleFileDirectory["tex"]},
         sampleDirectoryCreate[dir];
-        If[ !sampleFileMatchQ["tex"],
+        If[!sampleFileMatchQ["tex"],
             sampleData[["tex"]]//Query[All,Export[FileNameJoin@{dir,#Name},#Content,"Text"]&];
             Success["SampleTeXPrepared",<|
                 "MessageTemplate"->"The sample TeX files have been prepared."
@@ -194,7 +194,7 @@ sampleFileMatchQ[format_] :=
     ];
 
 sampleDirectoryCreate[dir_] :=
-    If[ !DirectoryQ[dir],
+    If[!DirectoryQ[dir],
         CreateDirectory[dir]
     ];
 

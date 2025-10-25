@@ -75,7 +75,7 @@ extractID//Options = {
 
 
 extractID[tag:$tagPattern:"string",opts:OptionsPattern[]][input_] :=
-    Module[ {idData},
+    Module[{idData},
         idData =
             input//throwWrongTypeInput[tag]//extractIDData[tag,FilterRules[{opts,Options[extractID]},Options[extractIDData]]];
         idData//ifAddButton[OptionValue["ClickToCopy"],"ID"]//Dataset
@@ -87,7 +87,7 @@ extractID[tag:$tagPattern:"string",opts:OptionsPattern[]][input_] :=
 
 
 extractIDData[tag:$tagPattern,opts:OptionsPattern[]][input_] :=
-    Module[ {idData},
+    Module[{idData},
         idData =
             Switch[tag,
                 "string",
@@ -130,13 +130,13 @@ getIDDataFromImage[OptionsPattern[]][Null] :=
     {};
 
 getIDDataFromImage[opts:OptionsPattern[]][img_Image] :=
-    Module[ {idData},
+    Module[{idData},
         idData =
             img//getStringListFromImage[FilterRules[{opts,Options[getIDDataFromImage]},Options[getStringListFromImage]]]//
                 alignToStringList//trimString//
                     Query[All,<|"ID"->First[getIDListFromString@#[[1]],""],"Position"->{#[[2]]}|>&]//
                         Query[Select[#ID=!=""&]];
-        If[ OptionValue["ShowHighlightedImage"],
+        If[OptionValue["ShowHighlightedImage"],
             showHighlightedImage[idData][img];
             idData//Query[All,KeyDrop["Position"]],
             (*Else*)
@@ -191,8 +191,8 @@ getPDFListFromPath[path:$pathPattern] :=
 
 
 getIDDataFromPDF[OptionsPattern[]][filePath_String] :=
-    Module[ {idData,idNumber,idList},
-        If[ OptionValue["TryFileName"]===True,
+    Module[{idData,idNumber,idList},
+        If[OptionValue["TryFileName"]===True,
             idList =
                 getIDListFromString[filePath];
             idNumber =
@@ -214,7 +214,7 @@ getIDDataFromPDF[OptionsPattern[]][filePath_String] :=
             idData =
                 getIDDataFromPDFFirstPage[filePath]
         ];
-        If[ OptionValue["HideDirectory"],
+        If[OptionValue["HideDirectory"],
             idData//Query[All,<|#,"FileName"->hideDirectory[#FileName]|>&],
             (*Else*)
             idData
@@ -223,7 +223,7 @@ getIDDataFromPDF[OptionsPattern[]][filePath_String] :=
 
 
 getIDDataFromPDFFirstPage[filePath_String] :=
-    Module[ {idList,idNumber},
+    Module[{idList,idNumber},
         idList =
             filePath//tryImport["",{"Plaintext",1}]//getIDListFromString;
         idNumber =
