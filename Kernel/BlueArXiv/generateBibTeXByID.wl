@@ -68,7 +68,7 @@ generateBibTeXByID[
     HoldPattern[bibName_String:$defaultBibName],
     opts:OptionsPattern[]
 ][input_] :=
-    Module[ {bibData},
+    Module[{bibData},
         bibData =
             input//throwWrongTypeInput[tag]//generateBibTeXByIDAsBibData[tag,targetDir,bibName,FilterRules[{opts,Options[generateBibTeXByID]},Options[generateBibTeXByIDAsBibData]]];
         (*Dataset[#,HiddenItems->{"BibTeX"->True}]&*)
@@ -85,14 +85,14 @@ generateBibTeXByIDAsBibData[tag:$tagPattern,targetDir:$pathPattern,bibName_Strin
 
 
 getBibDataFromIDData[targetDir:$pathPattern,bibName_String][idData_List] :=
-    Module[ {idList,idValidList,bibData},
+    Module[{idList,idValidList,bibData},
         idList =
             idData//Query[All,#ID&];
         idValidList =
             DeleteDuplicates@DeleteCases[idList,"NotFound"];
         bibData =
             idValidList//getRawBibDataFromIDList//addBibKeyToBibData;
-        If[ MemberQ[idList,"NotFound"],
+        If[MemberQ[idList,"NotFound"],
             bibData =
                 Join[
                     bibData,
@@ -111,7 +111,7 @@ getBibDataFromIDData[targetDir:$pathPattern,bibName_String][idData_List] :=
 
 
 getRawBibDataFromIDList[idList_List] :=
-    If[ idList==={},
+    If[idList==={},
         (*if there is no valid ID, return empty list.*)
         {},
         (*Else*)
@@ -145,7 +145,7 @@ addBibKeyToBibData[bibData_List] :=
 
 
 getBibKey[bibtex_String] :=
-    First@StringCases[bibtex,StartOfString~~Shortest[__]~~"{"~~Shortest[key__]~~",\n"~~__:>key]; 
+    First@StringCases[bibtex,StartOfString~~Shortest[__]~~"{"~~Shortest[key__]~~",\n"~~__:>key];
 
 getBibKey[_] :=
     Missing["BibKeyNotFound"];
