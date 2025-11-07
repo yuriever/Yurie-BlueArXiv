@@ -162,7 +162,7 @@ alignToStringList[list_List] :=
     ];
 
 
-trimString[list_List]:=
+trimString[list_List] :=
     list//MapAt[StringDelete[WhitespaceCharacter],{All,1}];
 
 
