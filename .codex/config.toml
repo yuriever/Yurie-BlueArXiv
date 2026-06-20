@@ -9,3 +9,6 @@ approval_mode = "approve"
 
 [mcp_servers.WolframLanguage.tools.WolframLanguageEvaluator]
 approval_mode = "approve"
+
+[mcp_servers.WolframLanguage.tools.CodeInspector]
+approval_mode = "approve"
