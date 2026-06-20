@@ -1,12 +1,4 @@
-{"extractID" -> {{"string", "image", "path"}, 
-   {"ClickToCopy", "MergeDuplicateID", "TryFileName", "HideDirectory", 
-    "ShowHighlightedImage", "TextLevel"}}, 
- "searchByID" -> {{"string", "image", "path"}, 
-   {"ClickToCopy", "MergeDuplicateID", "TryFileName", "HideDirectory", 
-    "ShowHighlightedImage", "TextLevel"}}, 
- "downloadByID" -> {{"string", "image", "path"}, 8, 
-   {"ClickToCopy", "HideFile", "MergeDuplicateID", "TryFileName", 
-    "HideDirectory", "ShowHighlightedImage", "TextLevel"}}, 
- "generateBibTeXByID" -> {{"string", "image", "path"}, 8, 0, 
-   {"ClickToCopy", "MergeDuplicateID", "TryFileName", "HideDirectory", 
-    "ShowHighlightedImage", "TextLevel"}}}
+{"extractID" -> {{"string", "image", "path"}}, 
+ "searchByID" -> {{"string", "image", "path"}}, 
+ "downloadByID" -> {{"string", "image", "path"}, 8}, 
+ "generateBibTeXByID" -> {{"string", "image", "path"}, 8, 0}}
