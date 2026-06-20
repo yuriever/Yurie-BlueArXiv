@@ -58,7 +58,7 @@ $thisPacletDir =
     $thisPaclet["Location"];
 
 $thisKernelDir =
-    FileNameJoin@{$thisPacletDir,"Kernel"};
+    FileNameJoin[$thisPacletDir,"Kernel"];
 
 $thisSourceDir =
     $thisPaclet["AssetLocation","Source"];
@@ -67,16 +67,16 @@ $thisTestDir =
     $thisPaclet["AssetLocation","Test"];
 
 $thisTestSourceDir =
-    $thisPaclet["AssetLocation","TestSource"];
+    FileNameJoin[$thisTestDir,"TestSource"];
 
 $thisCompletionDir =
-    FileNameJoin@{$thisPaclet["Location"],"AutoCompletionData"};
+    FileNameJoin[$thisPaclet["Location"],"AutoCompletionData"];
 
 $thisSandboxDir =
-    FileNameJoin@{$thisPaclet["Location"],"Sandbox"};
+    FileNameJoin[$thisPaclet["Location"],"Sandbox"];
 
 $thisWorkbenchDir =
-    FileNameJoin@{$thisPaclet["Location"],"Workbench"};
+    FileNameJoin[$thisPaclet["Location"],"Workbench"];
 
 
 (* ::Subsection:: *)
