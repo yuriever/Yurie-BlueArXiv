@@ -1,14 +1,14 @@
 
 
-(*edge-cases.nb*)
+(* edge-cases.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-edge-cases.nb"
+    TestID->"[0] edge-cases.nb"
 ]
 
 VerificationTest[
@@ -17,7 +17,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-edge-cases.nb"
+    TestID->"[1] edge-cases.nb"
 ]
 
 VerificationTest[
@@ -25,7 +25,7 @@ VerificationTest[
     ,
     {}
     ,
-    TestID->"2-edge-cases.nb"
+    TestID->"[2] edge-cases.nb"
 ]
 
 VerificationTest[
@@ -35,7 +35,7 @@ VerificationTest[
     ,
     {General::elmntav}
     ,
-    TestID->"3-edge-cases.nb"
+    TestID->"[3] edge-cases.nb"
 ]
 
 VerificationTest[
@@ -43,7 +43,7 @@ VerificationTest[
     ,
     {}
     ,
-    TestID->"4-edge-cases.nb"
+    TestID->"[4] edge-cases.nb"
 ]
 
 VerificationTest[
@@ -53,7 +53,7 @@ VerificationTest[
     ,
     {General::elmntav}
     ,
-    TestID->"5-edge-cases.nb"
+    TestID->"[5] edge-cases.nb"
 ]
 
 VerificationTest[
@@ -61,7 +61,7 @@ VerificationTest[
     ,
     {}
     ,
-    TestID->"6-edge-cases.nb"
+    TestID->"[6] edge-cases.nb"
 ]
 
 VerificationTest[
@@ -71,14 +71,14 @@ VerificationTest[
     ,
     {General::elmntav}
     ,
-    TestID->"7-edge-cases.nb"
+    TestID->"[7] edge-cases.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-edge-cases.nb"
+    TestID->"[∞] edge-cases.nb"
 ]
