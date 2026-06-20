@@ -5,3 +5,10 @@
 
 
 reportWLT[$thisTestDir]
+
+
+(* ::Text:: *)
+(*Test source*)
+
+
+convertNotebookToWLT[$thisTestSourceDir,$thisTestDir]
