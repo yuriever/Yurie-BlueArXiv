@@ -1,33 +1,38 @@
 # Repository Guidelines
 
-## Architecture
+## Project Map
 
-* `Kernel/` contains the main runtime package.
-* `Kernel/BlueArXiv/` contains the public feature modules: ID extraction, arXiv search, PDF download, BibTeX generation, and PDF name formatting.
-* `Utility/` contains secondary contexts such as sample data and paclet info helpers.
-* `Source/` stores fixtures used by examples and tests: PDFs, images, and TeX files.
-* `Documentation/English/` stores Wolfram documentation notebooks.
-* `AutoCompletionData/` stores front-end completion metadata.
-* `Sandbox/` stores AI-created temporary files, exploratory tests, and verification artifacts.
-* `Workbench/` and `TestSource/` are developer workspace material and are ignored by git.
-* `build/` stores generated paclet artifacts; avoid editing generated contents by hand.
+This paclet has three working zones: product code, human-maintained material, and AI workspace.
 
-## Context Model
+* Product code lives in `Kernel/`. Public feature modules are in `Kernel/BlueArXiv/`, one file per feature: ID extraction, arXiv search, PDF download, BibTeX generation, and PDF name formatting.
+* `Utility/` contains auxiliary contexts for paclet path metadata and sample-data helpers.
+* Paclet metadata and front-end resources live in `PacletInfo.wl`, `AutoCompletionData/`, `Documentation/English/`, `README.md`, and `ResourceDefinition.nb`.
+* Stable fixtures for examples and tests live in `Source/`.
+* Shared maintenance scripts belong in `Script/`.
+* Generated paclet artifacts belong in `build/`; avoid editing generated files by hand.
+
+## Ownership Boundaries
+
+* Human-only: `Workbench/`, `TestSource/`, and `Test/`.
+* AI-only: `Sandbox/`.
+* Shared: all project files outside the human-only and AI-only areas.
+* Do not add, edit, or regenerate human-only files unless Owner explicitly requests it.
+* Put AI scratch files, exploratory tests, temporary data, generated reports, and verification artifacts under `Sandbox/`.
+
+## Runtime Context
 
 * Load the public API with `` Needs["Yurie`BlueArXiv`"] ``.
 * Load sample helpers only when needed with `` Get["Yurie`BlueArXiv`Sample`"] ``.
-* The package talks to arXiv and INSPIRE APIs; keep network-dependent checks narrow and explicit.
-* Prefer fresh Wolfram kernels for verification so loaded contexts and cached service state do not hide regressions.
+* Preserve the package load order in `Kernel/BlueArXiv.wl`.
+* Keep public feature implementation inside the matching `Kernel/BlueArXiv/*.wl` module.
 
-## Test Policy
+## Testing and Verification
 
-* `Test/` is human-maintained formal regression territory.
-* Do not add, edit, or regenerate `Test/*.wlt` unless Owner explicitly requests formal regression updates.
-* AI-created temporary files, exploratory tests, and verification scripts belong in `Sandbox/`.
-* Existing tests use `VerificationTest` and `TestID` values tied to notebook names, for example `3-searchByID.nb`.
+* Formal regression tests in `Test/` are maintained by humans.
+* AI tests belong in `Sandbox/Test/`, preferably using fresh Wolfram kernels.
+* arXiv and INSPIRE checks are network-dependent; keep such verification narrow and explicit.
 
-## Maintenance
+## Maintenance Style
 
-* Preserve package load order in `Kernel/BlueArXiv.wl`.
-* Keep one public feature module per file under `Kernel/BlueArXiv/`.
-* Keep fixtures stable; update `Source/` only when examples or tests require new input data.
+* Match existing Wolfram formatting; public symbols use lower camel case.
+* Keep fixtures stable; update `Source/` only when shared examples or human-maintained tests need new input data.
