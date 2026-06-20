@@ -82,22 +82,17 @@ searchByIDAsPaperData[tag:$tagPattern,opts:OptionsPattern[]][input_] :=
 
 
 getPaperDataFromIDData[idData_List] :=
-    Module[{idList,idValidList,rawPaperData,newPaperData,paperNameList,urlList},
+    Module[{idList,idValidList,rawPaperData,paperDataAssoc,newPaperData},
         idList =
             idData//Query[All,#ID&];
         idValidList =
             DeleteDuplicates@DeleteCases[idList,"NotFound"];
         rawPaperData =
             idValidList//getRawPaperDataFromIDList;
-        paperNameList =
-            rawPaperData//getPaperNameListFromPaperData;
-        urlList =
-            rawPaperData//getURLListFromPaperData;
+        paperDataAssoc =
+            rawPaperData//getPaperDataAssocFromRawPaperData;
         newPaperData =
-            MapThread[
-                <|"ID"->#1,"Paper"->#2,"URL"->#3|>&,
-                {idValidList,paperNameList,urlList}
-            ];
+            idValidList//Map[getPaperDataFromPaperDataAssoc[paperDataAssoc]];
         If[MemberQ[idList,"NotFound"],
             newPaperData =
                 Join[
@@ -110,6 +105,29 @@ getPaperDataFromIDData[idData_List] :=
             idData,
             "ID"
         ]
+    ];
+
+
+getPaperDataAssocFromRawPaperData[rawPaperData_List] :=
+    rawPaperData//Map[getIDFromPaperData[#]->#&]//DeleteCases[_Missing->_]//Association;
+
+
+getPaperDataFromPaperDataAssoc[paperDataAssoc_Association][id_String] :=
+    Module[{paperData},
+        paperData =
+            Lookup[paperDataAssoc,id,<||>];
+        <|"ID"->id,"Paper"->getPaperNameFromPaperData[paperData],"URL"->getURL[paperData]|>
+    ];
+
+
+getIDFromPaperData[paperData_Association]/;MissingQ[paperData["URL"]] :=
+    Missing["IDNotExist"];
+
+getIDFromPaperData[paperData_Association] :=
+    FirstCase[
+        StringCases[paperData["URL"],id:$arXivIDPattern~~(("v"~~DigitCharacter..)|""):>id],
+        _,
+        Missing["IDNotExist"]
     ];
 
 
@@ -130,6 +148,13 @@ getRawPaperDataFromIDList[idList_List] :=
             Table[<||>,Length@idList]&
         ]
     ];
+
+
+getPaperNameFromPaperData[paperData_Association]/;MissingQ[paperData["ID"]] :=
+    Missing["IDNotExist"];
+
+getPaperNameFromPaperData[paperData_Association] :=
+    {paperData}//getPaperNameListFromPaperData//First;
 
 
 getPaperNameListFromPaperData[paperData_List] :=
