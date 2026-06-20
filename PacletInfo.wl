@@ -8,8 +8,8 @@ PacletObject[
     "SourceControlURL" -> "https://github.com/yuriever/Yurie-BlueArXiv",
     "License" -> "MIT",
     "PublisherID" -> "Yurie",
-    "Version" -> "3.0.0",
-    "WolframVersion" -> "14.2+",
+    "Version" -> "3.1.0",
+    "WolframVersion" -> "15+",
     "PrimaryContext" -> "Yurie`BlueArXiv`",
     "Extensions" -> {
       {
@@ -46,8 +46,7 @@ PacletObject[
           {"License", "LICENSE"},
           {"ReadMe", "README.md"},
           {"Source", "Source"},
-          {"Test", "Test"},
-          {"TestSource", "TestSource"}
+          {"Test", "Test"}
         }
       }
     }
