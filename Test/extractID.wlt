@@ -1,14 +1,14 @@
 
 
-(*extractID.nb*)
+(* extractID.nb *)
 
 VerificationTest[
     Begin["Global`"];
-	ClearAll["`*"]
+    ClearAll["`*"]
     ,
     Null
     ,
-    TestID->"0-extractID.nb"
+    TestID->"[0] extractID.nb"
 ]
 
 VerificationTest[
@@ -17,7 +17,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"1-extractID.nb"
+    TestID->"[1] extractID.nb"
 ]
 
 VerificationTest[
@@ -25,7 +25,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"2-extractID.nb"
+    TestID->"[2] extractID.nb"
 ]
 
 VerificationTest[
@@ -33,7 +33,7 @@ VerificationTest[
     ,
     {Association["ID" -> "hep-th/9802150"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "0000.00001"]}
     ,
-    TestID->"3-extractID.nb"
+    TestID->"[3] extractID.nb"
 ]
 
 VerificationTest[
@@ -41,7 +41,7 @@ VerificationTest[
     ,
     {Association["ID" -> "0000.00001"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "hep-th/9802150"]}
     ,
-    TestID->"4-extractID.nb"
+    TestID->"[4] extractID.nb"
 ]
 
 VerificationTest[
@@ -49,7 +49,7 @@ VerificationTest[
     ,
     {Association["ID" -> "0000.00001"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "hep-th/9802150"]}
     ,
-    TestID->"5-extractID.nb"
+    TestID->"[5] extractID.nb"
 ]
 
 VerificationTest[
@@ -57,7 +57,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"6-extractID.nb"
+    TestID->"[6] extractID.nb"
 ]
 
 VerificationTest[
@@ -65,7 +65,7 @@ VerificationTest[
     ,
     {Association["ID" -> "hep-th/9802150"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "0000.00001"]}
     ,
-    TestID->"7-extractID.nb"
+    TestID->"[7] extractID.nb"
 ]
 
 VerificationTest[
@@ -73,7 +73,7 @@ VerificationTest[
     ,
     {Association["ID" -> "hep-th/9802150"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "0000.00001"]}
     ,
-    TestID->"8-extractID.nb"
+    TestID->"[8] extractID.nb"
 ]
 
 VerificationTest[
@@ -81,7 +81,7 @@ VerificationTest[
     ,
     {Association["ID" -> "0000.00001"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "hep-th/9802150"]}
     ,
-    TestID->"9-extractID.nb"
+    TestID->"[9] extractID.nb"
 ]
 
 VerificationTest[
@@ -89,7 +89,7 @@ VerificationTest[
     ,
     {Association["ID" -> "0000.00001"], Association["ID" -> "1207.7214"], Association["ID" -> "1706.03762"], Association["ID" -> "hep-th/9802150"]}
     ,
-    TestID->"10-extractID.nb"
+    TestID->"[10] extractID.nb"
 ]
 
 VerificationTest[
@@ -98,7 +98,7 @@ VerificationTest[
     ,
     Null
     ,
-    TestID->"11-extractID.nb"
+    TestID->"[11] extractID.nb"
 ]
 
 VerificationTest[
@@ -106,7 +106,7 @@ VerificationTest[
     ,
     {Association["ID" -> "1706.03762", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FileName"}]}
     ,
-    TestID->"12-extractID.nb"
+    TestID->"[12] extractID.nb"
 ]
 
 VerificationTest[
@@ -114,7 +114,7 @@ VerificationTest[
     ,
     {Association["ID" -> "1706.03762", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FirstPage"}]}
     ,
-    TestID->"13-extractID.nb"
+    TestID->"[13] extractID.nb"
 ]
 
 VerificationTest[
@@ -123,7 +123,7 @@ VerificationTest[
     ,
     True
     ,
-    TestID->"14-extractID.nb"
+    TestID->"[14] extractID.nb"
 ]
 
 VerificationTest[
@@ -131,7 +131,7 @@ VerificationTest[
     ,
     {Association["ID" -> "1706.03762", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1207.7214", "FileName" -> {"newID-1207.7214.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "NotFound", "FileName" -> {"noID.pdf"}, "IDLocation" -> {"None"}], Association["ID" -> "hep-th/9802150", "FileName" -> {"oldID-9802150.pdf"}, "IDLocation" -> {"FirstPageExtra"}], Association["ID" -> "hep-th/9802150", "FileName" -> {"oldID-9802150.pdf"}, "IDLocation" -> {"FirstPageExtra"}], Association["ID" -> "0000.00001", "FileName" -> {"wrongID-0000.00001.pdf"}, "IDLocation" -> {"FileName"}]}
     ,
-    TestID->"15-extractID.nb"
+    TestID->"[15] extractID.nb"
 ]
 
 VerificationTest[
@@ -139,7 +139,7 @@ VerificationTest[
     ,
     {Association["ID" -> "0000.00001", "FileName" -> {"wrongID-0000.00001.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1207.7214", "FileName" -> {"newID-1207.7214.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1706.03762", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "hep-th/9802150", "FileName" -> {"oldID-9802150.pdf", "oldID-9802150.pdf"}, "IDLocation" -> {"FirstPageExtra", "FirstPageExtra"}], Association["ID" -> "NotFound", "FileName" -> {"noID.pdf"}, "IDLocation" -> {"None"}]}
     ,
-    TestID->"16-extractID.nb"
+    TestID->"[16] extractID.nb"
 ]
 
 VerificationTest[
@@ -147,14 +147,14 @@ VerificationTest[
     ,
     {Association["ID" -> "0000.00001", "FileName" -> {"wrongID-0000.00001.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1207.7214", "FileName" -> {"newID-1207.7214.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "1706.03762", "FileName" -> {"csID-1706.03762.pdf"}, "IDLocation" -> {"FileName"}], Association["ID" -> "hep-th/9802150", "FileName" -> {"oldID-9802150.pdf", "oldID-9802150.pdf"}, "IDLocation" -> {"FirstPageExtra", "FirstPageExtra"}], Association["ID" -> "NotFound", "FileName" -> {"noID.pdf"}, "IDLocation" -> {"None"}]}
     ,
-    TestID->"17-extractID.nb"
+    TestID->"[17] extractID.nb"
 ]
 
 VerificationTest[
     ClearAll["`*"];
-	End[]
+    End[]
     ,
     "Global`"
     ,
-    TestID->"∞-extractID.nb"
+    TestID->"[∞] extractID.nb"
 ]
