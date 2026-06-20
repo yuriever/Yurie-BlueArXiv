@@ -29,12 +29,18 @@ $thisTestSourceDir::usage =
 $thisCompletionDir::usage =
     "directory of auto completion data.";
 
+$thisSandboxDir::usage =
+    "directory of AI sandbox.";
+
+$thisWorkbenchDir::usage =
+    "directory of workbench.";
+
 
 (* ::Section:: *)
 (*Private*)
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*Begin*)
 
 
@@ -66,8 +72,14 @@ $thisTestSourceDir =
 $thisCompletionDir =
     FileNameJoin@{$thisPaclet["Location"],"AutoCompletionData"};
 
+$thisSandboxDir =
+    FileNameJoin@{$thisPaclet["Location"],"Sandbox"};
 
-(* ::Subsection::Closed:: *)
+$thisWorkbenchDir =
+    FileNameJoin@{$thisPaclet["Location"],"Workbench"};
+
+
+(* ::Subsection:: *)
 (*End*)
 
 
