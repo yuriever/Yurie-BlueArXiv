@@ -1,0 +1,35 @@
+{
+ "cells": [
+  {
+   "kind": 2,
+   "value": "<<Yurie`BlueArXiv`\n<<Yurie`BlueArXiv`Info`\n<<Yurie`Autocode`\n\nexportPublicSymbolUsage[\n\tFileNameJoin[$thisKernelDir,\"BlueArXiv\"],\n\t$thisKernelDir\n];",
+   "languageId": "wolfram",
+   "outputs": [],
+   "metadata": {},
+   "executionSummary": {
+    "timing": {
+     "startTime": 1781940939129,
+     "endTime": 1781940939245
+    },
+    "executionOrder": 23,
+    "success": true
+   }
+  },
+  {
+   "kind": 2,
+   "value": "tagList={\"string\",\"image\",\"path\"};\n\nexportArgumentCompletion[\n    $thisCompletionDir,\n    {\n        \"extractID\"->{tagList},\n        \"searchByID\"->{tagList},\n        \"downloadByID\"->{tagList,8},\n        \"generateBibTeXByID\"->{tagList,8,0}\n    }\n];",
+   "languageId": "wolfram",
+   "mime": "text/plain",
+   "outputs": [],
+   "metadata": {},
+   "executionSummary": {
+    "timing": {
+     "startTime": 1781940942295,
+     "endTime": 1781940942305
+    },
+    "executionOrder": 25,
+    "success": true
+   }
+  }
+ ]
+}
