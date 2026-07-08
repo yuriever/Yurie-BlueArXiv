@@ -1,6 +1,6 @@
-# Repository Guidelines
+# Repository Guide
 
-## Project Map
+## Architecture
 
 This paclet has three working zones: product code, human-maintained material, and AI workspace.
 
@@ -11,7 +11,7 @@ This paclet has three working zones: product code, human-maintained material, an
 * Shared maintenance scripts belong in `Script/`.
 * Generated paclet artifacts belong in `build/`; avoid editing generated files by hand.
 
-## Ownership Boundaries
+## Ownership Boundary
 
 * Human-only: `Workbench/`, `TestSource/`, and `Test/`.
 * AI-only: `Sandbox/`.
