@@ -36,3 +36,17 @@ This paclet has three working zones: product code, human-maintained material, an
 
 * Match existing Wolfram formatting; public symbols use lower camel case.
 * Keep fixtures stable; update `Source/` only when shared examples or human-maintained tests need new input data.
+
+## Convention
+
+* Naming
+    * Prefer singular forms for section headings and directory names.
+
+* Markdown
+    * Use `*` for unordered list markers.
+    * Use four spaces for nested indentation.
+    * In prose, do not hard-wrap sentences to fit a fixed width.
+    * For placeholders in commands, use angle/square brackets for required/optional arguments, such as `command <file> [--flag]`.
+
+* Wolfram
+    * Prefer file-based execution with `WolframKernel -script <file.wl>`.
