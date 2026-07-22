@@ -4,10 +4,6 @@
 # VSCode settings
 .vscode/
 
-# Local agent and MCP configuration
-.codex/
-.mcp.json
-
 # Developer workspace
 Workbench/
 TestSource/
